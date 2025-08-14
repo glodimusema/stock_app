@@ -276,6 +276,7 @@ class tvente_detail_uniteController extends Controller
         if (($request->get('refDetailUnite')) && ($request->get('idStockService'))) 
         {
             $qteBase = 0;
+            $puUnite = 0;
             $data3=DB::table('tvente_detail_unite')
              ->select('id','refProduit','refUnite','puUnite','qteUnite','puBase',
                         'qteBase','estunite','estpivot','active','author','refUser')
@@ -285,15 +286,16 @@ class tvente_detail_uniteController extends Controller
             ->get(); 
             foreach ($data3 as $row) 
             {
-                $qteBase =  $row->qteBase;                     
+                $qteBase =  $row->qteBase;   
+                $puUnite =  $row->puUnite;                  
             }
             // 'id','refService','refProduit','pu','qte','uniteBase','cmup','devise','taux','active','refUser','author'
             // tvente_stock_service
 
             $data = DB::select(
-                'select ROUND((qte / :qteBase),3) as Qtedispo,refProduit,ROUND((cmup * :qteBases),3) as cmupData from tvente_stock_service  
+                'select ROUND((qte / :qteBase),3) as Qtedispo,refProduit,ROUND(:puUnite,3) as cmupData from tvente_stock_service  
                  where tvente_stock_service.id = :idPro',
-                 ['qteBase' => $qteBase,'qteBases' => $qteBase,'idPro' => $request->idStockService]
+                 ['qteBase' => $qteBase,'puUnite' => $puUnite,'idPro' => $request->idStockService]
             );   
     
             return response()->json([

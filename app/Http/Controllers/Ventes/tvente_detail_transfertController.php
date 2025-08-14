@@ -742,21 +742,21 @@ class tvente_detail_transfertController extends Controller
                 'cmupMvt'    =>  $puTransfert
             ]); 
 
-                $data23 = DB::update(
-                'update tvente_stock_service set qte = qte + :qteTransfert where id = :id',
-                ['qteTransfert' => $qteEntree,'id' => $temp_id]
-                );
+            $data23 = DB::update(
+            'update tvente_stock_service set qte = qte + :qteTransfert where id = :id',
+            ['qteTransfert' => $qteEntree,'id' => $temp_id]
+            );
 
-                $id_detail_max=0;
-                $detail_list = DB::table('tvente_detail_transfert')       
-                ->selectRaw('MAX(id) as code_entete')
-                ->where('refUser', $request->refUser)
-                ->get();
-                foreach ($detail_list as $list) {
-                    $id_detail_max= $list->code_entete;
-                }
+            $id_detail_max=0;
+            $detail_list = DB::table('tvente_detail_transfert')       
+            ->selectRaw('MAX(id) as code_entete')
+            ->where('refUser', $request->refUser)
+            ->get();
+            foreach ($detail_list as $list) {
+                $id_detail_max= $list->code_entete;
+            }
               
-                $data98 = tvente_mouvement_stock::create([             
+            $data98 = tvente_mouvement_stock::create([             
                     'idStockService'    =>  $temp_id,             
                     'dateMvt'    =>   $request->date_transfert,   
                     'type_mouvement'    =>  'Entree',
@@ -785,7 +785,7 @@ class tvente_detail_transfertController extends Controller
                     'qteBase'    =>  $qteBase,
                     'uniteBase'    =>  $uniteBase,
                     'cmupMvt'    =>  $puTransfert
-                ]); 
+            ]); 
 
 
 
@@ -1164,11 +1164,79 @@ class tvente_detail_transfertController extends Controller
 
 
           }
-          
-           $data2 = DB::update(
-               'update tvente_produit set qte = qte - :qteTransfert where id = :refProduit',
-               ['qteTransfert' => $qteEntree,'refProduit' => $row91->refProduit]
-           );           
+
+        $idStockServiceSource=0;
+        $data_source=DB::table('tvente_stock_service') 
+        ->select('id','refService','refProduit','pu','qte','uniteBase','cmup',
+        'devise','taux','active','refUser','author')
+        ->where([
+            ['tvente_stock_service.refService','=', $refService],
+            ['tvente_stock_service.refProduit','=', $row91->refProduit]
+        ])      
+        ->first();
+        if ($data_source) 
+        {
+            $idStockServiceSource =  $data_source->id;           
+        }
+
+        $nom_service_source = '';
+        $nom_service_destination = '';    
+        $date_serv_source = DB::table("tvente_services")
+        ->select("tvente_services.id","tvente_services.nom_service",
+        "tvente_services.created_at","status",
+        'tvente_services.active')
+         ->where([
+            ['tvente_services.id','=',  $refService]
+        ])      
+        ->first();
+        if ($date_serv_source) 
+        {                 
+             $nom_service_source=$date_serv_source->nom_service; 
+        }
+        $data2222 = DB::update(
+            'update tvente_stock_service set qte = qte - :qteTransfert where id = :id',
+            ['qteTransfert' => $qteEntree,'id' => $idStockServiceSource]
+        );
+
+        $id_detail_max_s=0;
+        $detail_list_s = DB::table('tvente_detail_transfert')       
+        ->selectRaw('MAX(id) as code_entete')
+        ->where('refUser', $request->refUser)
+        ->first();
+        if ($detail_list_s) {
+            $id_detail_max_s= $detail_list_s->code_entete;
+        }
+
+        $data9967 = tvente_mouvement_stock::create([             
+            'idStockService'    =>  $idStockServiceSource,             
+            'dateMvt'    =>   $date_transfert,   
+            'type_mouvement'    =>  'Sortie',
+            'libelle_mouvement'    =>  'Entrée Stock',
+            'nom_table'    =>  'tvente_detail_transfert',
+            'id_data'    =>  $id_detail_max_s, 
+            'qteMvt'    =>  $qteTransfert,
+            'puMvt'    =>  $cmup_data,                   
+            'author'       =>  $request->author,
+            'refUser'       =>  $request->refUser,
+            'type_sortie'    =>  'Sortie',
+      
+            'active'    =>  $active,
+            'uniteMvt'    =>  $uniteTransfert,
+            'compte_vente'    =>  0,
+            'compte_variationstock'    =>  $compte_variationstock,
+            'compte_perte'    =>  0,
+            'compte_produit'    =>  $compte_produit,
+            'compte_destockage'    =>  0,
+            'compte_achat'    =>  $compte_achat,
+            'compte_stockage'    =>  $compte_stockage,
+            'puVente'    =>  $cmup_data,
+            'devise'    =>  'USD',
+            'taux'    =>  $taux,
+            'puBase'    =>  $puBase,
+            'qteBase'    =>  $qteBase,
+            'uniteBase'    =>  $uniteBase,
+            'cmupMvt'    =>  $cmup_data
+        ]);           
 
        }
 

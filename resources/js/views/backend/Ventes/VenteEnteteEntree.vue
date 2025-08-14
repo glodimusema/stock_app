@@ -591,7 +591,7 @@ export default {
     },    
     fetchListServiceDest() {
       //this.editOrFetch(`${this.apiBaseURL}/fetch_vente_services_2`).then(
-      this.editOrFetch(`${this.apiBaseURL}/fetch_service_magasin_user_by_user/${this.userData.id}`).then(
+      this.editOrFetch(`${this.apiBaseURL}/fetch_service_pointvente_user_by_user/${this.userData.id}`).then(
             ({ data }) => {
               var donnees = data.data;
               this.servicedestList = donnees;

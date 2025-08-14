@@ -120,24 +120,24 @@
                         </v-autocomplete>
                     </div>
                 </v-flex>
-                <v-flex xs12 sm12 md6 lg6>
+                <!-- <v-flex xs12 sm12 md6 lg6>
                     <div class="mr-1">
                         <v-autocomplete label="Selectionnez le Serveur" prepend-inner-icon="mdi-map"
                             :rules="[(v) => !!v || 'Ce champ est requis']" :items="serveurList" item-text="noms_agent"
                             item-value="id" dense outlined v-model="svData.serveur_id" chips clearable>
                         </v-autocomplete>
                     </div>
-                </v-flex>
+                </v-flex> -->
 
 
-                <v-flex xs12 sm12 md6 lg6>
+                <!-- <v-flex xs12 sm12 md6 lg6>
                     <div class="mr-1">
                         <v-autocomplete label="Selectionnez la Table" prepend-inner-icon="mdi-map"
                             :rules="[(v) => !!v || 'Ce champ est requis']" :items="tableList" item-text="nom_table"
                             item-value="id" dense outlined v-model="svData.table_id" chips clearable>
                         </v-autocomplete>
                     </div>
-                </v-flex>
+                </v-flex> -->
                 <v-flex xs12 sm12 md6 lg6>
                     <div class="mr-1">
                         <v-select label="Etat de Facture" :items="[
@@ -622,6 +622,9 @@ export default {
                 this.isLoading(true);
                 this.svData.author = this.userData.name;
                     this.svData.refUser = this.userData.id;
+                    this.svData.serveur_id = 1;
+                    this.svData.table_id = 1;
+
                     this.insertOrUpdate(
                     `${this.apiBaseURL}/insert_vente_globale_gros_vente`,
                     JSON.stringify(this.svData)
@@ -674,6 +677,9 @@ export default {
                     this.isLoading(true);
                     this.svData.author = this.userData.name;
                         this.svData.refUser = this.userData.id;
+                        this.svData.serveur_id = 1;
+                        this.svData.table_id = 1;
+
                         this.insertOrUpdate(
                         `${this.apiBaseURL}/insert_vente_globale_gros_vente_cash`,
                         JSON.stringify(this.svData)

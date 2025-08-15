@@ -151,15 +151,15 @@
                         </td>
                         <td class="short-cell">
                             <v-text-field v-model="item.qteEntree" type="number" label="Qté" :rules="[rules.required]"
-                                required></v-text-field>
+                                required @change="updateTVA(index)"></v-text-field>
                         </td>
                         <td class="short-cell">
                             <v-text-field v-model="item.puEntree" type="number" label="PU" :rules="[rules.required]"
-                                required ></v-text-field>
+                                required  @change="updateTVA(index)"></v-text-field>
                         </td>                      
                         <td class="short-cell">
                             <v-text-field v-model="item.montantreduction" type="number" label="Reduction"
-                                ></v-text-field>
+                               @change="updateTVA(index)" ></v-text-field>
                         </td>
                         <td class="medium-cell">
                             <v-autocomplete v-model="item.id_tva" :items="item.tvaList"
@@ -602,14 +602,31 @@ export default {
             );
         },
         fetchListService() {
-            //deviseList
             this.editOrFetch(`${this.apiBaseURL}/fetch_service_magasin_user_by_user/${this.userData.id}`).then(
                 ({ data }) => {
-                    var donnees = data.data;
+                    const donnees = data.data;
                     this.serviceList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refService && donnees.length > 0) {
+                        this.svData.refService = donnees[0].refService;
+
+                        // Optionnel : déclencher immédiatement le chargement des produits
+                        this.get_produit_for_service(this.svData.refService);
+                    }
                 }
             );
-        },
+        }
+        // fetchListService() {
+        //     //deviseList
+        //     this.editOrFetch(`${this.apiBaseURL}/fetch_service_magasin_user_by_user/${this.userData.id}`).then(
+        //         ({ data }) => {
+        //             var donnees = data.data;
+        //             this.serviceList = donnees;
+        //         }
+        //     );
+        // }
+        ,
         fetchListDevise() {
             //deviseList
             this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_devise_2`).then(
@@ -628,16 +645,18 @@ export default {
             );
         },
         fetchListTVA() {
-            this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_tva_2`).then(
-                ({ data }) => {
-                    const donnees = data.data;
-                    this.svData.detailData = this.svData.detailData.map(item => ({
-                        ...item, // Spread existing properties
-                        tvaList: donnees // Update 
-                    }));
-                }
-            );
-        },
+            this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_tva_2`).then(({ data }) => {
+                const donnees = data.data;
+
+                this.svData.detailData = this.svData.detailData.map(item => ({
+                    ...item,                         // garder propriétés existantes
+                    tvaList: donnees,                 // mettre à jour la liste
+                    // id_tva: item.id_tva || (donnees.find(tva => tva.id === 3)?.id ?? null)
+                    id_tva: item.id_tva || (donnees.length > 0 ? donnees[0].id : null) // valeur par défaut si non définie
+                }));
+            });
+        }
+        ,
         editData(id) {
         this.editOrFetch(`${this.apiBaseURL}/fetch_single_vente_entete_entree/${id}`).then(
             ({ data }) => {

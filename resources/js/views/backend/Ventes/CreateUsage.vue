@@ -531,15 +531,34 @@ export default {
                 }
             );
         },
+
         fetchListService() {
-            //deviseList
             this.editOrFetch(`${this.apiBaseURL}/fetch_service_user_by_user/${this.userData.id}`).then(
                 ({ data }) => {
-                    var donnees = data.data;
+                    const donnees = data.data;
                     this.serviceList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refService && donnees.length > 0) {
+                        this.svData.refService = donnees[0].refService;
+
+                        // Optionnel : déclencher immédiatement le chargement des produits
+                        this.get_produit_for_service(this.svData.refService);
+                    }
                 }
             );
-        },
+        }
+
+        // fetchListService() {
+        //     //deviseList
+        //     this.editOrFetch(`${this.apiBaseURL}/fetch_service_user_by_user/${this.userData.id}`).then(
+        //         ({ data }) => {
+        //             var donnees = data.data;
+        //             this.serviceList = donnees;
+        //         }
+        //     );
+        // }
+        ,
         fetchListDevise() {
             //deviseList
             this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_devise_2`).then(

@@ -325,13 +325,13 @@
                                 </v-list-item-title>
                                 </v-list-item> 
                                 
-                                <v-list-item link @click="editDataRes(item.id)">
+                                <!-- <v-list-item link @click="editDataRes(item.id)">
                                 <v-list-item-icon>
                                     <v-icon color="blue">edit</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-title style="margin-left: -20px">Affecter Reservation Chambre
                                 </v-list-item-title>
-                                </v-list-item>
+                                </v-list-item> -->
 
                                 <!-- <v-list-item link @click="editData(item.id)">
                                 <v-list-item-icon>

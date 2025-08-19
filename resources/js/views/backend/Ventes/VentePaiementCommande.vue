@@ -203,7 +203,7 @@
 
                                   <v-list dense width="">
 
-                                    <v-list-item v-if="item.RestePaie == 0" link
+                                    <v-list-item  v-if="item.RestePaie == 0" link
                                       @click="editData(item.id)">
                                       <v-list-item-icon>
                                         <v-icon color="blue">edit</v-icon>
@@ -218,7 +218,7 @@
                                       <v-list-item-title style="margin-left: -20px">Imprimer Reçu</v-list-item-title>
                                     </v-list-item>
 
-                                    <v-list-item link @click="deleteData(item.id)">
+                                    <v-list-item v-if="userData.id_role == 1" link @click="deleteData(item.id)">
                                         <v-list-item-icon>
                                           <v-icon color="red">print</v-icon>
                                         </v-list-item-icon>

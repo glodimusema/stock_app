@@ -288,11 +288,13 @@
                                 </v-list-item-title>
                                 </v-list-item> -->
 
-                                <v-list-item   link @click="deleteData(item.id)">
+                               <v-list-item v-if="userData.id_role == 1" clickable @click="deleteData(item.id)">
                                 <v-list-item-icon>
-                                    <v-icon color="  red">delete</v-icon>
+                                    <v-icon color="red">delete</v-icon>
                                 </v-list-item-icon>
-                                <v-list-item-title style="margin-left: -20px">Suppression
+
+                                <v-list-item-title style="margin-left: -20px">
+                                    Suppression
                                 </v-list-item-title>
                                 </v-list-item>
 
@@ -426,6 +428,8 @@ export default {
         this.fetchListService();
         this.fetchListDevise();
         this.fetchListTVA();
+
+        // alert(this.userData.id_role);
     },
     computed: {
         ...mapGetters(["categoryList", "isloading"]),   

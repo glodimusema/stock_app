@@ -322,7 +322,7 @@
                                 </v-list-item>
 
                                 <v-list-item   
-                                link @click="deleteData(item.id)">
+                                link v-if="userData.id_role == 1" @click="deleteData(item.id)">
                                 <v-list-item-icon>
                                     <v-icon color="  red">delete</v-icon>
                                 </v-list-item-icon>

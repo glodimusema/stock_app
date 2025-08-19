@@ -103,7 +103,7 @@
                     </td>
 
                     <td>
-                      <v-tooltip top color="black">
+                      <v-tooltip v-if="userData.id_role == 1" top color="black">
                         <template v-slot:activator="{ on, attrs }">
                           <span v-bind="attrs" v-on="on">
                             <v-btn @click="editData(item.id)" fab small><v-icon color="  blue">edit</v-icon></v-btn>

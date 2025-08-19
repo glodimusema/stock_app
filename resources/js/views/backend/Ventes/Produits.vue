@@ -336,7 +336,7 @@
 
                           <v-list dense width="">
 
-                            <v-list-item link @click="editData(item.id)">
+                            <v-list-item v-if="userData.id_role == 1" link @click="editData(item.id)">
                               <v-list-item-icon>
                                 <v-icon color="blue">edit</v-icon>
                               </v-list-item-icon>
@@ -371,7 +371,7 @@
 
                             
 
-                            <v-list-item   link @click="deleteData(item.id)">
+                            <v-list-item v-if="userData.id_role == 1" link @click="deleteData(item.id)">
                               <v-list-item-icon>
                                 <v-icon color="red">delete</v-icon>
                               </v-list-item-icon>

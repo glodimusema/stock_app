@@ -161,7 +161,7 @@
                                     <span>Modifier</span>
                                   </v-tooltip>
   
-                                  <v-tooltip  top color="black">
+                                  <v-tooltip v-if="userData.id_role == 1" top color="black">
                                     <template v-slot:activator="{ on, attrs }">
                                       <span v-bind="attrs" v-on="on">
                                         <v-btn @click="deleteData(item.id)" fab small>
@@ -172,7 +172,7 @@
                                     <span>Suppression</span>
                                   </v-tooltip>
   
-                                  <v-tooltip  top color="black">
+                                  <!-- <v-tooltip v-if="userData.id_role == 1" top color="black">
                                     <template v-slot:activator="{ on, attrs }">
                                       <span v-bind="attrs" v-on="on">
                                         <v-btn @click="deleteData(item.refEnteteEntree)" fab small><v-icon
@@ -180,7 +180,7 @@
                                       </span>
                                     </template>
                                     <span>Imprimer Bon</span>
-                                  </v-tooltip>
+                                  </v-tooltip> -->
   
                                 </td>
                               </tr>

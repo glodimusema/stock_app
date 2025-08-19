@@ -279,13 +279,13 @@
                               </v-list-item-title>
                             </v-list-item>
 
-                            <v-list-item link @click="editDataRes(item.id)">
+                            <!-- <v-list-item link @click="editDataRes(item.id)">
                               <v-list-item-icon>
                                 <v-icon color="blue">edit</v-icon>
                               </v-list-item-icon>
                               <v-list-item-title style="margin-left: -20px">Affecter Reservation Chambre
                               </v-list-item-title>
-                            </v-list-item>
+                            </v-list-item> -->
 
                             <v-list-item link @click="showFacture(item.id,item.noms,'Ventes')">
                               <v-list-item-icon>
@@ -295,7 +295,7 @@
                               </v-list-item-title>
                             </v-list-item>                            
 
-                            <v-list-item link @click="editData(item.id)">
+                            <v-list-item v-if="userData.id_role == 1" link @click="editData(item.id)">
                               <v-list-item-icon>
                                 <v-icon color="blue">edit</v-icon>
                               </v-list-item-icon>
@@ -303,7 +303,7 @@
                               </v-list-item-title>
                             </v-list-item>
 
-                            <v-list-item   
+                            <v-list-item  v-if="userData.id_role == 1"  
                             link @click="deleteData(item.id)">
                               <v-list-item-icon>
                                 <v-icon color="  red">delete</v-icon>

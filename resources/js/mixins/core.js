@@ -161,6 +161,28 @@ export default {
             });
         },
 
+        confirmMsgStock() {
+            return new Promise((resolve, reject) => {
+                this.$swal.fire({
+                    title: "êtes-vous sûr de vouloir le Ajouter les Produits dans Ce Service?",
+                    text: "Vous risquez de doubler les produits dans ce service !",
+                    icon: "warning",
+                    showDenyButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Continuer !",
+                    denyButtonText: `Annuler`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        resolve(result.isConfirmed)
+                    } else if (result.isDenied) {
+                        console.log('annuler')
+                    }
+
+                });
+            })
+        },
+
         confirmMsg() {
             return new Promise((resolve, reject) => {
                 this.$swal.fire({

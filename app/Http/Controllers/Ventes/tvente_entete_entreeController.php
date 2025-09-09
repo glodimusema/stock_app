@@ -156,29 +156,72 @@ class tvente_entete_entreeController extends Controller
 
     function delete_data($id)
     {
-
-
         $qte=0;
-        $idProduit=0;        
+        $idProduit=0;
+        $idFacture=0;
         $pu=0;
         $montantreduction=0;
         $montanttva=0;
         $idStockService=0;
-        $idDetail=0;
+        $idDetail = 0;
 
         $deleteds = DB::table('tvente_detail_entree')->Where('refEnteteEntree',$id)->get(); 
+
         foreach ($deleteds as $deleted) {
-            $idDetail = $deleted->id;
+
             $qte = $deleted->qteEntree;            
             $pu = $deleted->puEntree;
             $idProduit = $deleted->refProduit;
+            $idFacture = $deleted->refEnteteEntree;
+            $montantreduction = $deleted->montantreduction;
+            $montanttva = $deleted->montanttva;
             $idStockService = $deleted->idStockService;
+            $idDetail = $deleted->id;
 
-   
+             
+            $refService=0;
+
+            $idCommande=0;
+            $data999=DB::table('tvente_entete_entree') 
+            ->select('id','code','refFournisseur','refRecquisition','module_id','refService',
+            'dateEntree','libelle','transporteur','niveau1','niveaumax','active','author','refUser')
+            ->where([
+            ['tvente_entete_entree.id','=', $idFacture]
+            ])      
+            ->first();
+            if ($data999) 
+            {
+                $idCommande =  $data999->refRecquisition; 
+            }
+
+            $data222 = DB::update(
+                'update tvente_detail_requisition set qteTempo = qteTempo + :qteTempo where refEnteteCmd = :refEnteteCmd and idStockService = :idStockService',
+                    ['qteTempo' => $deleted->qteEntree,'refEnteteCmd' => $idCommande,'idStockService' => $idStockService]
+            );                    
+
+            $data33=DB::table('tvente_entete_entree') 
+            ->select('id','code','refFournisseur','refRecquisition','module_id','refService','dateEntree',
+                'libelle','transporteur','niveau1','niveaumax','active','author','refUser')
+            ->where([
+                ['tvente_entete_entree.id','=', $idFacture]
+            ])      
+            ->get();      
+            $output='';
+            foreach ($data33 as $row) 
+            {
+                $refService =  $row->refService;           
+            }
+
+
             $data2 = DB::update(
-                'update tvente_stock_service set qte = qte - :qteEntree where refProduit = :id',
-                ['qteEntree' => $qte,'id' => $idStockService]
-            ); 
+                'update tvente_stock_service set qte = qte - :qteEntree where refProduit = :refProduit and refService = :refService',
+                ['qteEntree' => $qte,'refProduit' => $idProduit,'refService' => $refService]
+            );
+
+            $data3 = DB::update(
+                'update tvente_entete_entree set montant = montant - (:pu * :qte) where id = :refEnteteEntree',
+                ['pu' => $pu,'qte' => $qte,'refEnteteEntree' => $idFacture]
+            );
 
             $nom_table = 'tvente_detail_entree';
 
@@ -186,11 +229,10 @@ class tvente_entete_entreeController extends Controller
                 'delete from tvente_mouvement_stock where tvente_mouvement_stock.id_data = :id and nom_table=:nom_table',
                 ['id' => $idDetail, 'nom_table' => $nom_table]
             );
-    
-            $data1 = tvente_detail_entree::where('id',$idDetail)->delete();
+
+            $data88 = tvente_detail_entree::where('id',$idDetail)->delete();
 
         }
-
         $data1 = tvente_detail_entree::where('refEnteteEntree',$id)->delete();
         $data = tvente_entete_entree::where('id',$id)->delete();
         return response()->json([

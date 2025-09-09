@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Ventes\{tvente_services};
+use App\Models\Ventes\{tvente_stock_service};
 use App\Traits\{GlobalMethod,Slug};
 use DB;
 
@@ -110,6 +111,58 @@ class tvente_servicesController extends Controller
         //
         $data = tvente_services::where('id', $id)->get();
         return response()->json(['data' => $data]);
+    }
+
+
+    function insert_data_stock_service($idService)
+    {
+
+        $inserteds = DB::table('tvente_produit')->get(); 
+
+            foreach ($inserteds as $data_insert) {   
+                
+                
+                $unitePivot='';
+                $qtePivot=0;
+
+                $unites = DB::table('tvente_detail_unite')
+                ->join('tvente_unite','tvente_unite.id','=','tvente_detail_unite.refUnite')
+                ->select('tvente_detail_unite.id','refProduit','refUnite','puUnite','qteUnite','puBase',
+                'qteBase','estunite','estpivot','tvente_detail_unite.active','tvente_detail_unite.author',
+                'tvente_detail_unite.refUser','nom_unite','code_unite'
+                )
+                ->where([
+                        ['refProduit', $data_insert->id],          
+                        ['tvente_detail_unite.estpivot','OUI']
+                ])->first(); 
+                if ($unites) {
+                    $unitePivot = $unites->nom_unite;            
+                    $qtePivot = $unites->qteBase;
+                }
+
+                
+                $data = tvente_stock_service::create([            
+                'refService'       =>  $idService,    
+                'refProduit'       =>  $data_insert->id,        
+                'pu'       =>  $data_insert->pu,
+                'qte'    =>  $data_insert->qte,
+                'uniteBase'    =>  $data_insert->uniteBase,
+                'cmup'    =>  $data_insert->cmup,
+                'devise'    =>  $data_insert->devise,
+                'taux'    =>  $data_insert->taux,
+                'active'    =>  'OUI',
+                'unitePivot'    =>  $unitePivot,
+                'qtePivot'    =>  $qtePivot,
+                'author'       =>  $data_insert->author,
+                'refUser'       =>  $data_insert->refUser
+            ]);
+
+
+        }
+        return response()->json([
+            'data'  =>  "suppression avec succès",
+        ]);
+        
     }
 
    

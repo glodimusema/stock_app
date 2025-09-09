@@ -332,9 +332,6 @@ class tvente_detail_entreeController extends Controller
         $compte_stockage=0;
         $cmupVente=0;
 
-
-
-
         $data3=DB::table('tvente_produit')
          ->join('tvente_categorie_produit','tvente_categorie_produit.id','=','tvente_produit.refCategorie') 
          ->select('compte_achat','compte_vente','compte_variationstock','tvente_categorie_produit.code',
@@ -441,8 +438,6 @@ class tvente_detail_entreeController extends Controller
             'update tvente_detail_requisition set qteTempo = qteTempo - :qteTempo where refEnteteCmd = :refEnteteCmd and idStockService = :idStockService',
                 ['qteTempo' => $request->qteEntree,'refEnteteCmd' => $idCommande,'idStockService' => $request->idStockService]
         );
-
-
 
         $id_detail_max=0;
         $detail_list = DB::table('tvente_detail_entree')       

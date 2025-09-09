@@ -1244,6 +1244,7 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::get("fetch_vente_services", 'tvente_servicesController@index');
     Route::get("fetch_single_vente_services/{id}", 'tvente_servicesController@edit');
     Route::get("delete_vente_services/{id}", 'tvente_servicesController@destroy');
+    Route::get("insert_data_stock_service/{idService}", 'tvente_servicesController@insert_data_stock_service');
     Route::post("insert_vente_services", 'tvente_servicesController@store');
     Route::get("fetch_vente_services_2", 'tvente_servicesController@fetch_tvente_services_2');
     Route::get("fetch_tvente_services_pointvente", 'tvente_servicesController@fetch_tvente_services_pointvente');

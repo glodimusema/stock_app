@@ -135,8 +135,19 @@
                           <span>Voir Stock des Services</span>
                       </v-tooltip>
 
+                      <v-tooltip top   color="black">
+                          <template v-slot:activator="{ on, attrs }">
+                            <span v-bind="attrs" v-on="on">
+                              <v-btn @click="InnitialiseDataStock(item.id)" fab small
+                                ><v-icon color="primary">mdi-cart-outline</v-icon></v-btn
+                              >
+                            </span>
+                          </template>
+                          <span>Innitialiser le Stock dans ce Service</span>
+                        </v-tooltip>
 
-                      <v-tooltip  top color="black">
+
+                      <!-- <v-tooltip  top color="black">
                           <template v-slot:activator="{ on, attrs }">
                                 <span v-bind="attrs" v-on="on">
                                   <v-btn @click="showStockServiceGazByService(item.id, item.nom_service)" fab small>
@@ -145,7 +156,7 @@
                                 </span>
                           </template>
                           <span>Voir Stock Gaz/Services</span>
-                      </v-tooltip>
+                      </v-tooltip> -->
 
 
 
@@ -235,6 +246,16 @@ export default {
       } else {
         this.titleComponent = "Ajout Unite ";
       }
+    },
+    InnitialiseDataStock(id) {
+      this.confirmMsgStock().then(({ res }) => {
+        this.delGlobal(`${this.apiBaseURL}/insert_data_stock_service/${id}`).then(
+          ({ data }) => {
+            this.successMsg(data.data);
+            this.onPageChange();
+          }
+        );
+      });
     }
     ,
 

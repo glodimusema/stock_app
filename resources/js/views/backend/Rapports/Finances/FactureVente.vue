@@ -394,7 +394,7 @@
                       donnee.designation }}</td>
                   <td class="cs38AECAED" colspan="2"
                     style="width:35px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">
-                    <nobr>{{ donnee.qteVente }}</nobr>
+                    <nobr>{{ donnee.qteVente }} {{ donnee.uniteVente }}</nobr>
                   </td>
                   <td class="cs38AECAED" colspan="3"
                     style="width:78px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">
@@ -585,6 +585,24 @@
                   <td class="csA2F7C04E" colspan="6"
                     style="width:178px;height:22px;line-height:17px;text-align:center;vertical-align:middle;">
                     <nobr>{{ entete.RestePaie }}$</nobr>
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr style="vertical-align:top;">
+                  <td style="width:0px;height:22px;"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>                  
+                  <td class="csEF71EB8E" colspan="6"
+                    style="width:101px;height:22px;line-height:17px;text-align:left;vertical-align:middle;">
+                    <nobr>Taux</nobr>
+                  </td>
+                  <td class="csA2F7C04E" colspan="6"
+                    style="width:178px;height:22px;line-height:17px;text-align:center;vertical-align:middle;">
+                    <nobr>{{ entete.taux }}FC</nobr>
                   </td>
                   <td></td>
                   <td></td>

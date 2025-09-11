@@ -282,7 +282,7 @@ class tvente_detail_venteController extends Controller
         'tvente_detail_vente.created_at','idStockService',
         //Produit
         'tvente_produit.designation','tvente_produit.refCategorie','tvente_produit.refUniteBase',
-        'tvente_produit.pu','tvente_produit.qte','tvente_produit.cmup','tvente_produit.taux',
+        'tvente_produit.pu','tvente_produit.qte','tvente_produit.cmup',
         'tvente_produit.Oldcode','tvente_produit.Newcode','tvente_produit.tvaapplique',
         'tvente_produit.estvendable',
         //client 
@@ -864,7 +864,7 @@ class tvente_detail_venteController extends Controller
 
         $deleteds = DB::table('tvente_detail_vente')->Where('id',$id)->get(); 
         foreach ($deleteds as $deleted) {
-            $qte = $deleted->qteVente;            
+            $qte = floatval($deleted->qteVente) * floatval($deleted->qteBase);            
             $pu = $deleted->puVente;
             $idProduit = $deleted->refProduit;
             $idFacture = $deleted->refEnteteVente;

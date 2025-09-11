@@ -385,15 +385,14 @@ class tvente_entete_venteController extends Controller
         $idDetail=0;
 
         $deleteds = DB::table('tvente_detail_vente')->Where('refEnteteVente',$id)->get(); 
-        foreach ($deleteds as $deleted) {
+        foreach ($deleteds as $deleted) {            
             $idDetail = $deleted->id;
-            $qte = $deleted->qteVente;            
+            $qte = floatval($deleted->qteVente) * floatval($deleted->qteBase);            
             $pu = $deleted->puVente;
             $idProduit = $deleted->refProduit;
             $montantreduction = $deleted->montantreduction;
             $montanttva = $deleted->montanttva;   
             $idStockService = $deleted->idStockService;
-
    
             $data2 = DB::update(
                 'update tvente_stock_service set qte = qte + :qteVente where refProduit = :id',

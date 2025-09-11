@@ -620,7 +620,7 @@ class tvente_detail_utilisationController extends Controller
 
         $deleteds = DB::table('tvente_detail_utilisation')->Where('id',$id)->get(); 
         foreach ($deleteds as $deleted) {
-            $qte = $deleted->qteVente;            
+            $qte = floatval($deleted->qteVente) * floatval($deleted->qteBase);         
             $pu = $deleted->puVente;
             $idProduit = $deleted->refProduit;
             $idFacture = $deleted->refEnteteVente;

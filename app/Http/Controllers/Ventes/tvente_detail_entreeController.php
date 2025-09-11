@@ -747,7 +747,8 @@ class tvente_detail_entreeController extends Controller
 
         $deleteds = DB::table('tvente_detail_entree')->Where('id',$id)->first(); 
         if ($deleteds) {
-            $qte = $deleteds->qteEntree;            
+            
+            $qte = floatval($deleteds->qteEntree) * floatval($deleteds->qteBase);            
             $pu = $deleteds->puEntree;
             $idProduit = $deleteds->refProduit;
             $idFacture = $deleteds->refEnteteEntree;

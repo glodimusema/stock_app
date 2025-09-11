@@ -165,11 +165,13 @@ class tvente_entete_entreeController extends Controller
         $idStockService=0;
         $idDetail = 0;
 
+        //qteBase
+
         $deleteds = DB::table('tvente_detail_entree')->Where('refEnteteEntree',$id)->get(); 
 
         foreach ($deleteds as $deleted) {
 
-            $qte = $deleted->qteEntree;            
+            $qte = floatval($deleted->qteEntree) * floatval($deleted->qteBase);            
             $pu = $deleted->puEntree;
             $idProduit = $deleted->refProduit;
             $idFacture = $deleted->refEnteteEntree;

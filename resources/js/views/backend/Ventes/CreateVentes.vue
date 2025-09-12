@@ -221,11 +221,11 @@
             <table>
                 <tr>
                     <td>
-                        <div style="text-align: right; margin-top: 20px;"> <v-btn @click="validate" color="success">Enregistrer</v-btn></div>
+                        <div style="text-align: right; margin-top: 20px;"> <v-btn @click="validate" color="success" :loading="loadings":disabled="loadings">Enregistrer</v-btn></div>
                         <v-progress-linear v-if="loadings" :value="progress" indeterminate color="green"></v-progress-linear>
                     </td>
                     <td>
-                        <div style="text-align: right; margin-top: 20px;"> <v-btn @click="validate2" color="success">Payer Cash</v-btn></div>  
+                        <div style="text-align: right; margin-top: 20px;"> <v-btn @click="validate2" color="success" :loading="loadings":disabled="loadings">Payer Cash</v-btn></div>  
                         <v-progress-linear v-if="loadings" :value="progress" indeterminate color="green"></v-progress-linear>                     
                     </td>
                 </tr>
@@ -433,7 +433,7 @@ export default {
                 devise: "",
                 serveur_id : 0,
                 table_id : 0,
-                etat_facture : "",
+                etat_facture : 'Cash',
  
                 refReservation:0,
 
@@ -621,115 +621,225 @@ export default {
             }];
             this.$refs.form.reset(); // Reset the form validation state            
             this.fetchListTVA();
-        },
+            //insert_vente_globale_vente
+            //insert_vente_globale_vente_cash
+        },        
         validate() {
+            try {
+                if (this.loadings) return; // 👈 sécurité supplémentaire
 
-
-            try
-            {
                 this.loadings = true;
                 this.progress = 0;
 
-                // Simuler un processus d'enregistrement
                 if (this.$refs.form.validate()) {
+
                 this.isLoading(true);
                 this.svData.author = this.userData.name;
-                    this.svData.refUser = this.userData.id;
-                    this.svData.serveur_id = 1;
-                    this.svData.table_id = 1;
-                    this.insertOrUpdate(
+                this.svData.refUser = this.userData.id;
+                this.svData.serveur_id = 1;
+                this.svData.table_id = 1;
+
+                this.insertOrUpdate(
                     `${this.apiBaseURL}/insert_vente_globale_vente`,
                     JSON.stringify(this.svData)
-                    )
+                )
                     .then(({ data }) => {
-                        this.showMsg(data.data);
-                        this.isLoading(false);
-                        this.edit = false;
-                        this.dialog = false;
-                        this.resetObj(this.svData);
-                        this.fetchDataList();
-                        this.resetForm();
-                        this.svData.libelle="Ventes des Produits";
+                    this.showMsg(data.data);
+                    this.isLoading(false);
+                    this.edit = false;
+                    this.dialog = false;
+                    this.resetObj(this.svData);
+                    this.fetchDataList();
+                    this.resetForm();
+                    this.svData.libelle = "Ventes des Produits";
                     })
                     .catch((err) => {
-                        this.svErr(), this.isLoading(false);
+                    this.svErr();
+                    this.isLoading(false);
+                    })
+                    .finally(() => {
+                    // 👇 Empêche le bouton de rester bloqué
+                    this.loadings = false;
                     });
-        
+                } else {
+                this.loadings = false;
                 }
-                //fin processus
+
+                // Gestion de la barre de progression
                 const interval = setInterval(() => {
-                    if (this.progress < 100) {
-                    this.progress += 10; // Augmentez la progression
-                    } else {
+                if (this.progress < 100) {
+                    this.progress += 10;
+                } else {
                     clearInterval(interval);
-                    this.loadings = false; // Arrêtez le chargement lorsque terminé
-                    this.progress = 0; // Réinitialisez la progression si nécessaire
-                    }
-                }, 100); // Ajustez le délai selon vos besoins
-
+                    this.progress = 0;
+                }
+                }, 100);
+            } catch (error) {
+                console.error("Erreur lors de l'enregistrement:", error);
+                this.loadings = false;
             }
-            catch (error) {
-                // Bloc 5 : Gestion des erreurs
-                console.error(`Erreur lors de enregistrement:,`);
-                this.loadings = false; // Arrêtez le chargement en cas d'erreur
-            }
-
-
-
-        },
+        },        
         validate2() {
+            try {
+                if (this.loadings) return; // 👈 sécurité supplémentaire
 
-            try
-            {
                 this.loadings = true;
                 this.progress = 0;
 
-                // Simuler un processus d'enregistrement
                 if (this.$refs.form.validate()) {
-                    this.isLoading(true);
-                    this.svData.author = this.userData.name;
-                        this.svData.refUser = this.userData.id;
-                        this.svData.serveur_id = 1;
-                        this.svData.table_id = 1;
-                        this.insertOrUpdate(
-                        `${this.apiBaseURL}/insert_vente_globale_vente_cash`,
-                        JSON.stringify(this.svData)
-                        )
-                        .then(({ data }) => {
-                            this.showMsg(data.data);
-                            this.isLoading(false);
-                            this.edit = false;
-                            this.dialog = false;
-                            this.resetObj(this.svData);
-                            this.fetchDataList();
-                            this.resetForm();
-                        })
-                        .catch((err) => {
-                            this.svErr(), this.isLoading(false);
-                        });
-            
+
+                this.isLoading(true);
+                this.svData.author = this.userData.name;
+                this.svData.refUser = this.userData.id;
+                this.svData.serveur_id = 1;
+                this.svData.table_id = 1;
+
+                this.insertOrUpdate(
+                    `${this.apiBaseURL}/insert_vente_globale_vente_cash`,
+                    JSON.stringify(this.svData)
+                )
+                    .then(({ data }) => {
+                    this.showMsg(data.data);
+                    this.isLoading(false);
+                    this.edit = false;
+                    this.dialog = false;
+                    this.resetObj(this.svData);
+                    this.fetchDataList();
+                    this.resetForm();
+                    this.svData.libelle = "Ventes des Produits";
+                    })
+                    .catch((err) => {
+                    this.svErr();
+                    this.isLoading(false);
+                    })
+                    .finally(() => {
+                    // 👇 Empêche le bouton de rester bloqué
+                    this.loadings = false;
+                    });
+                } else {
+                this.loadings = false;
                 }
-                //fin processus
+
+                // Gestion de la barre de progression
                 const interval = setInterval(() => {
-                    if (this.progress < 100) {
-                    this.progress += 10; // Augmentez la progression
-                    } else {
+                if (this.progress < 100) {
+                    this.progress += 10;
+                } else {
                     clearInterval(interval);
-                    this.loadings = false; // Arrêtez le chargement lorsque terminé
-                    this.progress = 0; // Réinitialisez la progression si nécessaire
-                    }
-                }, 100); // Ajustez le délai selon vos besoins
-
+                    this.progress = 0;
+                }
+                }, 100);
+            } catch (error) {
+                console.error("Erreur lors de l'enregistrement:", error);
+                this.loadings = false;
             }
-            catch (error) {
-                // Bloc 5 : Gestion des erreurs
-                console.error(`Erreur lors de enregistrement:,`);
-                this.loadings = false; // Arrêtez le chargement en cas d'erreur
-            }
-
-
-
         },
+        // validate() {
+        //     try
+        //     {
+        //         this.loadings = true;
+        //         this.progress = 0;
+
+        //         // Simuler un processus d'enregistrement
+        //         if (this.$refs.form.validate()) {
+        //         this.isLoading(true);
+        //         this.svData.author = this.userData.name;
+        //             this.svData.refUser = this.userData.id;
+        //             this.svData.serveur_id = 1;
+        //             this.svData.table_id = 1;
+        //             this.insertOrUpdate(
+        //             `${this.apiBaseURL}/insert_vente_globale_vente`,
+        //             JSON.stringify(this.svData)
+        //             )
+        //             .then(({ data }) => {
+        //                 this.showMsg(data.data);
+        //                 this.isLoading(false);
+        //                 this.edit = false;
+        //                 this.dialog = false;
+        //                 this.resetObj(this.svData);
+        //                 this.fetchDataList();
+        //                 this.resetForm();
+        //                 this.svData.libelle="Ventes des Produits";
+        //             })
+        //             .catch((err) => {
+        //                 this.svErr(), this.isLoading(false);
+        //             });
+        
+        //         }
+        //         //fin processus
+        //         const interval = setInterval(() => {
+        //             if (this.progress < 100) {
+        //             this.progress += 10; // Augmentez la progression
+        //             } else {
+        //             clearInterval(interval);
+        //             this.loadings = false; // Arrêtez le chargement lorsque terminé
+        //             this.progress = 0; // Réinitialisez la progression si nécessaire
+        //             }
+        //         }, 100); // Ajustez le délai selon vos besoins
+
+        //     }
+        //     catch (error) {
+        //         // Bloc 5 : Gestion des erreurs
+        //         console.error(`Erreur lors de enregistrement:,`);
+        //         this.loadings = false; // Arrêtez le chargement en cas d'erreur
+        //     }
+
+
+
+        // },
+        // validate2() {
+
+        //     try
+        //     {
+        //         this.loadings = true;
+        //         this.progress = 0;
+
+        //         // Simuler un processus d'enregistrement
+        //         if (this.$refs.form.validate()) {
+        //             this.isLoading(true);
+        //             this.svData.author = this.userData.name;
+        //                 this.svData.refUser = this.userData.id;
+        //                 this.svData.serveur_id = 1;
+        //                 this.svData.table_id = 1;
+        //                 this.insertOrUpdate(
+        //                 `${this.apiBaseURL}/insert_vente_globale_vente_cash`,
+        //                 JSON.stringify(this.svData)
+        //                 )
+        //                 .then(({ data }) => {
+        //                     this.showMsg(data.data);
+        //                     this.isLoading(false);
+        //                     this.edit = false;
+        //                     this.dialog = false;
+        //                     this.resetObj(this.svData);
+        //                     this.fetchDataList();
+        //                     this.resetForm();
+        //                 })
+        //                 .catch((err) => {
+        //                     this.svErr(), this.isLoading(false);
+        //                 });
+            
+        //         }
+        //         //fin processus
+        //         const interval = setInterval(() => {
+        //             if (this.progress < 100) {
+        //             this.progress += 10; // Augmentez la progression
+        //             } else {
+        //             clearInterval(interval);
+        //             this.loadings = false; // Arrêtez le chargement lorsque terminé
+        //             this.progress = 0; // Réinitialisez la progression si nécessaire
+        //             }
+        //         }, 100); // Ajustez le délai selon vos besoins
+
+        //     }
+        //     catch (error) {
+        //         // Bloc 5 : Gestion des erreurs
+        //         console.error(`Erreur lors de enregistrement:,`);
+        //         this.loadings = false; // Arrêtez le chargement en cas d'erreur
+        //     }
+
+
+
+        // },
         fetchDataList() {
         this.fetch_data(`${this.apiBaseURL}/fetch_vente_entete_vente_encours?page=`);
         },
@@ -773,6 +883,10 @@ export default {
                 ({ data }) => {
                     var donnees = data.data;
                     this.deviseList = donnees;
+                     // Sélection par défaut : premiere devise si rien n’est déjà choisi
+                    if (!this.svData.devise && donnees.length > 0) {
+                        this.svData.devise = donnees[0].designation;
+                    }
                 }
             );
         },

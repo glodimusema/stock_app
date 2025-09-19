@@ -71,8 +71,7 @@ class tvente_detail_cuisineController extends Controller
             $data->where('noms', 'like', '%'.$query.'%')          
             ->orderBy("tvente_detail_cuisine.created_at", "asc");
 
-            return $this->apiData($data->paginate(10));
-           
+            return $this->apiData($data->paginate(10));           
 
         }
         $data->orderBy("tvente_detail_cuisine.created_at", "desc");

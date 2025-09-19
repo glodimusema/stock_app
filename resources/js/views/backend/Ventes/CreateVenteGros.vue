@@ -439,6 +439,8 @@ export default {
                 serveur_id : 0,
                 table_id : 0,
                 etat_facture : 'Cash',
+
+                stat_qte : 0,
  
                 refReservation:0,
 
@@ -558,6 +560,15 @@ export default {
                         {
                             this.showError("La quantité demandée est supérieur à la quantité disponible en stock !!!!");
                             this.svData.detailData[index].qteVente = 0;
+                            this.svData.detailData[index].puVente = 0;
+                            this.svData.detailData[index].qteDisponible = 0;
+                            this.svData.detailData[index].montantreduction = 0;
+                            this.svData.detailData[index].pt = 0;
+                            this.svData.detailData[index].tva = 0;
+                            this.svData.detailData[index].montant_tva = 0;
+                            this.svData.detailData[index].idStockService = 0;
+                            this.svData.detailData[index].nom_unite = '';
+
                         }
 
                        

@@ -545,8 +545,8 @@ function showDetailVente($date1, $date2)
     // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
     // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
     'priseencharge')
-   ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-   ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+   ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+   ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
    ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
    ->selectRaw('ROUND((montanttva),2) as TotalTVA')
    ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -1141,8 +1141,8 @@ function showDetailVente_Categorie($date1,$date2,$refCategorie)
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -1726,8 +1726,8 @@ function showDetailVente_EtatfactureService($date1,$date2,$etat_facture,$idServi
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -2271,8 +2271,8 @@ function showDetailVente_Etatfacture($date1,$date2,$etat_facture)
         'nom_service', "tvente_module.nom_module",'tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','reduction','totaltva',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -2863,8 +2863,8 @@ function showDetailVente_Service($date1,$date2,$idService)
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -3416,8 +3416,8 @@ function showDetailUsage_Service($date1,$date2,$idService)
         'nom_service', "tvente_module.nom_module",'tvente_entete_utilisation.code','refService',
         'module_id','dateUse','libelle', 
         'type_sortie')
-        ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
         ->selectRaw('CONCAT("S",YEAR(dateUse),"",MONTH(dateUse),"00",refEnteteVente) as codeFacture')
@@ -3963,8 +3963,8 @@ function showDetailCuisine_Service($date1,$date2,$idService)
 
         'nom_service', "tvente_module.nom_module",'tvente_entete_cuisine.code','refClient','refService','refReservation',
         'module_id','dateVente','libelle','priseencharge')
-        ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as montanttva')
         ->selectRaw('CONCAT("S",YEAR(dateVente),"",MONTH(dateVente),"00",refEnteteVente) as codeFacture')
@@ -4512,8 +4512,8 @@ function showDetailUsage_Service_Type($date1,$date2,$idService,$type_sortie)
         'nom_service', "tvente_module.nom_module",'tvente_entete_utilisation.code','refService',
         'module_id','dateUse','libelle', 
         'type_sortie')
-        ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
         ->selectRaw('CONCAT("S",YEAR(dateUse),"",MONTH(dateUse),"00",refEnteteVente) as codeFacture')
@@ -5108,8 +5108,8 @@ function showDetailVente_Service_Categorie($date1,$date2,$idService,$idCategorie
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -5712,8 +5712,8 @@ function showDetailVente_Produit($date1, $date2,$refProduit)
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -9832,8 +9832,8 @@ function showDetailVenteDette($date1, $date2)
     // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
     // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
     'priseencharge')
-   ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-   ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+   ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+   ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
    ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
    ->selectRaw('ROUND((montanttva),2) as TotalTVA')
    ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -14395,8 +14395,8 @@ function showDetailVente_Service_Produit($date1,$date2,$idService,$idProduit)
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')
@@ -14950,8 +14950,8 @@ function showDetailUsage_Service_Produit($date1,$date2,$idService,$idProduit)
         'nom_service', "tvente_module.nom_module",'tvente_entete_utilisation.code','refService',
         'module_id','dateUse','libelle', 
         'type_sortie')
-        ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
         ->selectRaw('CONCAT("S",YEAR(dateUse),"",MONTH(dateUse),"00",refEnteteVente) as codeFacture')
@@ -15500,8 +15500,8 @@ function showDetailUsage_Service_Categorie($date1,$date2,$idService,$idCategorie
         'nom_service', "tvente_module.nom_module",'tvente_entete_utilisation.code','refService',
         'module_id','dateUse','libelle', 
         'type_sortie')
-        ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
         ->selectRaw('CONCAT("S",YEAR(dateUse),"",MONTH(dateUse),"00",refEnteteVente) as codeFacture')
@@ -27504,8 +27504,8 @@ function pdf_detail_vente_service_excel(Request $request)
         // ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTVA')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
        ->selectRaw('ROUND((((IFNULL(montant,0)) - montantreduction)+(montanttva)),2) as PTTTC')

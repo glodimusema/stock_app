@@ -542,7 +542,7 @@ export default {
 
         async updateTVA(index)
             {
-                try {
+                try { 
                     // Fetch the unit detail for the specified reference
                     const response = await this.editOrFetch(`${this.apiBaseURL}/fetch_single_vente_tva/${this.svData.detailData[index].id_tva}`);
                     // Extract data from the response

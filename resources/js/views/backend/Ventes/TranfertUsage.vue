@@ -63,7 +63,7 @@
                         </td>
                         <td class="medium-cell">
                             <v-text-field v-model="item.qteTransfert" type="number" label="Qté" :rules="[rules.required]"
-                                required></v-text-field>
+                                required @change="updateUnite(index)"></v-text-field>
                         </td>
                     
                         <td>
@@ -157,13 +157,14 @@ export default {
     methods: {
         addItem() {
             this.svData.detailData.push({
-                refProduit: 0,                
+                refProduit: 0,
                 puTransfert: 0,
                 qteTransfert: 0,
                 uniteTransfert : "", 
                 qteDisponible:0,
                 refUnite :0,
                 refDetailUnite : 0,
+                idStockService : 0,
                 uniteList: []
             });
 
@@ -287,10 +288,29 @@ export default {
                     const donnees = response.data.data;
                     // Assuming you want to get the first item
                     if (donnees.length > 0) {
-                        // this.svData.detailData[index].puEntree = donnees[0].puUnite; // Update price per unit
-                        this.svData.detailData[index].qteDisponible = donnees[0].Qtedispo; // Update available quantity
-                        this.svData.detailData[index].refProduit = donnees[0].refProduit;
-                    } else {
+                        if(this.svData.detailData[index].qteTransfert <= this.svData.detailData[index].qteDisponible)
+                        {
+                            // this.svData.detailData[index].puEntree = donnees[0].puUnite; // Update price per unit
+                            this.svData.detailData[index].qteDisponible = donnees[0].Qtedispo; // Update available quantity
+                            this.svData.detailData[index].refProduit = donnees[0].refProduit;
+                        }
+                        else
+                        { 
+                            this.showError("La quantité demandée est supérieur à la quantité disponible en stock !!!!");
+                                                      
+                            this.svData.detailData[index].refProduit= 0;
+                            this.svData.detailData[index].puTransfert= 0;
+                            this.svData.detailData[index].qteTransfert= 0;
+                            this.svData.detailData[index].uniteTransfert = ""; 
+                            this.svData.detailData[index].qteDisponible=0;
+                            this.svData.detailData[index].refUnite =0;
+                            this.svData.detailData[index].refDetailUnite = 0;
+                            this.svData.detailData[index].idStockService = 0;                            
+                            this.svData.detailData[index].uniteList= [];
+                        }
+                        
+                    }
+                     else {
                         console.warn('No data found for the specified unit.');
                     }
                 } catch (error) {

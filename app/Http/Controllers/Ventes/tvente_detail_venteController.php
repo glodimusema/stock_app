@@ -84,11 +84,11 @@ class tvente_detail_venteController extends Controller
         ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage','priseencharge'
        )
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTTC')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTTC')
        ->selectRaw('ROUND(montanttva,2) as montanttva')
-       ->selectRaw('((qteVente*puVente)/tvente_detail_vente.taux) as PTVenteFC')
-       ->selectRaw('(qteBase*puBase) as PTBase')
+       ->selectRaw('((qteVente * (puVente - montantreduction))/tvente_detail_vente.taux) as PTVenteFC')
+       ->selectRaw('(qteBase * puBase) as PTBase')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
        ->selectRaw('IFNULL(paie,0) as totalPaie')
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie');
@@ -162,11 +162,11 @@ class tvente_detail_venteController extends Controller
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge'
        )
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTTC')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTTC')
        ->selectRaw('ROUND(montanttva,2) as montanttva')
-       ->selectRaw('((qteVente*puVente)/tvente_detail_vente.taux) as PTVenteFC')
-       ->selectRaw('(qteBase*puBase) as PTBase')
+       ->selectRaw('((qteVente * (puVente - montantreduction))/tvente_detail_vente.taux) as PTVenteFC')
+       ->selectRaw('(qteBase * puBase) as PTBase')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
        ->selectRaw('IFNULL(paie,0) as totalPaie')
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
@@ -236,11 +236,11 @@ class tvente_detail_venteController extends Controller
         ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage','priseencharge'
        )
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTTC')
+       ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTTC')
        ->selectRaw('ROUND(montanttva,2) as montanttva')
-       ->selectRaw('((qteVente*puVente)/tvente_detail_vente.taux) as PTVenteFC')
-       ->selectRaw('(qteBase*puBase) as PTBase')
+       ->selectRaw('((qteVente * (puVente - montantreduction))/tvente_detail_vente.taux) as PTVenteFC')
+       ->selectRaw('(qteBase * puBase) as PTBase')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
        ->selectRaw('IFNULL(paie,0) as totalPaie')
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
@@ -305,11 +305,11 @@ class tvente_detail_venteController extends Controller
         'compteproduit.numero_ssouscompte as numero_ssouscompteProduit'
         ,'comptedestockage.refSousCompte as refSousCompteDestockage','comptedestockage.nom_ssouscompte as nom_ssouscompteDestockage',
         'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage','priseencharge')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction))),2) as PTVente')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) - IFNULL(reduction,0)),0),2) as totalFacture')
        ->selectRaw('ROUND((totaltva),2) as TotalTVA')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as PTTTC')
-       ->selectRaw('((qteVente*puVente)/tvente_detail_vente.taux) as PTVenteFC')
+       ->selectRaw('((qteVente * (puVente - montantreduction))/tvente_detail_vente.taux) as PTVenteFC')
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
        ->selectRaw("DATE_FORMAT(date_paie_current,'%d/%M/%Y') as date_paie_current")
        ->selectRaw('(qteBase*puBase) as PTBase')
@@ -386,11 +386,11 @@ class tvente_detail_venteController extends Controller
        ->selectRaw('TIMESTAMPDIFF(DAY, date_entree, date_sortie) as NombreJour')
        ->selectRaw('(IFNULL((((TIMESTAMPDIFF(DAY, date_entree, date_sortie))*(prix_unitaire))-thotel_reservation_chambre.reduction),0)-IFNULL(totalPaie,0)) as RestePaieChambre')
        ->selectRaw('IFNULL((((TIMESTAMPDIFF(DAY, date_entree, date_sortie))*(prix_unitaire))-thotel_reservation_chambre.reduction),0) as totalFactureChambre')
-       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente * (puVente - montantreduction))),2) as PTVente')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) - IFNULL(tvente_entete_vente.reduction,0)),0),2) as totalFacture')
        ->selectRaw('ROUND((totaltva),2) as TotalTVA')
        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(tvente_entete_vente.reduction,0)),0),2) as PTTTC')
-       ->selectRaw('((qteVente*puVente)/tvente_detail_vente.taux) as PTVenteFC')
+       ->selectRaw('((qteVente * (puVente - montantreduction))/tvente_detail_vente.taux) as PTVenteFC')
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(tvente_entete_vente.reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
        ->selectRaw("DATE_FORMAT(date_paie_current,'%d/%M/%Y') as date_paie_current")
        ->selectRaw("DATE_FORMAT(date_entree,'%d/%M/%Y') as date_entree")
@@ -2268,14 +2268,6 @@ class tvente_detail_venteController extends Controller
             'data'  =>  "Modification  avec succès!!!",
         ]); 
     }
- 
-
-
-
-
-
-
-
 
 
 }

@@ -288,7 +288,7 @@ class tvente_detail_venteController extends Controller
         //client 
         'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         "tvente_categorie_client.designation as CategorieClient","compte_client",'compteclient.refSousCompte',
         'compteclient.nom_ssouscompte','compteclient.numero_ssouscompte',
         //ente vente

@@ -47,7 +47,7 @@ class tagentController extends Controller
             'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
             "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
             "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-            "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
+            "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
             ->selectRaw('TIMESTAMPDIFF(YEAR, datenaissance_agent, CURDATE()) as age_agent')
             ->where('noms_agent', 'like', '%'.$query.'%')               
             ->orWhere('Categorie_agent', 'like', '%'.$query.'%')
@@ -79,7 +79,7 @@ class tagentController extends Controller
             'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
             "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
             "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-            "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
+            "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
             ->selectRaw('TIMESTAMPDIFF(YEAR, datenaissance_agent, CURDATE()) as age_agent')
             ->orderBy("tagent.noms_agent", "asc")
             ->paginate(80);
@@ -112,7 +112,7 @@ class tagentController extends Controller
             'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
             "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
             "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-            "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie",
+            "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie",
             'refCompte','codeSecret','ttaxe_categorie.designation as categorietaxe','prix_categorie')
             ->where([               
                 ['mail_agent','=', $request->mail],
@@ -149,7 +149,7 @@ class tagentController extends Controller
         'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
         "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
         "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-        "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
+        "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
         ->selectRaw('TIMESTAMPDIFF(YEAR, datenaissance_agent, CURDATE()) as age_agent')
         ->where([
             ['tagent.id', $id]
@@ -178,7 +178,7 @@ class tagentController extends Controller
         'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
         "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
         "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-        "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
+        "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
         ->selectRaw('TIMESTAMPDIFF(YEAR, datenaissance_agent, CURDATE()) as age_agent')
         ->orderBy("noms_agent", "asc")
         ->get();
@@ -231,7 +231,8 @@ class tagentController extends Controller
                 'Collectivite_agent'  =>  $formData->Collectivite_agent,
                 'Territoire_agent'  =>  $formData->Territoire_agent,
                 'EmployeurAnt_agent'  =>  $formData->EmployeurAnt_agent,
-                'PersRef_agent'  =>  $formData->PersRef_agent, 
+                'PersRef_agent'  =>  $formData->PersRef_agent,
+                'codeSecret'  =>  $formData->codeSecret,
                 'photo'         =>  $imageName,
                 'slug'          =>  $slug,
                 'cartes'          =>  'NON',
@@ -276,7 +277,8 @@ class tagentController extends Controller
                 'Collectivite_agent'  =>  $formData->Collectivite_agent,
                 'Territoire_agent'  =>  $formData->Territoire_agent,
                 'EmployeurAnt_agent'  =>  $formData->EmployeurAnt_agent,
-                'PersRef_agent'  =>  $formData->PersRef_agent,            
+                'PersRef_agent'  =>  $formData->PersRef_agent,    
+                'codeSecret'  =>  $formData->codeSecret,        
                 'photo'         =>  'avatar.png',
                 'slug'          =>  $slug,
                 'cartes'          =>  'NON',
@@ -329,7 +331,8 @@ class tagentController extends Controller
                 'Collectivite_agent'  =>  $formData->Collectivite_agent,
                 'Territoire_agent'  =>  $formData->Territoire_agent,
                 'EmployeurAnt_agent'  =>  $formData->EmployeurAnt_agent,
-                'PersRef_agent'  =>  $formData->PersRef_agent,            
+                'PersRef_agent'  =>  $formData->PersRef_agent, 
+                'codeSecret'  =>  $formData->codeSecret,           
                 'photo'         =>  $imageName,
                 'slug'          =>  $slug,
                 'cartes'          =>  $formData->cartes,
@@ -372,7 +375,8 @@ class tagentController extends Controller
                 'Collectivite_agent'  =>  $formData->Collectivite_agent,
                 'Territoire_agent'  =>  $formData->Territoire_agent,
                 'EmployeurAnt_agent'  =>  $formData->EmployeurAnt_agent,
-                'PersRef_agent'  =>  $formData->PersRef_agent,          
+                'PersRef_agent'  =>  $formData->PersRef_agent,     
+                'codeSecret'  =>  $formData->codeSecret,     
                 'photo'         =>  'avatar.png',
                 'slug'          =>  $slug,
                 'cartes'          =>  $formData->cartes,
@@ -428,7 +432,7 @@ class tagentController extends Controller
         "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier",
         "communes.idVille",
         "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
-        "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
+        "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie")
         ->selectRaw('TIMESTAMPDIFF(YEAR, datenaissance_agent, CURDATE()) as age_agent')
         ->where('tagent.id', $id)->get();
 

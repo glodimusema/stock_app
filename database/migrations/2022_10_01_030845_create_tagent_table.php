@@ -40,7 +40,8 @@ class CreateTagentTable extends Migration
             $table->string('Collectivite_agent');
             $table->string('Territoire_agent');
             $table->string('EmployeurAnt_agent');
-            $table->string('PersRef_agent');            
+            $table->string('PersRef_agent');
+            $table->string('codeSecret')->default('12345'); 
             $table->string('photo'); 
             $table->string('slug'); 
             $table->string('cartes')->default('NON');

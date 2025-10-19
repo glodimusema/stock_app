@@ -711,6 +711,40 @@
                   <td></td>
                   <td></td>
                 </tr>
+                <tr style="vertical-align:top;">
+                  <td style="width:0px;height:92px;"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="cs101A94F7" colspan="6" style="width:126px;height:92px;text-align:left;vertical-align:top;">
+                     <div>
+                        <div style="text-align:center; margin-top:10px;">
+                          <div v-if="qrCodeData">
+                            <img :src="qrCodeData" alt="QR Code" style="width:150px;height:150px;" />
+                          </div>
+                          <div v-else>
+                            <qrcode-vue
+                              ref="qrcode"
+                              :value="svData.id.toString()"
+                              :size="150"
+                              :level="'H'"
+                              render-as="canvas"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
               </table>
 
 
@@ -736,10 +770,12 @@
     
     
     
-    </template>
+</template>
     <script>
     import { mapGetters, mapActions } from "vuex";
+    import QrcodeVue from 'qrcode.vue';
     export default {
+      components: { QrcodeVue },
       data() {
         return {
     //
@@ -758,7 +794,8 @@
           bobo: "corneille",
           test: {},
           entete: {},
-          donneesvente: {},
+          donneesvente: [],
+          qrCodeData: '',
           svData: {
             id : 0,
             nombre_print :0,
@@ -786,7 +823,7 @@
     showModel(id) {
 
       let donnees = {}
-      let _donneesvente = {}
+      let _donneesvente = []
 
 
 
@@ -844,14 +881,35 @@
         );
       }
 
+      // générer QR code avec le numéro de facture
+      this.svData.id = id; // on met à jour svData.id avant le QR
+      this.generateQrCode();
+
       
 
+    },
+
+    async generateQrCode() {
+      try {
+        // on récupère le canvas généré par le composant QrcodeVue
+        const canvas = this.$refs.qrcode && this.$refs.qrcode.$el.querySelector('canvas')
+        if (canvas) {
+          const dataUrl = canvas.toDataURL('image/png')
+          this.qrCodeData = dataUrl
+        } else {
+          console.warn('Canvas du QR non trouvé (peut-être pas encore rendu)')
+        }
+      } catch (err) {
+        console.error("Erreur génération QR code :", err)
+      }
     },
     async printBill() {       
       //  await this.$htmlToPaper('printMe');
 
        this.svData.id = this.refEnteteSortie;
        this.svData.nombre_print ++;
+
+          await this.generateQrCode();
 
           this.insertOrUpdate(
             `${this.apiBaseURL}/update_nombre_print/${this.svData.id}`,
@@ -861,7 +919,10 @@
               //this.showMsg(data.data);
               this.isLoading(false);
               this.resetObj(this.svData);
-              this.$htmlToPaper('printMe');
+               // Petite pause pour laisser Vue re-render l’image base64
+                setTimeout(() => {
+                  this.$htmlToPaper('printMe')
+                }, 500)
             })
             .catch((err) => {
               this.svErr(), this.isLoading(false);
@@ -869,6 +930,15 @@
     }      
     
     
+      },
+      mounted() {
+        // Créer QR code en Data URL
+        // const canvas = document.createElement('canvas')
+        // const qrcode = new QrcodeVue({
+        //   propsData: { value: this.refEnteteSortie, size: 200 }
+        // })
+        // qrcode.$mount(canvas)
+        // this.qrCodeData = canvas.querySelector('canvas').toDataURL()
       },
       filters: {
     

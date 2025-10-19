@@ -27,7 +27,7 @@
         "sass": "~1.32",
         "sass-loader": "^8.0.2",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^31.1.0",
@@ -41,6 +41,7 @@
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.3",
         "pusher-js": "^7.0.6",
+        "qrcode.vue": "^1.7.0",
         "register-service-worker": "^1.7.2",
         "socket.io": "^4.4.1",
         "socket.io-client": "^4.4.1",

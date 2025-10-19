@@ -45,7 +45,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
         
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -95,7 +95,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
         
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -147,7 +147,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
         
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -197,7 +197,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
         
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -250,7 +250,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
         
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -267,6 +267,154 @@ class tvente_entete_venteController extends Controller
         ->selectRaw('IFNULL(paie,0) as totalPaie')
         ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
         ->where('tvente_entete_vente.id', $id)
+        ->get();
+
+        return response()->json([
+            'data'  => $data,
+        ]);
+    }
+
+    function fetch_vente_by_idVente()
+    {
+        if (($request->get('id_vente'))) 
+        {
+            $current = Carbon::now(); 
+            $formattedDate = $current->format('Y-m-d');
+
+            $data = DB::table('tvente_entete_vente')
+            ->join('tvente_module','tvente_module.id','=','tvente_entete_vente.module_id')
+            ->join('tvente_services','tvente_services.id','=','tvente_entete_vente.refService')
+            ->join('tvente_client','tvente_client.id','=','tvente_entete_vente.refClient')
+            ->join('tvente_categorie_client','tvente_categorie_client.id','=','tvente_client.refCategieClient')  
+            ->join('tfin_ssouscompte','tfin_ssouscompte.id','=','tvente_categorie_client.compte_client')
+            ->join('tfin_souscompte','tfin_souscompte.id','=','tfin_ssouscompte.refSousCompte')
+            ->join('tfin_compte','tfin_compte.id','=','tfin_souscompte.refCompte')
+            ->join('tfin_classe','tfin_classe.id','=','tfin_compte.refClasse')
+            ->join('tfin_typecompte','tfin_typecompte.id','=','tfin_compte.refTypecompte')
+            ->join('tfin_typeposition','tfin_typeposition.id','=','tfin_compte.refPosition')
+            ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
+            'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
+            'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
+            'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
+            
+            ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
+
+            ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
+            'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
+            'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+            'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
+            "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
+            'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
+            'nom_classe','numero_classe','nom_typeposition',"nom_typecompte"        
+            )
+            ->selectRaw('CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture')
+            ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
+            ->selectRaw('IFNULL(paie,0) as totalPaie')
+            ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
+            ->where([
+                ['tvente_entete_vente.id', $request->get('id_vente')]
+            ])
+            ->get();
+
+            return response()->json([
+                'data'  => $data,
+            ]);
+        }
+        else
+        {
+            
+        }
+
+        
+    }
+
+
+    function fetch_vente_by_serveur($id_serveur)
+    {
+        
+        $current = Carbon::now(); 
+        $formattedDate = $current->format('Y-m-d');
+
+        $data = DB::table('tvente_entete_vente')
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_vente.module_id')
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_vente.refService')
+        ->join('tvente_client','tvente_client.id','=','tvente_entete_vente.refClient')
+        ->join('tvente_categorie_client','tvente_categorie_client.id','=','tvente_client.refCategieClient')  
+        ->join('tfin_ssouscompte','tfin_ssouscompte.id','=','tvente_categorie_client.compte_client')
+        ->join('tfin_souscompte','tfin_souscompte.id','=','tfin_ssouscompte.refSousCompte')
+        ->join('tfin_compte','tfin_compte.id','=','tfin_souscompte.refCompte')
+        ->join('tfin_classe','tfin_classe.id','=','tfin_compte.refClasse')
+        ->join('tfin_typecompte','tfin_typecompte.id','=','tfin_compte.refTypecompte')
+        ->join('tfin_typeposition','tfin_typeposition.id','=','tfin_compte.refPosition')
+        ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
+        'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
+        'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
+        
+        ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
+
+        ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
+        'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
+        "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
+        'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
+        'nom_classe','numero_classe','nom_typeposition',"nom_typecompte"        
+        )
+        ->selectRaw('CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture')
+        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
+        ->selectRaw('IFNULL(paie,0) as totalPaie')
+        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
+        ->where([
+            ['tvente_entete_vente.serveur_id', $id_serveur],
+            ['tvente_entete_vente.created_at','>=', $formattedDate]
+        ])
+        ->get();
+
+        return response()->json([
+            'data'  => $data,
+        ]);
+    }
+
+    function fetch_vente_for_today_mobile()
+    {
+        
+        $current = Carbon::now(); 
+        $formattedDate = $current->format('Y-m-d');
+
+        $data = DB::table('tvente_entete_vente')
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_vente.module_id')
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_vente.refService')
+        ->join('tvente_client','tvente_client.id','=','tvente_entete_vente.refClient')
+        ->join('tvente_categorie_client','tvente_categorie_client.id','=','tvente_client.refCategieClient')  
+        ->join('tfin_ssouscompte','tfin_ssouscompte.id','=','tvente_categorie_client.compte_client')
+        ->join('tfin_souscompte','tfin_souscompte.id','=','tfin_ssouscompte.refSousCompte')
+        ->join('tfin_compte','tfin_compte.id','=','tfin_souscompte.refCompte')
+        ->join('tfin_classe','tfin_classe.id','=','tfin_compte.refClasse')
+        ->join('tfin_typecompte','tfin_typecompte.id','=','tfin_compte.refTypecompte')
+        ->join('tfin_typeposition','tfin_typeposition.id','=','tfin_compte.refPosition')
+        ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
+        'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
+        'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
+        
+        ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
+
+        ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
+        'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
+        "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
+        'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
+        'nom_classe','numero_classe','nom_typeposition',"nom_typecompte"        
+        )
+        ->selectRaw('CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture')
+        ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
+        ->selectRaw('IFNULL(paie,0) as totalPaie')
+        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
+        ->where([
+            ['tvente_entete_vente.created_at','>=', $formattedDate]
+        ])
         ->get();
 
         return response()->json([
@@ -292,7 +440,7 @@ class tvente_entete_venteController extends Controller
         ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-        'tvente_entete_vente.created_at','reduction','totaltva'        
+        'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'        
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
@@ -342,7 +490,7 @@ class tvente_entete_venteController extends Controller
 
     function update_data(Request $request, $id)
     {
-        //'date_paie_current','nombre_print'
+        //'livraison'
         $data = tvente_entete_vente::where('id', $id)->update([
             'refClient'       =>  $request->refClient,
             'refService'       =>  $request->refService,
@@ -358,6 +506,17 @@ class tvente_entete_venteController extends Controller
         ]);
         return response()->json([
             'data'  =>  "Modification  avec succès!!!",
+        ]);
+    }
+
+    function update_livraison(Request $request, $id)
+    {
+        $data = tvente_entete_vente::where('id', $id)->update([
+            'livraison'       =>  'OUI',
+            'livreur_author'       =>  $request->livreur_author
+        ]);
+        return response()->json([
+            'data'  =>  "Livraison effectuée avec succès!!!"
         ]);
     }
 

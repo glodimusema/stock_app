@@ -31,9 +31,12 @@ class CreateTventeEnteteVenteTable extends Migration
             $table->double('paie')->default(0);
             $table->date('date_paie_current')->nullable();
             $table->double('nombre_print')->default(0);
-            $table->string('author',100);  
+            $table->string('livraison',100)->default('NON'); 
+            $table->string('livreur_author',100)->default('RAS');   
+            $table->string('author',100);
             $table->foreignId('refUser')->constrained('users')->restrictOnUpdate()->restrictOnDelete();
             $table->timestamps();
+            //livreur_author
         });
     }
 

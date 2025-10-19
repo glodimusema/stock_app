@@ -216,6 +216,8 @@
                       <th class="text-left">Libellé</th>
                       <th class="text-left">Solde</th>
                       <th class="text-left">Etat</th>
+                      <th class="text-left">Livraison</th>
+                      <th class="text-left">Livreur</th>
                       <th class="text-left">Author</th>
                       <th class="text-left">Created_at</th>
                       <th class="text-left">Observation</th>
@@ -232,6 +234,16 @@
                       <td>{{ item.libelle }}</td>
                       <td>{{ item.RestePaie }}$</td>
                       <td>{{ item.etat_facture }}</td>
+                      <td><v-btn
+                          elevation="2"
+                          x-small
+                          class="white--text"
+                          :color="item.livraison == 'OUI' ? '#3DA60C' : item.livraison == 'NON' ? '#F13D17' :'error'"
+                          depressed                            
+                          >
+                        {{ item.livraison == 'OUI' ? 'Livrées' : item.livraison == 'NON' ? 'Non Livrées' :'error' }}
+                      </v-btn></td>
+                      <td>{{ item.livreur_author }}</td>
                       <td>{{ item.author }}</td>
                       <td>
                             {{ item.created_at | formatDate }}

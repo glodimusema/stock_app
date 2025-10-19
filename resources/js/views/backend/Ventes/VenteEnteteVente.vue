@@ -216,6 +216,8 @@
                       <th class="text-left">Libellé</th>
                       <th class="text-left">Solde</th>
                       <th class="text-left">Etat</th>
+                      <th class="text-left">Livraison</th>
+                      <th class="text-left">Livreur</th>
                       <th class="text-left">Author</th>
                       <th class="text-left">Created_at</th>
                       <th class="text-left">Action</th>
@@ -231,6 +233,16 @@
                       <td>{{ item.libelle }}</td>
                       <td>{{ item.RestePaie }}$</td>
                       <td>{{ item.etat_facture }}</td>
+                      <td><v-btn
+                          elevation="2"
+                          x-small
+                          class="white--text"
+                          :color="item.livraison == 'OUI' ? '#3DA60C' : item.livraison == 'NON' ? '#F13D17' :'error'"
+                          depressed                            
+                          >
+                        {{ item.livraison == 'OUI' ? 'Livrées' : item.livraison == 'NON' ? 'Non Livrées' :'error' }}
+                      </v-btn></td>
+                      <td>{{ item.livreur_author }}</td>
                       <td>{{ item.author }}</td>
                       <td>
                             {{ item.created_at | formatDate }}
@@ -285,7 +297,15 @@
                               </v-list-item-icon>
                               <v-list-item-title style="margin-left: -20px">Imprimer la Facture
                               </v-list-item-title>
-                            </v-list-item>                            
+                            </v-list-item>  
+                            
+                            <v-list-item link @click="appliquer_livraison(item.id)">
+                              <v-list-item-icon>
+                                <v-icon color="blue">edit</v-icon>
+                              </v-list-item-icon>
+                              <v-list-item-title style="margin-left: -20px">Effectuer la Livraison
+                              </v-list-item-title>
+                            </v-list-item>
 
                             <v-list-item v-if="userData.id_role == 1" link @click="editData(item.id)">
                               <v-list-item-icon>
@@ -361,7 +381,10 @@ export default {
         author: "",
         refUser:0,
 
-        refReservation:0
+        refReservation:0,
+
+        livraison: '',
+        livreur_author:'',
         
       },
       fetchData: [],
@@ -512,6 +535,29 @@ export default {
           this.dialog = true;
         }
       );
+    },
+    appliquer_livraison(code) {
+      // if (this.$refs.form.validate()) {
+      this.isLoading(true);
+      this.svData.id = code;
+      this.svData.livreur_author = this.userData.name;
+      this.insertOrUpdate(
+        `${this.apiBaseURL}/update_livraison_vente/${this.svData.id}`,
+        JSON.stringify(this.svData)
+      )
+        .then(({ data }) => {
+          this.showMsg(data.data);
+          this.isLoading(false);
+          this.edit = false;
+          this.dialog = false;
+          this.resetObj(this.svData);
+          this.fetchDataList();
+        })
+        .catch((err) => {
+          this.svErr(), this.isLoading(false);
+        });
+
+      // }
     },
     editDataRes(id) {
       this.editOrFetch(`${this.apiBaseURL}/fetch_single_vente_entete_vente/${id}`).then(

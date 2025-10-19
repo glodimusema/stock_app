@@ -922,17 +922,21 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::post("update_vente_entete_requisition/{id}", 'tvente_entete_requisitionController@update_data');
     Route::get("delete_vente_entete_requisition/{id}", 'tvente_entete_requisitionController@delete_data');
 
-    //all_dette
+    //fetch_vente_for_today_mobile
     Route::get("fetch_vente_entete_vente", 'tvente_entete_venteController@all');
     Route::get("fetch_vente_entete_vente_dette", 'tvente_entete_venteController@all_dette');
+    Route::get("fetch_vente_for_today_mobile", 'tvente_entete_venteController@fetch_vente_for_today_mobile');
+    Route::get("fetch_vente_by_idVente", 'tvente_entete_venteController@fetch_vente_by_idVente');
     Route::get("fetch_vente_entete_vente_encours", 'tvente_entete_venteController@fetch_data_encours');
     Route::get("fetch_data_entete_vente_search", 'tvente_entete_venteController@fetch_data_entete_vente_search');
     Route::get("fetch_vente_entete_vente/{refEntete}", 'tvente_entete_venteController@fetch_data_entete');
-    Route::get("fetch_single_vente_entete_vente/{id}", 'tvente_entete_venteController@fetch_single_data');    
+    Route::get("fetch_single_vente_entete_vente/{id}", 'tvente_entete_venteController@fetch_single_data');
+    Route::get("fetch_vente_by_serveur/{id_serveur}", 'tvente_entete_venteController@fetch_vente_by_serveur');    
     Route::post("insert_vente_entete_vente", 'tvente_entete_venteController@insert_data');
     Route::post("update_vente_entete_vente/{id}", 'tvente_entete_venteController@update_data');
     Route::post("update_nombre_print/{id}", 'tvente_entete_venteController@update_nombre_print');
     Route::get("delete_vente_entete_vente/{id}", 'tvente_entete_venteController@delete_data');
+    Route::post("update_livraison_vente/{id}", 'tvente_entete_venteController@update_livraison');
 
 
     Route::get("fetch_vente_entete_inventaire", 'tvente_entete_inventaireController@all');
@@ -2402,6 +2406,7 @@ Route::get("destroyMessage/{id}", [tcategoriemedecinController::class, 'destroyM
 
 Route::get("fetch_agent", [tagentController::class, 'index']);
 Route::get("fetch_list_agent", [tagentController::class, 'fetch_list_agent']);
+Route::get("fetch_login_agent", [tagentController::class, 'fetch_login_agent']);
 Route::get("fetch_list_categoriemedecin", [tagentController::class, 'fetch_list_categorie']);
 Route::get("fetch_list_fonctionmedecin", [tagentController::class, 'fetch_list_fonction']);
 Route::get("fetch_single_agent/{id}", [tagentController::class, 'edit']);

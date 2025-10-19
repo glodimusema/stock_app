@@ -9,7 +9,7 @@ class tvente_entete_vente extends Model
 {
     protected $fillable=['id','code','refClient','refService','refReservation','module_id',
     'dateVente','libelle','serveur_id','table_id','etat_facture','montant','paie','reduction',
-    'date_paie_current','nombre_print','totaltva','author','refUser'];
+    'date_paie_current','nombre_print','livraison','livreur_author','totaltva','author','refUser'];
     protected $table = 'tvente_entete_vente';
 }
 

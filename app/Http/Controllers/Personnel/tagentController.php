@@ -88,6 +88,47 @@ class tagentController extends Controller
             }
 
         }
+
+
+    function fetch_login_agent(Request $request)
+    {
+        if (($request->get('mail')) && ($request->get('codeSecret'))) 
+        {
+          
+            $data = DB::table('tagent')  
+            ->join('ttaxe_categorie' , 'ttaxe_categorie.id','=','tagent.refCompte')          
+            ->join('avenues' , 'avenues.id','=','tagent.refAvenue_agent')
+            ->join('quartiers' , 'quartiers.id','=','avenues.idQuartier')
+            ->join('communes' , 'communes.id','=','quartiers.idCommune')
+            ->join('villes' , 'villes.id','=','communes.idVille')
+            ->join('provinces' , 'provinces.id','=','villes.idProvince')
+            ->join('pays' , 'pays.id','=','provinces.idPays')
+            //MALADE
+            ->select("tagent.id","matricule_agent","noms_agent","sexe_agent","datenaissance_agent",
+            "lieunaissnce_agent","provinceOrigine_agent","etatcivil_agent","refAvenue_agent","nummaison_agent",
+            "contact_agent","mail_agent","grade_agent","fonction_agent","specialite_agent",
+            "Categorie_agent","niveauEtude_agent","anneeFinEtude_agent","Ecole_agent",'conjoint_agent', 
+            'nomPere_agent', 'nomMere_agent', 'Nationalite_agent', 'Collectivite_agent', 
+            'Territoire_agent', 'EmployeurAnt_agent', 'PersRef_agent',"photo","slug",
+            "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
+            "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
+            "pays.nomPays","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie",
+            'refCompte','codeSecret','ttaxe_categorie.designation as categorietaxe','prix_categorie')
+            ->where([               
+                ['mail_agent','=', $request->mail],
+                ['codeSecret','=', $request->codeSecret]
+            ])     
+            ->get();               
+        
+            return response()->json([
+                'data'  => $data,
+            ]);
+                       
+        }
+        else{
+
+        }       
+    }
     
     public function Profiletagent($id, Request $request)
     {

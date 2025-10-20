@@ -208,6 +208,7 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
+                      <th class="text-left">Action</th>
                       <th class="text-left">N°FAC</th>
                       <th class="text-left">DateVente</th>
                       <th class="text-left">Service</th>
@@ -219,37 +220,12 @@
                       <th class="text-left">Livraison</th>
                       <th class="text-left">Livreur</th>
                       <th class="text-left">Author</th>
-                      <th class="text-left">Created_at</th>
-                      <th class="text-left">Action</th>
+                      <th class="text-left">Created_at</th>                      
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in fetchData" :key="item.id">
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.dateVente | formatDate }}</td>
-                      <td>{{ item.nom_service }}</td>
-                      <td>{{ item.noms }}</td>
-                      <td>{{ item.contact }}</td>
-                      <td>{{ item.libelle }}</td>
-                      <td>{{ item.RestePaie }}$</td>
-                      <td>{{ item.etat_facture }}</td>
-                      <td><v-btn
-                          elevation="2"
-                          x-small
-                          class="white--text"
-                          :color="item.livraison == 'OUI' ? '#3DA60C' : item.livraison == 'NON' ? '#F13D17' :'error'"
-                          depressed                            
-                          >
-                        {{ item.livraison == 'OUI' ? 'Livrées' : item.livraison == 'NON' ? 'Non Livrées' :'error' }}
-                      </v-btn></td>
-                      <td>{{ item.livreur_author }}</td>
-                      <td>{{ item.author }}</td>
                       <td>
-                            {{ item.created_at | formatDate }}
-                            {{ item.created_at | formatHour }}
-                      </td>
-                      <td>
-
                         <v-menu bottom rounded offset-y transition="scale-transition">
                           <template v-slot:activator="{ on }">
                             <v-btn icon v-on="on" small fab depressed text>
@@ -326,8 +302,31 @@
 
                           </v-list>
                         </v-menu>
-
                       </td>
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.dateVente | formatDate }}</td>
+                      <td>{{ item.nom_service }}</td>
+                      <td>{{ item.noms }}</td>
+                      <td>{{ item.contact }}</td>
+                      <td>{{ item.libelle }}</td>
+                      <td>{{ item.RestePaie }}$</td>
+                      <td>{{ item.etat_facture }}</td>
+                      <td><v-btn
+                          elevation="2"
+                          x-small
+                          class="white--text"
+                          :color="item.livraison == 'OUI' ? '#3DA60C' : item.livraison == 'NON' ? '#F13D17' :'error'"
+                          depressed                            
+                          >
+                        {{ item.livraison == 'OUI' ? 'Livrées' : item.livraison == 'NON' ? 'Non Livrées' :'error' }}
+                      </v-btn></td>
+                      <td>{{ item.livreur_author }}</td>
+                      <td>{{ item.author }}</td>
+                      <td>
+                            {{ item.created_at | formatDate }}
+                            {{ item.created_at | formatHour }}
+                      </td>
+                      
                     </tr>
                   </tbody>
                 </template>

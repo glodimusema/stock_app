@@ -56,7 +56,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Lieu de Naissance" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.lieunaissnce_agent">
                                         </v-text-field>
                                     </div>
@@ -64,7 +64,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field type="date" label="Date Naissance" prepend-inner-icon="event"
-                                            dense :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                            dense  outlined
                                             v-model="svData.datenaissance_agent">
                                         </v-text-field>
                                     </div>
@@ -78,7 +78,7 @@
                                             { designation: 'Homme' },
                                             { designation: 'Femme' }
                                         ]" prepend-inner-icon="extension"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
+                                             outlined dense
                                             item-text="designation" item-value="designation"
                                             v-model="svData.sexe_agent"></v-select>
                                     </div>
@@ -91,7 +91,7 @@
                                             { designation: 'Divocé(3)' },
                                             { designation: 'Veuf(ve)' }
                                         ]" prepend-inner-icon="extension"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
+                                             outlined dense
                                             item-text="designation" item-value="designation"
                                             v-model="svData.etatcivil_agent"></v-select>
                                     </div>
@@ -110,7 +110,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Nom du Père" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.nomPere_agent">
                                         </v-text-field>
                                     </div>
@@ -118,7 +118,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Nom  de la Mère" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.nomMere_agent">
                                         </v-text-field>
                                     </div>
@@ -128,7 +128,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Nationnalité" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.Nationalite_agent">
                                         </v-text-field>
                                     </div>
@@ -146,7 +146,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Territire d'Origine" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.Territoire_agent">
                                         </v-text-field>
                                     </div>
@@ -154,7 +154,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="Province d'Orgine" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.provinceOrigine_agent">
                                         </v-text-field>
                                     </div>
@@ -172,7 +172,7 @@
                                             { designation: 'Certificat' },
                                             { designation: 'D6' }
                                         ]" prepend-inner-icon="extension"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
+                                             outlined dense
                                             item-text="designation" item-value="designation"
                                             v-model="svData.niveauEtude_agent"></v-select>
                                     </div>
@@ -180,7 +180,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field type="text" label="Domaine" prepend-inner-icon="event" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.specialite_agent">
                                         </v-text-field>
                                     </div>
@@ -207,7 +207,7 @@
                                 <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
                                         <v-text-field label="Employeur Anterieur " prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.EmployeurAnt_agent">
                                         </v-text-field>
                                     </div>
@@ -215,7 +215,7 @@
                                 <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
                                         <v-text-field label="Personne contact en cas d'Urgence " prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.PersRef_agent">
                                         </v-text-field>
                                     </div>
@@ -226,7 +226,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la Categorie" prepend-inner-icon="mdi-map"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="clientList"
+                                             :items="clientList"
                                             item-text="designation" item-value="designation" dense outlined
                                             v-model="svData.Categorie_agent" chips clearable>
                                         </v-autocomplete>
@@ -235,7 +235,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la Fonction" prepend-inner-icon="mdi-map"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="fonctionList"
+                                             :items="fonctionList"
                                             item-text="designation" item-value="designation" dense outlined
                                             v-model="svData.fonction_agent" chips clearable>
                                         </v-autocomplete>
@@ -246,7 +246,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-text-field label="N° de Téléphone" prepend-inner-icon="draw" dense
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined
+                                             outlined
                                             v-model="svData.contact_agent">
                                         </v-text-field>
                                     </div>
@@ -261,7 +261,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez le Pays" prepend-inner-icon="home"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="paysList"
+                                             :items="paysList"
                                             item-text="nomPays" item-value="id" dense outlined v-model="svData.idPays"
                                             chips clearable @change="get_data_tug_pays(svData.idPays)">
                                         </v-autocomplete>
@@ -270,7 +270,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la province" prepend-inner-icon="map"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']"
+                                            
                                             :items="stataData.provinceList" item-text="nomProvince" item-value="id"
                                             dense outlined v-model="svData.idProvince" clearable chips
                                             @change="get_data_tug_province(svData.idProvince)">
@@ -281,7 +281,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la ville" prepend-inner-icon="explore"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="stataData.villeList"
+                                             :items="stataData.villeList"
                                             item-text="nomVille" item-value="id" dense outlined v-model="svData.idVille"
                                             clearable chips @change="get_data_tug_commune(svData.idVille)">
                                         </v-autocomplete>
@@ -291,7 +291,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la commune" prepend-inner-icon="push_pin"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']"
+                                            
                                             :items="stataData.communeList" item-text="nomCommune" item-value="id" dense
                                             outlined v-model="svData.idCommune" clearable
                                             @change="get_data_tug_quartier(svData.idCommune)" chips>
@@ -302,7 +302,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez le quartier" prepend-inner-icon="navigation"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']"
+                                            
                                             :items="stataData.quartierList" item-text="nomQuartier" item-value="id"
                                             dense outlined v-model="svData.idQuartier"
                                             @change="get_data_tug_Avenue(svData.idQuartier)" clearable chips>
@@ -313,7 +313,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez l'avenue" prepend-inner-icon="domain"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="stataData.avenueList"
+                                             :items="stataData.avenueList"
                                             item-text="nomAvenue" item-value="id" dense outlined
                                             v-model="svData.refAvenue_agent" clearable chips>
                                         </v-autocomplete>
@@ -333,7 +333,7 @@
                                             { designation: 'NON' },
                                             { designation: 'OUI' }
                                         ]" prepend-inner-icon="extension"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
+                                             outlined dense
                                             item-text="designation" item-value="designation"
                                             v-model="svData.cartes"></v-select>
                                     </div>
@@ -344,7 +344,7 @@
                                 <v-flex xs12 sm12 md6 lg6>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la Catégorie de Taxe" prepend-inner-icon="mdi-map"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" :items="categorietaxeList"
+                                             :items="categorietaxeList"
                                             item-text="designation" item-value="id" dense outlined
                                             v-model="svData.refCompte" chips clearable>
                                         </v-autocomplete>
@@ -366,7 +366,7 @@
                                             { designation: 'OUI' },
                                             { designation: 'NON' }
                                         ]" prepend-inner-icon="extension"
-                                            :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
+                                             outlined dense
                                             item-text="designation" item-value="designation"
                                             v-model="svData.envie"></v-select>
                                     </div>

@@ -95,8 +95,7 @@ class tagentController extends Controller
         if (($request->get('mail')) && ($request->get('codeSecret'))) 
         {
           
-            $data = DB::table('tagent')  
-            ->join('ttaxe_categorie' , 'ttaxe_categorie.id','=','tagent.refCompte')          
+            $data = DB::table('tagent')            
             ->join('avenues' , 'avenues.id','=','tagent.refAvenue_agent')
             ->join('quartiers' , 'quartiers.id','=','avenues.idQuartier')
             ->join('communes' , 'communes.id','=','quartiers.idCommune')
@@ -113,7 +112,7 @@ class tagentController extends Controller
             "avenues.nomAvenue", "quartiers.idCommune","quartiers.nomQuartier","quartiers.id as idQuartier","communes.idVille",
             "communes.nomCommune","villes.idProvince","villes.nomVille","provinces.idPays","provinces.nomProvince",
             "pays.nomPays","codeSecret","tagent.author","tagent.created_at","tagent.updated_at","cartes","envie",
-            'refCompte','codeSecret','ttaxe_categorie.designation as categorietaxe','prix_categorie')
+            'codeSecret')
             ->where([               
                 ['mail_agent','=', $request->mail],
                 ['codeSecret','=', $request->codeSecret]

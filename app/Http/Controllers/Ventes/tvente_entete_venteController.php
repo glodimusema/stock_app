@@ -274,12 +274,11 @@ class tvente_entete_venteController extends Controller
         ]);
     }
 
-    function fetch_vente_by_idVente()
+    function fetch_vente_by_idVente(Request $request)
     {
         if (($request->get('id_vente'))) 
         {
-            $current = Carbon::now(); 
-            $formattedDate = $current->format('Y-m-d');
+            $idVente = $request->id_vente;
 
             $data = DB::table('tvente_entete_vente')
             ->join('tvente_module','tvente_module.id','=','tvente_entete_vente.module_id')
@@ -295,7 +294,7 @@ class tvente_entete_venteController extends Controller
             ->select('tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
             'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
             'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
-            'tvente_entete_vente.created_at','reduction','totaltva','livraison','livreur_author'
+            'tvente_entete_vente.created_at','reduction','totaltva','livreur_author'
             
             ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
 
@@ -307,18 +306,26 @@ class tvente_entete_venteController extends Controller
             'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
             'nom_classe','numero_classe','nom_typeposition',"nom_typecompte"        
             )
-            ->selectRaw('CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture')
-            ->selectRaw('ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) as totalFacture')
-            ->selectRaw('IFNULL(paie,0) as totalPaie')
-            ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
+            ->addSelect(DB::raw('
+                CONCAT("F", YEAR(dateVente), "", MONTH(dateVente), "00", tvente_entete_vente.id) AS codeFacture,
+                ROUND(IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0),2) AS totalFacture,
+                IFNULL(paie,0) AS totalPaie,
+                ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) AS RestePaie,
+                (CASE 
+                    WHEN tvente_entete_vente.livraison = "OUI" THEN "Déjà Livrée"
+                    WHEN tvente_entete_vente.livraison = "NON" THEN "Non encore Livrée"
+                END) AS livraison
+            '))
             ->where([
-                ['tvente_entete_vente.id', $request->get('id_vente')]
+                ['tvente_entete_vente.id', $idVente]
             ])
             ->get();
 
-            return response()->json([
-                'data'  => $data,
-            ]);
+            return response($data, 200);
+
+            // return response()->json([
+            //     'data'  => $data,
+            // ]);
         }
         else
         {
@@ -371,9 +378,11 @@ class tvente_entete_venteController extends Controller
         ])
         ->get();
 
-        return response()->json([
-            'data'  => $data,
-        ]);
+        return response($data, 200);
+
+        // return response()->json([
+        //     'data'  => $data,
+        // ]);
     }
 
     function fetch_vente_for_today_mobile()
@@ -417,9 +426,11 @@ class tvente_entete_venteController extends Controller
         ])
         ->get();
 
-        return response()->json([
-            'data'  => $data,
-        ]);
+        return response($data, 200);
+
+        // return response()->json([
+        //     'data'  => $data,
+        // ]);
     }
 
 
@@ -515,9 +526,20 @@ class tvente_entete_venteController extends Controller
             'livraison'       =>  'OUI',
             'livreur_author'       =>  $request->livreur_author
         ]);
+
         return response()->json([
             'data'  =>  "Livraison effectuée avec succès!!!"
         ]);
+    }
+
+    function update_livraison_mobile(Request $request)
+    {
+        //update_livraison_mobile
+        $data = tvente_entete_vente::where('id', $request->id)->update([
+            'livraison'       =>  'OUI',
+            'livreur_author'       =>  $request->livreur_author
+        ]);        
+        return $this->msgJson('Information ajoutée avec succès');       
     }
 
     function update_nombre_print(Request $request, $id)

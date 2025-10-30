@@ -211,6 +211,19 @@
                                 <v-tooltip bottom color="black">
                                     <template v-slot:activator="{ on, attrs }">
                                         <span v-bind="attrs" v-on="on">
+                                            <v-btn @click="show_fetch_livre_caisse" block color="  blue" dark>
+                                                <v-icon>print</v-icon> LIVRE DE CAISSE/BANQUE
+                                            </v-btn>
+                                        </span>
+                                    </template>
+                                    <span>Imprimer le rapport</span>
+                                </v-tooltip>                                                        
+
+                                <br>
+
+                                <v-tooltip bottom color="black">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-bind="attrs" v-on="on">
                                             <v-btn @click="PrintshowPaiementFactureByDateandBanque" block color="  blue" dark>
                                                 <v-icon>print</v-icon> PAIEMENTS DES FACTURES/BANQUE/CAISSE
                                             </v-btn>
@@ -456,6 +469,17 @@ export default {
                 } else {
                     this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
                 }
+        },
+        show_fetch_livre_caisse() {
+            var date1 =  this.dates[0] ;
+            var date2 =  this.dates[1] ;
+            if (date1 <= date2) {
+
+                window.open(`${this.apiBaseURL}/pdf_fiche_livre_caisse?date1=` + date1+"&date2="+date2+"&refBanque="+this.svData.refCompte);                         
+               
+            } else {
+               this.showError("Veillez sélectionner la date");
+            }
         },
         PrintshowDepenseByDate() {
 

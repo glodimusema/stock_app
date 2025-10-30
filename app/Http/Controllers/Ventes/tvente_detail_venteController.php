@@ -313,7 +313,11 @@ class tvente_detail_venteController extends Controller
        ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
        ->selectRaw("DATE_FORMAT(date_paie_current,'%d/%M/%Y') as date_paie_current")
        ->selectRaw('(qteBase*puBase) as PTBase')
-       ->selectRaw('IFNULL(paie,0) as totalPaie')       
+       ->selectRaw('IFNULL(paie,0) as totalPaie')   
+       ->selectRaw('CONCAT("N°FACT : ",tvente_entete_vente.id," ; Date : ",dateVente," ; Statut : ", ((CASE 
+                    WHEN tvente_entete_vente.livraison = "OUI" THEN "Déjà Livrée"
+                    WHEN tvente_entete_vente.livraison = "NON" THEN "Non encore Livrée"
+                END))) as InfoFacture')    
        ->Where('tvente_detail_vente.refEnteteVente',$id)               
        ->get();
 

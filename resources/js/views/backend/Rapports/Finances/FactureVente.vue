@@ -77,6 +77,40 @@
                   <td></td>
                   <td></td>
                   <td class="cs101A94F7" colspan="6" style="width:126px;height:92px;text-align:left;vertical-align:top;">
+                     <div>
+                        <div style="text-align:center; margin-top:10px;">
+                          <div v-if="qrCodeData">
+                            <img :src="qrCodeData" alt="QR Code" style="width:150px;height:150px;" />
+                          </div>
+                          <div v-else>
+                            <qrcode-vue
+                              ref="qrcode"
+                              :value="entete.InfoFacture.toString()"
+                              :size="150"
+                              :level="'H'"
+                              render-as="canvas"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr style="vertical-align:top;">
+                  <td style="width:0px;height:92px;"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="cs101A94F7" colspan="6" style="width:126px;height:92px;text-align:left;vertical-align:top;">
                     <div style="overflow:hidden;width:126px;height:92px;">
                       <img alt="logo maison" :src="`${baseURL}/fichier/logo.png`" style="width:126px;height:92px;" />
                     </div>
@@ -745,6 +779,11 @@
                   <td></td>
                   <td></td>
                 </tr>
+
+                
+
+                
+
               </table>
 
 

@@ -44,7 +44,7 @@
                                 readonly
                             ></v-text-field>
 
-                             <v-tooltip bottom color="black">
+                             <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showListeClient" block color="  blue" dark>
@@ -54,9 +54,9 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
                           
-                            <!-- <v-tooltip bottom color="black">
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailDetailSortieByDate" block color="  blue" dark>
@@ -66,7 +66,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br> -->
+                            <br>
 
                              <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -79,6 +79,7 @@
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
                             <br>
+                            <!-- <br>
 
                                 <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
@@ -88,7 +89,7 @@
                                         chips>
                                         </v-autocomplete>
                                     </div>
-                                </v-flex>
+                                </v-flex> -->
                             <!-- <br> -->
 
                             <!-- <v-tooltip bottom color="black">
@@ -103,6 +104,28 @@
                             </v-tooltip>
                             <br> -->
 
+                             <v-flex xs12 sm12 md12 lg12>
+                                    <div class="mr-1">
+                                        <v-autocomplete label="Selectionnez service" prepend-inner-icon="map"
+                                        :rules="[(v) => !!v || 'Ce champ est requis']" :items="serviceList"
+                                        item-text="nom_service" item-value="refService" dense outlined v-model="svData.idService" clearable
+                                        chips>
+                                        <!-- showDetailVenteByDate_Service --> 
+                                        </v-autocomplete>
+                                    </div>
+                                </v-flex> 
+
+                                <v-flex xs12 sm12 md12 lg12>
+                                    <div class="mr-1">
+                                        <v-autocomplete label="Selectionnez la Catégorie Produit" prepend-inner-icon="map"
+                                        :rules="[(v) => !!v || 'Ce champ est requis']" :items="categorieProList"
+                                        item-text="designation" item-value="id" dense outlined v-model="svData.idCategorie" clearable
+                                        chips>
+                                        <!-- serviceList -->
+                                        </v-autocomplete>
+                                    </div>
+                                </v-flex> 
+
                             <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez le Produit" prepend-inner-icon="map"
@@ -112,6 +135,18 @@
                                         </v-autocomplete>
                                     </div>
                             </v-flex>
+
+                             <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="showDetailVenteByDate_ServiceByCategorie" block color="  blue" dark>
+                                            <v-icon>print</v-icon> VENTES/SERVICE/CATEGORIE PRODUIT
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+                            <br>
 
                             <!-- <br> -->
 
@@ -124,35 +159,16 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
 
-                            <br> -->
-                                <v-flex xs12 sm12 md12 lg12>
-                                    <div class="mr-1">
-                                        <v-autocomplete label="Selectionnez la Catégorie Produit" prepend-inner-icon="map"
-                                        :rules="[(v) => !!v || 'Ce champ est requis']" :items="categorieProList"
-                                        item-text="designation" item-value="id" dense outlined v-model="svData.idCategorie" clearable
-                                        chips>
-                                        <!-- serviceList -->
-                                        </v-autocomplete>
-                                    </div>
-                                </v-flex>                           
+                            <!-- <br> -->
+                                                          
 
-                              <v-tooltip bottom color="black">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on">
-                                        <v-btn @click="showFicheStockByDate_Categorie" block color="  blue" dark>
-                                            <v-icon>print</v-icon> FICHE DE STOCK/CATEGORIE PRODUIT
-                                        </v-btn>
-                                    </span>
-                                </template>
-                                <span>Imprimer le rapport</span>
-                                <!-- showFicheStockByDate_CategorieUnite -->
-                            </v-tooltip>                          
+                                                    
                             
                             
                             
-                            <br>
+                            <!-- <br>
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -162,20 +178,23 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                                <!-- showFicheStockByDate_CategorieUnite -->
-                            </v-tooltip>                             
+                               
+                            </v-tooltip>                              -->
                             
-                            <br>
-                                <v-flex xs12 sm12 md12 lg12>
-                                    <div class="mr-1">
-                                        <v-autocomplete label="Selectionnez service" prepend-inner-icon="map"
-                                        :rules="[(v) => !!v || 'Ce champ est requis']" :items="serviceList"
-                                        item-text="nom_service" item-value="id" dense outlined v-model="svData.idService" clearable
-                                        chips>
-                                        <!-- showDetailVenteByDate_Service --> 
-                                        </v-autocomplete>
-                                    </div>
-                                </v-flex>  
+                            
+                               
+                                
+                                <!-- <br> -->
+                                <v-tooltip bottom color="black">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-bind="attrs" v-on="on">
+                                            <v-btn @click="showFicheStockByDate_ServiceByCategorie" block color="  blue" dark>
+                                                <v-icon>print</v-icon> FICHE STOCK/SERVICE/CATEGORIE PROD.
+                                            </v-btn>
+                                        </span>
+                                    </template>
+                                    <span>Imprimer le rapport</span>
+                                </v-tooltip>
 
 
                                 <!-- <v-tooltip bottom color="black">
@@ -187,8 +206,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br> -->
+                            </v-tooltip> -->
+                            <br>
 
                             <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -202,7 +221,7 @@
                             </v-tooltip>
                             <br> -->
 
-                            <!-- <v-tooltip bottom color="black">
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailVenteByDate_ServiceByProduit" block color="  blue" dark>
@@ -212,21 +231,11 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br> -->
+                            <br>
+
+                           
 
                             <!-- <v-tooltip bottom color="black">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on">
-                                        <v-btn @click="showDetailVenteByDate_ServiceByCategorie" block color="  blue" dark>
-                                            <v-icon>print</v-icon> VENTES/SERVICE/CAT.PROD.
-                                        </v-btn>
-                                    </span>
-                                </template>
-                                <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br> -->
-
-                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailUsageByDate_Service" block color="  blue" dark>
@@ -236,8 +245,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
-                            <v-tooltip bottom color="black">
+                            <br> -->
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailUsageByDate_ServiceByCategorie" block color="  blue" dark>
@@ -247,9 +256,9 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
                             <!-- showMouvementProduitByDate_ServiceByProduit -->
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailUsageByDate_ServiceByProduit" block color="  blue" dark>
@@ -259,7 +268,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
                             <!-- showMouvementProduitByDate_ServiceByProduit -->
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -272,7 +281,7 @@
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
                             <br>                                
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailTransfertByDate_Service_Source" block color="  blue" dark>
@@ -282,7 +291,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>                                
+                            <br>                                 -->
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -293,8 +302,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>                                
-                            <!-- <v-tooltip bottom color="black">
+                            <!-- <br>                                
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailCuisineByDate_Service" block color="  blue" dark>
@@ -303,8 +312,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br> -->
+                            </v-tooltip> -->
+                            <br>
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -315,7 +324,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <!-- <br>
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -326,15 +335,15 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
-                            <v-autocomplete label="Produit Vendable" :items="[
+                            <br> -->
+                            <!-- <v-autocomplete label="Produit Vendable" :items="[
                                 { designation: 'OUI' },
                                 { designation: 'NON' }
                                 ]" prepend-inner-icon="extension" :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
                                 item-text="designation" item-value="designation" v-model="svData.statut">
-                            </v-autocomplete>
+                            </v-autocomplete> -->
                             <!-- <br>showDetailSortieByDate_EtatFactureService -->
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showFicheStockByDate_Service_Vendable" block color="  blue" dark>
@@ -343,8 +352,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
+                            </v-tooltip> -->
+                            <!-- <br>
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -354,9 +363,9 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
                             
-                            <br>
+                            <!-- <br>
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -366,8 +375,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
+                            </v-tooltip> -->
+                            <!-- <br>
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -377,8 +386,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
+                            </v-tooltip> -->
+                            <!-- <br>
 
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -389,8 +398,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
+                            </v-tooltip> -->
+                            <!-- <br>
 
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -401,21 +410,11 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
+                            
                             
                             <br>
-                            <v-tooltip bottom color="black">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on">
-                                        <v-btn @click="showFicheStockByDate_ServiceByCategorie" block color="  blue" dark>
-                                            <v-icon>print</v-icon> FICHE STOCK/SERVICE/CATEGORIE PROD.
-                                        </v-btn>
-                                    </span>
-                                </template>
-                                <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showInventaireByDate_ServiceByCategorie" block color="  blue" dark>
@@ -425,7 +424,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -436,7 +435,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <!-- <br>
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -446,8 +445,8 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br>
+                            </v-tooltip> -->
+                            <!-- <br>
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -457,17 +456,17 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>                            
-                            <br>
+                            </v-tooltip>                             -->
+                            <!-- <br>
                             <v-autocomplete label="Type Sortie" :items="[
                                 { designation: 'Casse' },
                                 { designation: 'Usage Service' },
                                 { designation: 'Peertes deverses' }
                                 ]" prepend-inner-icon="extension" :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
                                 item-text="designation" item-value="designation" v-model="svData.type_sortie">
-                            </v-autocomplete>
+                            </v-autocomplete> -->
                             <!-- <br> -->
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailUsageByDate_ServiceByTypeSortie" block color="  blue" dark>
@@ -476,7 +475,7 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
                             <br>
                             <v-autocomplete label="Etat de la Facture" :items="[
                                 { designation: 'Cash' },
@@ -488,7 +487,7 @@
                                 item-text="designation" item-value="designation" v-model="svData.etat_facture">
                             </v-autocomplete>
                             <!-- <br>showDetailSortieByDate_EtatFactureService -->
-                            <!-- <v-tooltip bottom color="black">
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailSortieByDate_EtatFacture" block color="  blue" dark>
@@ -498,8 +497,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br> -->
-                            <!-- <v-tooltip bottom color="black">
+                            <br>
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailSortieByDate_EtatFactureService" block color="  blue" dark>
@@ -509,8 +508,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                             <br> -->
-                              <!-- <v-tooltip bottom color="black">
+                             <!-- <br>
+                              <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showEnteteVenteByDate_EtatFacture" block color="  blue" dark>
@@ -519,10 +518,10 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
-                            <br> -->
+                            </v-tooltip> -->
+                            <br>
 
-                            <v-flex xs12 sm12 md12 lg12>
+                            <!-- <v-flex xs12 sm12 md12 lg12>
                                 <div class="mr-1">
                                     <v-autocomplete label="Selectionnez l'Agent" prepend-inner-icon="map"
                                         :rules="[(v) => !!v || 'Ce champ est requis']" :items="serveurList"
@@ -530,8 +529,8 @@
                                         chips>
                                     </v-autocomplete>
                                 </div>
-                            </v-flex>
-                            <!-- <v-tooltip bottom color="black">
+                            </v-flex> -->
+                            <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showEnteteVenteByDate_Serveur_EtatFacture" block color="  blue" dark>
@@ -541,9 +540,9 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br> -->
+                            <br>
 
-                             <v-tooltip bottom color="black">
+                             <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showEnteteVenteDetteByDate_Serveur" block color="  blue" dark>
@@ -552,9 +551,9 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
 
-                            <br>
+                            <!-- <br>
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -564,10 +563,10 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
                             <br>
                             <!-- exportToExcelFicheStockServiceSansPrix -->
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="exportToExcelFicheStockServiceSansPrix" block color="  blue" dark>
@@ -577,8 +576,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
-                            <v-tooltip bottom color="black">
+                            <br> -->
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="exportToExcelFicheStockServiceCategorie" block color="  blue" dark>
@@ -591,8 +590,8 @@
 
 
 
-                            <br>
-                            <v-tooltip bottom color="black">
+                            <br> -->
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="exportToExcelFicheStockServiceUnite" block color="  blue" dark>
@@ -602,8 +601,8 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
-                            <v-tooltip bottom color="black">
+                            <br> -->
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="exportToExcelFicheStockServiceCategorieUnite" block color="  blue" dark>
@@ -613,10 +612,10 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
 
 
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showFicheSyntheseCompteByDate_Service_Vente" block color="  blue" dark>
@@ -625,7 +624,7 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
 
                             <br>
                             
@@ -705,7 +704,7 @@ export default {
             
         },
     fetchListFournisseur() {
-      this.editOrFetch(`${this.apiBaseURL}/fetch_list_fournisseur`).then(
+      this.editOrFetch(`${this.apiBaseURL}/fetch_list_fournisseur?refUser=`+this.userData.id).then(
         ({ data }) => {
           var donnees = data.data;
           this.fournisseurList = donnees;
@@ -714,7 +713,7 @@ export default {
       );
     },
     fetchListServeur() {
-      this.editOrFetch(`${this.apiBaseURL}/fetch_list_agent`).then(
+      this.editOrFetch(`${this.apiBaseURL}/fetch_list_agent_vente?refUser=`+this.userData.id).then(
         ({ data }) => {
           var donnees = data.data;
           this.serveurList = donnees;
@@ -755,14 +754,22 @@ export default {
             this.categorieProList = donnees;
           }
         );
-      },      
+      },
       fetchListServiceVente() {
-        this.editOrFetch(`${this.apiBaseURL}/fetch_vente_services_2`).then(
-          ({ data }) => {
-            var donnees = data.data;
-            this.serviceList = donnees;
-          }
-        );
+             this.editOrFetch(`${this.apiBaseURL}/fetch_service_user_by_user/${this.userData.id}`).then(
+                ({ data }) => {
+                    const donnees = data.data;
+                    this.serviceList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refService && donnees.length > 0) {
+                        this.svData.refService = donnees[0].refService;
+
+                        // Optionnel : déclencher immédiatement le chargement des produits
+                        this.get_produit_for_service(this.svData.refService);
+                    }
+                }
+            );
       }
       ,
      
@@ -896,7 +903,7 @@ export default {
             }
         },
         showListeClient() {
-            window.open(`${this.apiBaseURL}/fetch_rapport_liste_client`); 
+            window.open(`${this.apiBaseURL}/fetch_rapport_liste_client?refUser=` + this.userData.id); 
         },
         showFicheStockUniteByDate() {
 
@@ -1438,7 +1445,7 @@ export default {
             var date2 =  this.dates[1] ;
             if (date1 <= date2) {
 
-                window.open(`${this.apiBaseURL}/fetch_rapport_solde_facture_date_fournisseur?date1=` + date1+"&date2="+date2);              
+                window.open(`${this.apiBaseURL}/fetch_rapport_solde_facture_date_fournisseur?date1=` + date1+"&date2="+date2+"&refUser="+this.userData.id);              
                
             } else {
                this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");

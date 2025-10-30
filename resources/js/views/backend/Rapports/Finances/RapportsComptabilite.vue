@@ -326,7 +326,7 @@ export default {
             var date2 =  this.dates[1] ;
             if (date1 <= date2) {
 
-                window.open(`${this.apiBaseURL}/pdf_livre_caisse_par_banque_caisse?date1=` + date1+"&date2="+date2+"&refBanque="+this.svData.refTresorerie);                         
+                window.open(`${this.apiBaseURL}/pdf_fiche_livre_caisse?date1=` + date1+"&date2="+date2+"&refBanque="+this.svData.refTresorerie);                         
                
             } else {
                this.showError("Veillez sélectionner la date");

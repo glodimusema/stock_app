@@ -1764,8 +1764,9 @@ Route::post('cloturer_Caisse_ok', [tDepenseController::class, 'cloturer_Caisse_o
 //cloturer_Caisse_vente   cloturer_Caisse_hotel  cloturer_Caisse_salle cloturer_Caisse_billard
 //cloturer_Caisse
 
+//pdf_fiche_livre_caisse
 
-
+Route::get("pdf_fiche_livre_caisse", [Pdf_ComptabiliteController::class, 'pdf_fiche_livre_caisse']);
 Route::get("pdf_livre_caisse_par_banque_caisse", [Pdf_ComptabiliteController::class, 'pdf_livre_caisse_par_banque_caisse']);
 Route::get("fetch_rapport_detailfacture_date_compte_cash", [Pdf_ComptabiliteController::class, 'fetch_rapport_detailfacture_date_compte_cash']);
 Route::get("fetch_rapport_detailfacture_date_compte_credit", [Pdf_ComptabiliteController::class, 'fetch_rapport_detailfacture_date_compte_credit']);

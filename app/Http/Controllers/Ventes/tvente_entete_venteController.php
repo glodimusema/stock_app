@@ -51,7 +51,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -101,7 +101,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -153,7 +153,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -203,7 +203,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -256,7 +256,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -300,7 +300,7 @@ class tvente_entete_venteController extends Controller
 
             ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
             'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-            'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+            'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
             'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
             "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
             'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -362,7 +362,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -411,7 +411,7 @@ class tvente_entete_venteController extends Controller
 
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',
@@ -455,7 +455,7 @@ class tvente_entete_venteController extends Controller
         ,'nom_service', "tvente_module.nom_module",'date_paie_current','nombre_print'
         ,'noms','sexe','contact','mail','adresse','pieceidentite','numeroPiece','dateLivrePiece',
         'lieulivraisonCarte','nationnalite','datenaissance','lieunaissance','profession','occupation',
-        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug','tvente_client.author',
+        'nombreEnfant','dateArriverGoma','arriverPar','refCategieClient','photo','slug',
         'tvente_entete_vente.updated_at', "tvente_categorie_client.designation",
         "compte_client",'refSousCompte','nom_ssouscompte','numero_ssouscompte','nom_souscompte',
         'numero_souscompte','refCompte','nom_compte','numero_compte','refClasse','refTypecompte','refPosition',

@@ -115,6 +115,20 @@
                                     </div>
                                 </v-flex> 
 
+                                <br>
+                              <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="showEnteteVenteByDate_Synthese_Service" block color="  blue" dark>
+                                            <v-icon>print</v-icon> LES VENTES CASH ET CREDIT/SERVICE
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+
+                            <br>
+
                                 <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
                                         <v-autocomplete label="Selectionnez la Catégorie Produit" prepend-inner-icon="map"
@@ -1891,6 +1905,23 @@ export default {
                 }else
                 {
                     this.showError("Veillez selectionner le service svp");
+                }               
+               
+            } else {
+               this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
+            }
+        },
+        showEnteteVenteByDate_Synthese_Service() {
+            var date1 =  this.dates[0] ;
+            var date2 =  this.dates[1] ;
+            if (date1 <= date2) {
+                //fetch_rapport_entete_facture_client_service_date
+                if(this.svData.idService!="")
+                {
+                    window.open(`${this.apiBaseURL}/fetch_rapport_entete_facture_client_service_date?date1=` + date1+"&date2="+date2+"&refService="+this.svData.idService);
+                }else
+                {
+                    this.showError("Veillez selectionner l'etat de la facture svp");
                 }               
                
             } else {

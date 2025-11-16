@@ -1034,6 +1034,7 @@ Route::group(['namespace'   =>  "Ventes"], function(){
 
 
     //
+    Route::get("fetch_rapport_entete_facture_client_service_date", 'PdfVenteController@fetch_rapport_entete_facture_client_service_date');
     Route::get("pdf_fiche_stock_vente_service_by_vendable_cmup", 'PdfVenteController@pdf_fiche_stock_vente_service_by_vendable_cmup');
     Route::get("pdf_fiche_stock_vente_service_by_vendable", 'PdfVenteController@pdf_fiche_stock_vente_service_by_vendable');
     Route::get("pdf_fiche_stock_vente_service_by_sans_prix", 'PdfVenteController@pdf_fiche_stock_vente_service_by_sans_prix');

@@ -189,7 +189,7 @@
                                 required @change="updateTVA(index)"></v-text-field>
                         </td>
                         <td class="short-cell">
-                            <v-text-field v-model="item.puVente" type="number" label="PU" :rules="[rules.required]"
+                            <v-text-field v-model="item.puVente" readonly type="number" label="PU" :rules="[rules.required]"
                                 required @change="updateTVA(index)"></v-text-field>
                         </td>                      
                         <td class="short-cell">
@@ -422,7 +422,7 @@ export default {
                 id: '',
                 refClient: 0,
                 refService: 0,
-                dateVente: "",
+                dateVente: new Date().toISOString().substr(0, 10),
                 libelle: "Ventes des Produits",
                 author: "",
                 refUser: 0,
@@ -507,6 +507,22 @@ export default {
                 tvaList: [],
             });
             this.fetchListTVA();
+        },        
+        refreshAllData()
+        {
+            this.fetchDataList();
+            this.fetchListClient();
+            this.fetchListModule();
+            this.fetchListService();
+            this.fetchListDevise();
+            this.fetchListTVA();
+            this.fetchListServeur();
+            this.fetchListTable();
+            this.fetchListChambre();
+
+            this.svData.etat_facture = 'Cash';
+            this.svData.libelle = "Ventes des Produits";
+
         },
        refreshData()
         {
@@ -630,8 +646,6 @@ export default {
             }];
             this.$refs.form.reset(); // Reset the form validation state            
             this.fetchListTVA();
-            //insert_vente_globale_vente
-            //insert_vente_globale_vente_cash
         },        
         validate() {
             try {
@@ -658,7 +672,7 @@ export default {
                     this.edit = false;
                     this.dialog = false;
                     this.resetObj(this.svData);
-                    this.fetchDataList();
+                    this.refreshAllData();
                     this.resetForm();
                     this.svData.libelle = "Ventes des Produits";
                     })
@@ -713,7 +727,7 @@ export default {
                     this.edit = false;
                     this.dialog = false;
                     this.resetObj(this.svData);
-                    this.fetchDataList();
+                    this.refreshAllData();
                     this.resetForm();
                     this.svData.libelle = "Ventes des Produits";
                     })
@@ -850,7 +864,7 @@ export default {
 
         // },
         fetchDataList() {
-        this.fetch_data(`${this.apiBaseURL}/fetch_vente_entete_vente_encours?page=`);
+        this.fetch_data(`${this.apiBaseURL}/fetch_vente_entete_vente_encours?refUser=`+this.userData.id+"&page=");
         },
         fetchListModule() {
             this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_module_2`).then(
@@ -904,6 +918,11 @@ export default {
                 ({ data }) => {
                     var donnees = data.data;
                     this.clientList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refClient && donnees.length > 0) {
+                        this.svData.refClient = donnees[0].id;
+                    }
                 }
             );
         },
@@ -954,7 +973,7 @@ export default {
             this.delGlobal(`${this.apiBaseURL}/delete_vente_entete_vente/${id}`).then(
             ({ data }) => {
                 this.showMsg(data.data);
-                this.fetchDataList();
+                this.refreshAllData();
             }
             );
         });
@@ -1039,7 +1058,7 @@ export default {
                 this.isLoading(false);
                 this.edit = false;                
                 this.resetObj(this.svData);
-                this.fetchDataList();
+                this.refreshAllData();
                 })
                 .catch((err) => {
                 this.svErr(), this.isLoading(false);
@@ -1073,7 +1092,7 @@ export default {
                 this.edit = false;
                 this.dialog = false;
                 this.resetObj(this.svData);
-                this.fetchDataList();
+                this.refreshAllData();
                 })
                 .catch((err) => {
                 this.svErr(), this.isLoading(false);

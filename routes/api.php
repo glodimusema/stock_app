@@ -909,7 +909,7 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::post("update_vente_entete_entree/{id}", 'tvente_entete_entreeController@update_data');
     Route::get("delete_vente_entete_entree/{id}", 'tvente_entete_entreeController@delete_data');
 
-    //all_filter  all_fournisseur_filter 
+    //all_filter  all_client_filter 
     Route::get("fetch_vente_entete_requisition", 'tvente_entete_requisitionController@all');
     Route::get("fetch_vente_entete_requisition_filter", 'tvente_entete_requisitionController@all_filter');
     Route::get("fetch_vente_entete_requisition_filter_fss", 'tvente_entete_requisitionController@all_fournisseur_filter');
@@ -925,6 +925,8 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     //update_livraison_mobile
     Route::get("fetch_vente_entete_vente", 'tvente_entete_venteController@all');
     Route::get("fetch_vente_entete_vente_dette", 'tvente_entete_venteController@all_dette');
+    Route::get("fetch_vente_entete_ventes_filter", 'tvente_entete_venteController@all_filter');
+    Route::get("fetch_vente_entete_ventes_filter_client", 'tvente_entete_venteController@all_client_filter');
     Route::get("fetch_vente_for_today_mobile", 'tvente_entete_venteController@fetch_vente_for_today_mobile');
     Route::get("fetch_vente_by_idVente", 'tvente_entete_venteController@fetch_vente_by_idVente');
     Route::get("fetch_vente_entete_vente_encours", 'tvente_entete_venteController@fetch_data_encours');

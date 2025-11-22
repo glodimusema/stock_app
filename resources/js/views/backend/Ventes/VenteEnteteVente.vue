@@ -180,10 +180,53 @@
         <!--   -->
         <v-flex md12>
           <v-layout>
-            <v-flex md6>
+            <v-flex md12>
               <v-text-field placeholder="recherche..." append-icon="search" label="Recherche..." single-line solo outlined
                 rounded hide-details v-model="query" @keyup="fetchDataList" clearable></v-text-field>
             </v-flex>
+            <hr />      
+            <hr />
+            <hr />
+            <hr />                    
+              <v-flex md6>
+                <v-text-field type="date" label="Du" prepend-inner-icon="event" dense
+                    :rules="[(v) => !!v || 'Ce champ est requis']" outlined v-model="svData.date1">
+                  </v-text-field>
+              </v-flex>
+              <hr />
+              <hr />
+              <hr />
+              <v-flex md6>
+                <v-text-field type="date" label="Au" prepend-inner-icon="event" dense
+                    :rules="[(v) => !!v || 'Ce champ est requis']" outlined v-model="svData.date2">
+                  </v-text-field>
+              </v-flex> 
+              <hr />
+              <hr />
+              <hr />
+
+              <v-flex md12>
+                <v-autocomplete label="Selectionnez le Client" prepend-inner-icon="mdi-map"
+                    :rules="[(v) => !!v || 'Ce champ est requis']" :items="clientList" item-text="noms"
+                    item-value="id" outlined dense v-model="svData.refClient">
+                </v-autocomplete>
+              </v-flex> 
+             
+              <hr />
+              <hr />
+              <hr />
+              <v-flex md4>
+                <v-btn color="blue" dark :loading="loading" @click="fetchDataListFilterClient">
+                    {{ "Filtrer" }}
+                  </v-btn>
+              </v-flex> 
+              <hr />
+              <v-flex md4>
+                <v-btn color="blue" dark :loading="loading" @click="fetchDataList">
+                    {{ "Refresh" }}
+                  </v-btn>
+              </v-flex> 
+
             <v-flex md5>
 
 
@@ -704,7 +747,18 @@ export default {
       this.$refs.ModelClient.$data.titleComponentss =
         "Un nouveau Client";
 
-    }
+    },
+      fetchDataListFilterClient() {
+        if(this.svData.refClient != '')
+        {
+          this.fetch_data(`${this.apiBaseURL}/fetch_vente_entete_ventes_filter_client?date1=` + this.svData.date1 + "&date2=" + this.svData.date2 + "&refClient=" + this.svData.refClient + "&page=");
+        }
+        else
+        {
+          this.fetch_data(`${this.apiBaseURL}/fetch_vente_entete_ventes_filter?date1=` + this.svData.date1 + "&date2=" + this.svData.date2 + "&page=");
+        }
+        
+      }
 
   },
   filters: {

@@ -215,7 +215,7 @@
                   rounded hide-details v-model="query" @keyup="fetchDataList" clearable></v-text-field>
               </v-flex>
 
-              <hr />      
+            <hr />      
             <hr />
             <hr />
             <hr />                    

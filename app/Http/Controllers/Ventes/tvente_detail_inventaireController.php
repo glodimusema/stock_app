@@ -871,11 +871,11 @@ class tvente_detail_inventaireController extends Controller
             $qteVente = $qteBase * floatval($data['qteVente']);
             if($estunite = "OUI")
             {
-            $puBase=  floatval($montants);
+                $puBase=  floatval($montants);
             }
             else
             {
-            $puBase=  floatval($montants) / floatval($qteBase);
+                $puBase=  floatval($montants) / floatval($qteBase);
             }
             
             $montanttva=0;

@@ -115,7 +115,7 @@
                                     </div>
                                 </v-flex> 
 
-                                <br>
+                                <!-- <br>
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -125,7 +125,7 @@
                                     </span>
                                 </template>
                                 <span>Imprimer le rapport</span>
-                            </v-tooltip>
+                            </v-tooltip> -->
 
                             <br>
 

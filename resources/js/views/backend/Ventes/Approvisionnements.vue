@@ -375,9 +375,9 @@ export default {
                 refFournisseur: 0,
                 refService: 0,
                 refRecquisition:0,
-                dateEntree: "",
+                dateEntree: new Date().toISOString().substr(0, 10),
                 libelle: "Approvisionnements du Stock",
-                transporteur : '',
+                transporteur : 'Fournisseur',
                 author: "",
                 refUser: 0,
                 totalInvoice:0,
@@ -439,6 +439,17 @@ export default {
         {
             this.fetchListFournisseur();
             this.get_produit_for_service(this.svData.refService);
+        },        
+        refreshAllData()
+        {
+            this.fetchDataList();
+            this.fetchListFournisseur();
+            this.fetchListModule();
+            this.fetchListService();
+            this.fetchListDevise();
+            this.fetchListTVA();
+            this.svData.libelle = "Approvisionnements du Stock";
+
         },
         addItem() {  
             this.updateTotal();         
@@ -563,7 +574,7 @@ export default {
                             this.edit = false;
                             this.dialog = false;
                             this.resetObj(this.svData);
-                            this.fetchDataList();
+                            this.refreshAllData();
                             this.resetForm();
                             this.svData.libelle="Approvisionnements du Stock";
                         })
@@ -615,6 +626,10 @@ export default {
                     if (!this.svData.refService && donnees.length > 0) {
                         this.svData.refService = donnees[0].refService;
 
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refService && donnees.length > 0) {
+                        this.svData.refService = donnees[0].refService;
+                    }
                         // Optionnel : déclencher immédiatement le chargement des produits
                         this.get_produit_for_service(this.svData.refService);
                     }
@@ -637,6 +652,11 @@ export default {
                 ({ data }) => {
                     var donnees = data.data;
                     this.deviseList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.devise && donnees.length > 0) {
+                        this.svData.devise = donnees[0].designation;
+                    }
                 }
             );
         },
@@ -645,6 +665,11 @@ export default {
                 ({ data }) => {
                     var donnees = data.data;
                     this.fournisseurList = donnees;
+
+                    // Sélection par défaut : premier service si rien n’est déjà choisi
+                    if (!this.svData.refFournisseur && donnees.length > 0) {
+                        this.svData.refFournisseur = donnees[0].id;
+                    }
                 }
             );
         },
@@ -678,7 +703,7 @@ export default {
             this.delGlobal(`${this.apiBaseURL}/delete_vente_entete_entree/${id}`).then(
             ({ data }) => {
                 this.showMsg(data.data);
-                this.fetchDataList();
+                this.refreshAllData();
             }
             );
         });

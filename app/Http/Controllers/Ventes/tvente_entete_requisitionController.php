@@ -143,7 +143,6 @@ class tvente_entete_requisitionController extends Controller
 
     }
 
-
     public function all_fournisseur_filter(Request $request)
     { 
         if ($request->get('date1') && $request->get('date2') && $request->get('refFournisseur'))  {

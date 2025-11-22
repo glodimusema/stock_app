@@ -30,16 +30,14 @@
                   >
                 </v-flex>
 
-
-
-              <v-flex xs12 sm12 md12 lg12>
+              <!-- <v-flex xs12 sm12 md12 lg12>
                 <div class="mr-1">
                   <v-autocomplete label="Selectionnez l'agent" prepend-inner-icon="person"
                     :rules="[(v) => !!v || 'Ce champ est requis']" :items="listeMedecin" item-text="noms_agent" item-value="id" dense
                     outlined v-model="svData.idAgent" chips @change="getDataAgent(svData.idAgent)" clearable>
                   </v-autocomplete>
                 </div>
-              </v-flex>
+              </v-flex> -->
 
                 <v-flex xs12 md6 sm6 lg6>
                   <div class="mr-1">

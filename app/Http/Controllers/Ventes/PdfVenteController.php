@@ -27562,6 +27562,157 @@ function pdf_detail_vente_service_excel(Request $request)
 
 
 
+function pdf_detail_invetaire_service_excel(Request $request)
+{
+
+   if ($request->get('date1') && $request->get('date2') && $request->get('idService')) {
+        $date1 = $request->get('date1');
+        $date2 = $request->get('date2');
+        $idService = $request->get('idService');
+
+        $data_return = []; // Initialisation du tableau pour stocker les résultats
+
+        // Récupérer les données de stock, mouvements et ventes en une seule requête 
+        $data = DB::table('tvente_detail_inventaire')
+        ->join('tvente_produit','tvente_produit.id','=','tvente_detail_inventaire.refProduit')
+        ->join('tvente_categorie_produit','tvente_categorie_produit.id','=','tvente_produit.refCategorie')
+
+        ->join('tvente_entete_inventaire','tvente_entete_inventaire.id','=','tvente_detail_inventaire.refEnteteVente')        
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_inventaire.module_id')
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_inventaire.refService')
+        
+        ->select('tvente_detail_inventaire.id','refEnteteVente','refProduit','tvente_detail_inventaire.compte_vente',
+        'tvente_detail_inventaire.compte_variationstock','tvente_detail_inventaire.compte_perte',
+        'tvente_detail_inventaire.compte_produit','tvente_detail_inventaire.compte_destockage','puVente',
+        'qteVente','qteObs','uniteVente','puBase','qteBase','tvente_detail_inventaire.uniteBase','cmupVente',
+        'tvente_detail_inventaire.devise','tvente_detail_inventaire.taux','montantreduction',
+        'tvente_detail_inventaire.active','tvente_detail_inventaire.author','tvente_detail_inventaire.refUser',
+        'tvente_detail_inventaire.created_at','idStockService',
+
+        'tvente_produit.designation','tvente_produit.refCategorie','tvente_produit.refUniteBase',
+        'tvente_produit.pu','tvente_produit.qte','tvente_produit.cmup','tvente_produit.taux',
+        'tvente_produit.Oldcode','tvente_produit.Newcode','tvente_produit.tvaapplique',
+        'tvente_produit.estvendable',"tvente_categorie_produit.designation as Categorie",
+
+        'nom_service', "tvente_module.nom_module",'tvente_entete_inventaire.code','refService',
+        'module_id','dateVente','libelle','priseencharge'
+       )
+       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction),2) as PTVente')
+       ->selectRaw('ROUND(((qteVente*puVente) - montantreduction + montanttva),2) as PTVenteTTC')
+       ->selectRaw('ROUND(montanttva,2) as montanttva')
+       ->selectRaw('((qteVente*puVente)/tvente_detail_inventaire.taux) as PTVenteFC')
+       ->selectRaw('(qteObs - qteVente) as Ecart')
+       ->selectRaw('(qteBase*puBase) as PTBase')
+        ->where([
+            ['tvente_entete_inventaire.dateVente','>=', $date1],
+            ['tvente_entete_inventaire.dateVente','<=', $date2],
+            ['tvente_entete_inventaire.refService','=', $idService]
+        ])
+        ->orderBy("tvente_detail_inventaire.created_at", "asc")    
+        ->get();   
+
+    // Vérifiez que les deux tableaux ont la même longueur
+    if ($data)
+    {
+        for ($i = 0; $i < count($data); $i++) {
+            $row1 = $data[$i];
+
+            $data_return[] = [
+                'N°INV.' => $row1->id,
+                'SERVICE' => $row1->nom_service,
+                'DATE INVENTAIRE.' => $row1->dateVente,
+                'CATEGORIE' => $row1->Categorie,
+                'PRODUIT' => $row1->designation,
+                'UNITE' => $row1->uniteVente,
+                'QTE_OBSERV' => $row1->qteVente,
+                'QTE_PHYSIQUE' => $row1->qteObs,
+                'DIFFERENCE' => $row1->Ecart
+            ];
+
+            //cmupVente
+
+        }
+    } 
+    else {
+        // Gérer le cas où les tableaux n'ont pas la même longueur
+        echo 'Les tableaux ont pas la même longueur.';
+    }
+
+     return response()->json($data_return);
+
+    }
+
+    return response()->json(['error' => 'Invalid parameters'], 400);
+}
+
+function pdf_detail_stock_service_excel(Request $request)
+{
+
+   if ($request->get('idService')) {
+        $idService = $request->get('idService');
+
+        $data_return = []; // Initialisation du tableau pour stocker les résultats
+
+        // Récupérer les données de stock, mouvements et ventes en une seule requête 
+        $data = DB::table('tvente_stock_service')
+            ->join('tvente_services','tvente_services.id','=','tvente_stock_service.refService')
+            ->join('tvente_produit','tvente_produit.id','=','tvente_stock_service.refProduit')
+            ->join('tvente_categorie_produit','tvente_categorie_produit.id','=','tvente_produit.refCategorie')  
+    
+            ->select('tvente_stock_service.id','tvente_stock_service.refService','tvente_stock_service.refProduit',
+            'tvente_stock_service.uniteBase','tvente_stock_service.devise','unitePivot','qtePivot',
+            'tvente_stock_service.taux','tvente_stock_service.active','tvente_stock_service.refUser',
+            'tvente_stock_service.author' ,"tvente_services.nom_service","stock_alerte"  
+            
+            ,"tvente_produit.designation as designation",'refCategorie','refUniteBase','Oldcode',
+            'Newcode','tvaapplique','estvendable',"tvente_categorie_produit.designation as Categorie"
+            )
+            ->selectRaw('IFNULL(tvente_stock_service.qte,0) as qte')
+            ->selectRaw('ROUND(tvente_stock_service.pu,4) as pu')
+            ->selectRaw('ROUND(tvente_stock_service.cmup,4) as cmup')
+            ->selectRaw('ROUND(IFNULL((tvente_stock_service.pu * tvente_stock_service.qte),0),4) as PTCmup')
+        ->where([
+            ['tvente_stock_service.refService','=', $idService]
+        ])
+        ->orderBy("tvente_produit.designation", "asc")    
+        ->get();   
+
+    // Vérifiez que les deux tableaux ont la même longueur
+    if ($data)
+    {
+        for ($i = 0; $i < count($data); $i++) {
+            $row1 = $data[$i];
+
+            $data_return[] = [
+                'N°' => $row1->id,
+                'SERVICE' => $row1->nom_service,
+                'CATEGORIE' => $row1->Categorie,
+                'PRODUIT' => $row1->designation,
+                'UNITE' => $row1->uniteVente,
+                'QTE' => $row1->qte,
+                'PU' => $row1->pu,
+                'PT' => $row1->PT,
+                'DEVISE' => $row1->devise
+            ];
+
+            //cmupVente
+
+        }
+    } 
+    else {
+        // Gérer le cas où les tableaux n'ont pas la même longueur
+        echo 'Les tableaux ont pas la même longueur.';
+    }
+
+     return response()->json($data_return);
+
+    }
+
+    return response()->json(['error' => 'Invalid parameters'], 400);
+}
+
+
+
 
 //======== RAPPORTS DES ENTETES DES FACTURES ET DES CREDITS ==============================================
 //========================================================================================================

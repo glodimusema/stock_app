@@ -70,13 +70,13 @@
                           :rules="[(v) => !!v || 'Ce champ est requis']" outlined v-model="svData.montantreduction">
                         </v-text-field>
 
-                        <v-autocomplete label="Est pris en charge" :items="[
+                        <!-- <v-autocomplete label="Est pris en charge" :items="[
                           { designation: 'NON' }, 
                           { designation: 'OUI' },                                       
                           ]" prepend-inner-icon="extension" :rules="[(v) => !!v || 'Ce champ est requis']" outlined dense
                             item-text="designation" item-value="designation"
                             v-model="svData.priseencharge">
-                        </v-autocomplete>
+                        </v-autocomplete> -->
 
                         <v-autocomplete v-model="svData.id_tva" :items="tvaList"
                                 label="Selectionnez la TVA" :rules="[(v) => !!v || 'Ce champ est requis']"
@@ -271,7 +271,7 @@ export default {
         qteVente: 0,
         devise: "",  
         montantreduction:0,
-        priseencharge:"",      
+        priseencharge: 'NON',      
         author: "",
         refUser: 0,
         id_tva : 0,
@@ -319,6 +319,8 @@ export default {
           this.svData.refEnteteVente = this.refEnteteVente;
           this.svData.author = this.userData.name;
           this.svData.refUser = this.userData.id;
+          // this.svData.priseencharge = 'NON';
+
           this.insertOrUpdate(
             `${this.apiBaseURL}/update_vente_detail_vente/${this.svData.id}`,
             JSON.stringify(this.svData)
@@ -329,7 +331,7 @@ export default {
               this.edit = false;
               this.dialog = false;
               this.resetObj(this.svData);
-              this.fetchDataList();
+              this.ActualiserData();
             })
             .catch((err) => {
               this.svErr(), this.isLoading(false);
@@ -343,6 +345,7 @@ export default {
               this.svData.refEnteteVente = this.refEnteteVente;
               this.svData.author = this.userData.name;
               this.svData.refUser = this.userData.id;
+              this.svData.priseencharge = 'NON';
 
               this.insertOrUpdate(
               `${this.apiBaseURL}/insert_vente_detail_vente`,
@@ -354,7 +357,7 @@ export default {
                 this.edit = false;
                 this.dialog = false;
                 this.resetObj(this.svData);
-                this.fetchDataList();
+                this.ActualiserData();
               })
               .catch((err) => {
                 this.svErr(), this.isLoading(false);
@@ -380,11 +383,26 @@ export default {
 
       }
     },
+    
+    ActualiserData()
+    {
+      this.svData.refEnteteVente = this.refEnteteVente;
+      this.svData.author = this.userData.name;
+      this.svData.refUser = this.userData.id;
+      this.svData.priseencharge = 'NON';
+
+      this.fetchDataList();
+    },
         fetchListDevise() {
             this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_devise_2`).then(
                 ({ data }) => {
                     var donnees = data.data;
                     this.deviseList = donnees;
+
+                     // Sélection par défaut : premiere devise si rien n’est déjà choisi
+                    if (!this.svData.devise && donnees.length > 0) {
+                        this.svData.devise = donnees[0].designation;
+                    }
                 }
             );
         },
@@ -393,6 +411,11 @@ export default {
                 ({ data }) => {
                     var donnees = data.data;
                     this.tvaList = donnees;
+
+                     // Sélection par défaut : premiere devise si rien n’est déjà choisi
+                    if (!this.svData.id_tva && donnees.length > 0) {
+                        this.svData.id_tva = donnees[0].id;
+                    }
                 }
             );
         },

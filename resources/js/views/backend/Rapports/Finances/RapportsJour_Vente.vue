@@ -260,12 +260,38 @@
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
                             <br>
+                            //
+
 
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="exportToExcelDetailVenteService" block color="  blue" dark>
                                             <v-icon>print</v-icon> LES VENTES/SERVICE/EXCEL
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+                            <br>
+
+                            <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="exportToExcelDetailInventaireService" block color="  blue" dark>
+                                            <v-icon>print</v-icon> INVENTAIRES/SERVICE/EXCEL
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+                            <br>
+
+                            <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="exportToExcelDetailStockService" block color="  blue" dark>
+                                            <v-icon>print</v-icon> LISTE DES PRODUITS/SERVICE/EXCEL
                                         </v-btn>
                                     </span>
                                 </template>
@@ -2245,6 +2271,92 @@ export default {
                 else {
                   this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
                 }
+
+            } 
+            catch (error) {
+                console.error("Erreur lors de l'exportation : ", error);
+            }
+        },
+        async exportToExcelDetailInventaireService() {
+            try {
+                var date1 =  this.dates[0] ;
+                var date2 =  this.dates[1] ;
+
+                if (date1 <= date2) {
+
+                    if(this.svData.idService!="")
+                    {
+                        const response = await axios.get(`${this.apiBaseURL}/pdf_detail_invetaire_service_excel?date1=` + date1+"&date2="+date2+"&idService="+this.svData.idService);
+                        let detail_inventaire = response.data; // Changez const en let
+
+                        console.log('Réponse de API:', detail_inventaire); // Vérifiez la structure des données
+
+                        // Adapter l'accès aux données en fonction de la structure
+                        if (Array.isArray(detail_inventaire)) {
+                            // C'est déjà un tableau
+                        } else if (detail_inventaire.data && Array.isArray(detail_inventaire.data)) {
+                            detail_inventaire = detail_inventaire.data; // Accéder au tableau
+                        } else if (detail_inventaire.products && Array.isArray(detail_inventaire.products)) {
+                            detail_inventaire = detail_inventaire.products; // Accéder au tableau
+                        } else {
+                            throw new Error('Les données récupérées ne sont pas un tableau');
+                        }
+
+                        const worksheet = XLSX.utils.json_to_sheet(detail_inventaire);
+                        const workbook = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(workbook, worksheet, 'detail_inventaire');
+
+                        XLSX.writeFile(workbook, 'RapportDetailInventaireService.xlsx');                               
+
+                    }
+                    else
+                    {
+                        this.showError("Veillez selectionner le service svp");
+                    } 
+
+                        
+                } 
+                else {
+                  this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
+                }
+
+            } 
+            catch (error) {
+                console.error("Erreur lors de l'exportation : ", error);
+            }
+        },
+        async exportToExcelDetailStockService() {
+            try {
+
+                if(this.svData.idService!="")
+                    {
+                        const response = await axios.get(`${this.apiBaseURL}/pdf_detail_stock_service_excel?idService=` + this.svData.idService);
+                        let data_stock_service = response.data; // Changez const en let
+
+                        console.log('Réponse de API:', data_stock_service); // Vérifiez la structure des données
+
+                        // Adapter l'accès aux données en fonction de la structure
+                        if (Array.isArray(data_stock_service)) {
+                            // C'est déjà un tableau
+                        } else if (data_stock_service.data && Array.isArray(data_stock_service.data)) {
+                            data_stock_service = data_stock_service.data; // Accéder au tableau
+                        } else if (data_stock_service.products && Array.isArray(data_stock_service.products)) {
+                            data_stock_service = data_stock_service.products; // Accéder au tableau
+                        } else {
+                            throw new Error('Les données récupérées ne sont pas un tableau');
+                        }
+
+                        const worksheet = XLSX.utils.json_to_sheet(data_stock_service);
+                        const workbook = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(workbook, worksheet, 'data_stock_service');
+
+                        XLSX.writeFile(workbook, 'RapportDetailInventaireService.xlsx');                               
+
+                    }
+                    else
+                    {
+                        this.showError("Veillez selectionner le service svp");
+                    }
 
             } 
             catch (error) {

@@ -1035,7 +1035,13 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::get("delete_vente_mouvement_stock/{id}", 'tvente_mouvement_stockController@delete_data');
 
 
+    
+
     //
+
+    Route::get("pdf_detail_invetaire_service_excel", 'PdfVenteController@pdf_detail_invetaire_service_excel');
+    Route::get("pdf_detail_stock_service_excel", 'PdfVenteController@pdf_detail_stock_service_excel');
+
     Route::get("fetch_rapport_entete_facture_client_service_date", 'PdfVenteController@fetch_rapport_entete_facture_client_service_date');
     Route::get("pdf_fiche_stock_vente_service_by_vendable_cmup", 'PdfVenteController@pdf_fiche_stock_vente_service_by_vendable_cmup');
     Route::get("pdf_fiche_stock_vente_service_by_vendable", 'PdfVenteController@pdf_fiche_stock_vente_service_by_vendable');

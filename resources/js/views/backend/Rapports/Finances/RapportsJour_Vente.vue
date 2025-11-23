@@ -236,7 +236,7 @@
                                         </v-autocomplete>
                                     </div>
                                 </v-flex>  
-                                 <br>
+                                 <!-- <br> -->
                               <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -260,9 +260,6 @@
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
                             <br>
-                            //
-
-
                             <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
@@ -2350,7 +2347,7 @@ export default {
                         const workbook = XLSX.utils.book_new();
                         XLSX.utils.book_append_sheet(workbook, worksheet, 'data_stock_service');
 
-                        XLSX.writeFile(workbook, 'RapportDetailInventaireService.xlsx');                               
+                        XLSX.writeFile(workbook, 'RapportProduitStockService.xlsx');                               
 
                     }
                     else

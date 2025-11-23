@@ -27670,7 +27670,7 @@ function pdf_detail_stock_service_excel(Request $request)
             ->selectRaw('IFNULL(tvente_stock_service.qte,0) as qte')
             ->selectRaw('ROUND(tvente_stock_service.pu,4) as pu')
             ->selectRaw('ROUND(tvente_stock_service.cmup,4) as cmup')
-            ->selectRaw('ROUND(IFNULL((tvente_stock_service.pu * tvente_stock_service.qte),0),4) as PTCmup')
+            ->selectRaw('ROUND(IFNULL((tvente_stock_service.pu * tvente_stock_service.qte),0),4) as PT')
         ->where([
             ['tvente_stock_service.refService','=', $idService]
         ])
@@ -27688,7 +27688,7 @@ function pdf_detail_stock_service_excel(Request $request)
                 'SERVICE' => $row1->nom_service,
                 'CATEGORIE' => $row1->Categorie,
                 'PRODUIT' => $row1->designation,
-                'UNITE' => $row1->uniteVente,
+                'UNITE' => $row1->uniteBase,
                 'QTE' => $row1->qte,
                 'PU' => $row1->pu,
                 'PT' => $row1->PT,

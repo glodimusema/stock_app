@@ -339,6 +339,24 @@
                   <td></td>
                   <td></td>
                 </tr>
+
+                <tr style="vertical-align:top;">
+                  <td style="width:0px;height:22px;"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="csAA7EBA13" colspan="4"
+                    style="width:55px;height:22px;line-height:17px;text-align:left;vertical-align:middle;">
+                    <nobr>Service &nbsp;:</nobr>
+                  </td>
+                  <td class="csAA7EBA13" colspan="10"
+                    style="width:260px;height:22px;line-height:17px;text-align:left;vertical-align:middle;">
+                    <nobr>{{ entete.nom_service }}</nobr>
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
                 <tr style="vertical-align:top;">
                   <td style="width:0px;height:10px;"></td>
                   <td></td>

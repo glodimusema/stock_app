@@ -55,12 +55,27 @@
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
                             <br>
+                            <!-- showDetailPaieDuJourByDate -->
 
                              <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showDetailDetailSortieByDate" block color="  blue" dark>
                                             <v-icon>print</v-icon> RAPPORTS DES VENTES
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+
+                            <br>
+                            <!--  -->
+
+                             <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="showDetailPaieDuJourByDate" block color="  blue" dark>
+                                            <v-icon>print</v-icon> RAPPORTS DES PAIEMENTS DU JOUR
                                         </v-btn>
                                     </span>
                                 </template>
@@ -1043,11 +1058,24 @@ export default {
             }
         },
         showDetailDetailSortieByDate() {
+            //fetch_rapport_paiementfacture_vente_date
             var date1 =  this.dates[0] ;
             var date2 =  this.dates[1] ;
             if (date1 <= date2) {
 
                 window.open(`${this.apiBaseURL}/fetch_pdf_rapport_detail_vente_date?date1=` + date1+"&date2="+date2);              
+               
+            } else {
+               this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
+            }
+        },
+        showDetailPaieDuJourByDate() {
+            //
+            var date1 =  this.dates[0] ;
+            var date2 =  this.dates[1] ;
+            if (date1 <= date2) {
+
+                window.open(`${this.apiBaseURL}/fetch_rapport_paiementfacture_vente_date?date1=` + date1+"&date2="+date2);              
                
             } else {
                this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");

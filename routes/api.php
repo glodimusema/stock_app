@@ -922,8 +922,9 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::post("update_vente_entete_requisition/{id}", 'tvente_entete_requisitionController@update_data');
     Route::get("delete_vente_entete_requisition/{id}", 'tvente_entete_requisitionController@delete_data');
 
-    //update_livraison_mobile
+    //fetch_data_service
     Route::get("fetch_vente_entete_vente", 'tvente_entete_venteController@all');
+    Route::get("fetch_vente_entete_vente_user_service", 'tvente_entete_venteController@fetch_data_service');
     Route::get("fetch_vente_entete_vente_dette", 'tvente_entete_venteController@all_dette');
     Route::get("fetch_vente_entete_ventes_filter", 'tvente_entete_venteController@all_filter');
     Route::get("fetch_vente_entete_ventes_filter_client", 'tvente_entete_venteController@all_client_filter');

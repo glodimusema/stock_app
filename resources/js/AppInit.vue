@@ -887,7 +887,7 @@ export default {
                 },
                 { //
                   text: "Liste des Ventes",
-                  href: "/admin/VenteEnteteVente",
+                  href: "/admin/VenteEnteteVenteUserService",
                 },
                 { //
                   text: "Liste des Dettes",
@@ -1096,7 +1096,11 @@ export default {
                   text: "Innitialisation Stock",
                   href: "/admin/CreateRestoreProduct",
                 },
-                {
+                { //
+                  text: "Les Ventes des Services",
+                  href: "/admin/VenteEnteteVente",
+                },
+                { //
                   icon: "store",
                   text: "Rapports",
                   href: "/admin/RapportsJour_Vente",
@@ -1239,6 +1243,10 @@ export default {
                   icon: "store",
                   text: "Rapports Ventes",
                   href: "/admin/RapportsJour_Vente",
+                },
+                { //
+                  text: "Les Ventes des Services",
+                  href: "/admin/VenteEnteteVente",
                 },
                 {
                   text: "Rapport Comptabilité",
@@ -2151,7 +2159,7 @@ export default {
                 },
                 { //
                   text: "Liste des Ventes",
-                  href: "/admin/VenteEnteteVente",
+                  href: "/admin/VenteEnteteVenteUserService",
                 },
                 { //
                   text: "Liste des Dettes",
@@ -2359,6 +2367,10 @@ export default {
                 { 
                   text: "Innitialisation Stock",
                   href: "/admin/CreateRestoreProduct",
+                },
+                { //
+                  text: "Les Ventes des Services",
+                  href: "/admin/VenteEnteteVente",
                 },
                 {
                   icon: "store",
@@ -2703,7 +2715,7 @@ export default {
                 },
                 { //
                   text: "Liste des Ventes",
-                  href: "/admin/VenteEnteteVente",
+                  href: "/admin/VenteEnteteVenteUserService",
                 },
                 { //
                   text: "Liste des Dettes",
@@ -3293,7 +3305,7 @@ export default {
                 },
                 { //
                   text: "Liste des Ventes",
-                  href: "/admin/VenteEnteteVente",
+                  href: "/admin/VenteEnteteVenteUserService",
                 },
                 { //
                   text: "Liste des Dettes",
@@ -3376,6 +3388,10 @@ export default {
                   text: "Innitialisation Stock",
                   href: "/admin/CreateRestoreProduct",
                 },
+                { //
+                  text: "Les Ventes des Services",
+                  href: "/admin/VenteEnteteVente",
+                },
                 {
                   icon: "store",
                   text: "Rapports",
@@ -3428,6 +3444,10 @@ export default {
                 { 
                   text: "Cloture de la Comptabilité",
                   href: "/admin/ClotureComptabilite",
+                },
+                { //
+                  text: "Les Ventes des Services",
+                  href: "/admin/VenteEnteteVente",
                 },
                 {
                   icon: "store",

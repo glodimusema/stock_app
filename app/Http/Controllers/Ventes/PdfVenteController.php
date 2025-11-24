@@ -546,6 +546,7 @@ function showDetailVente($date1, $date2)
     // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
     'priseencharge')
    ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+   ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
    ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
    ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
    ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -1142,6 +1143,7 @@ function showDetailVente_Categorie($date1,$date2,$refCategorie)
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -1727,6 +1729,7 @@ function showDetailVente_EtatfactureService($date1,$date2,$etat_facture,$idServi
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -2272,6 +2275,7 @@ function showDetailVente_Etatfacture($date1,$date2,$etat_facture)
         'dateVente','libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','reduction','totaltva',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -2864,6 +2868,7 @@ function showDetailVente_Service($date1,$date2,$idService)
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -3417,6 +3422,7 @@ function showDetailUsage_Service($date1,$date2,$idService)
         'module_id','dateUse','libelle', 
         'type_sortie')
         ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+        ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -3964,6 +3970,7 @@ function showDetailCuisine_Service($date1,$date2,$idService)
         'nom_service', "tvente_module.nom_module",'tvente_entete_cuisine.code','refClient','refService','refReservation',
         'module_id','dateVente','libelle','priseencharge')
         ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+        ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as montanttva')
@@ -4513,6 +4520,7 @@ function showDetailUsage_Service_Type($date1,$date2,$idService,$type_sortie)
         'module_id','dateUse','libelle', 
         'type_sortie')
         ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+        ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -5109,6 +5117,7 @@ function showDetailVente_Service_Categorie($date1,$date2,$idService,$idCategorie
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -5713,6 +5722,7 @@ function showDetailVente_Produit($date1, $date2,$refProduit)
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -9833,6 +9843,7 @@ function showDetailVenteDette($date1, $date2)
     // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
     'priseencharge')
    ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+   ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
    ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
    ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
    ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -14396,6 +14407,7 @@ function showDetailVente_Service_Produit($date1,$date2,$idService,$idProduit)
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -14951,6 +14963,7 @@ function showDetailUsage_Service_Produit($date1,$date2,$idService,$idProduit)
         'module_id','dateUse','libelle', 
         'type_sortie')
         ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+        ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -15501,6 +15514,7 @@ function showDetailUsage_Service_Categorie($date1,$date2,$idService,$idCategorie
         'module_id','dateUse','libelle', 
         'type_sortie')
         ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+        ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(qteVente*puVente,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -27505,6 +27519,7 @@ function pdf_detail_vente_service_excel(Request $request)
         // 'comptedestockage.numero_ssouscompte as numero_ssouscompteDestockage',
         'priseencharge')
        ->selectRaw('ROUND((qteVente * (puVente - montantreduction)),2) as PTVente')
+       ->selectRaw('ROUND((puVente - montantreduction),2) as puVente')
        ->selectRaw('ROUND(((qteVente * (puVente - montantreduction)) + montanttva),2) as PTVenteTVA')
        ->selectRaw('ROUND((IFNULL(montant,0)),2) as totalFacture')
        ->selectRaw('ROUND((montanttva),2) as TotalTVA')
@@ -29855,11 +29870,13 @@ function printRapportEnteteFacturationClient($date1, $date2, $refService)
          $totalFact=0;
          $totalPaie=0;
          $totalReste=0;
+         $totalReduction = 0;
                  
          //
          $data2 = DB::table('tvente_entete_vente')
         ->selectRaw('
             ROUND(SUM(IFNULL(montant, 0)), 2) as TotalFacture,
+            ROUND(SUM(IFNULL(reduction, 0)), 2) as totalReduction,
             ROUND(SUM(IFNULL(paie, 0)), 2) as TotalPaie,
             ROUND(SUM(IFNULL(montant, 0) - IFNULL(reduction, 0) - IFNULL(paie, 0)), 2) as TotalReste
         ')
@@ -29876,7 +29893,8 @@ function printRapportEnteteFacturationClient($date1, $date2, $refService)
         if ($data2) {                                
             $totalFact = $data2->TotalFacture;
             $totalPaie = $data2->TotalPaie;
-            $totalReste = $data2->TotalReste;                           
+            $totalReste = $data2->TotalReste;
+            $totalReduction = $data2->totalReduction;                          
         }
 
         $nom_service = '';
@@ -30094,7 +30112,7 @@ function printRapportEnteteFacturationClient($date1, $date2, $refService)
                 <td class="cs9FE9304F" style="width:128px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>TOTAL&nbsp;FACTURE($)</nobr></td>
                 <td class="cs9FE9304F" style="width:113px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>TOTAL&nbsp;CASH($)</nobr></td>
                 <td class="cs9FE9304F" colspan="3" style="width:112px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>CREDIT($)</nobr></td>
-                <td class="csEAC52FCD" style="width:102px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>OBS</nobr></td>
+                <td class="csEAC52FCD" style="width:102px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>RED.</nobr></td>
             </tr>
             ';
 
@@ -30108,7 +30126,7 @@ function printRapportEnteteFacturationClient($date1, $date2, $refService)
                 <td class="cs9FE9304F" style="width:128px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$totalFact.'$</td>
                 <td class="cs9FE9304F" style="width:113px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$totalPaie.'$</td>
                 <td class="cs9FE9304F" colspan="3" style="width:112px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$totalReste.'$</td>
-                <td class="csEAC52FCD" style="width:102px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
+                <td class="csEAC52FCD" style="width:102px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->'.$totalReduction.'$</td>
             </tr>
             <tr style="vertical-align:top;">
                 <td style="width:0px;height:10px;"></td>
@@ -30157,7 +30175,8 @@ function showEnteteFacturationClient($date1,$date2,$refService)
 
     ->select(
         'tvente_entete_vente.id','tvente_entete_vente.code','refClient','refService','refReservation','module_id',
-        'dateVente','tvente_entete_vente.libelle','tvente_entete_vente.montant','tvente_entete_vente.paie','tvente_entete_vente.author',
+        'dateVente','tvente_entete_vente.libelle','tvente_entete_vente.montant',
+        'tvente_entete_vente.paie','tvente_entete_vente.author',
         'tvente_entete_vente.refUser','serveur_id','table_id','etat_facture',
         'tvente_entete_vente.created_at','reduction','totaltva',
         'tvente_services.nom_service', 'tvente_module.nom_module','date_paie_current','nombre_print',
@@ -30172,7 +30191,8 @@ function showEnteteFacturationClient($date1,$date2,$refService)
         CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture,
         ROUND(IFNULL(tvente_entete_vente.montant,0),2) as totalFacture,
         ROUND(IFNULL(tvente_entete_vente.paie,0),2) as totalPaie,
-        ROUND((IFNULL(tvente_entete_vente.montant,0) - IFNULL(tvente_entete_vente.paie,0)),2) as RestePaie,
+        ROUND(IFNULL(tvente_entete_vente.reduction,0),2) as totalReduction,
+        ROUND((IFNULL(tvente_entete_vente.montant,0) - IFNULL(tvente_entete_vente.reduction,0) - IFNULL(tvente_entete_vente.paie,0)),2) as RestePaie,
         TIMESTAMPDIFF(DAY, tvente_entete_vente.dateVente, CURDATE()) as nombreJr
     '))
     // ->whereRaw('ROUND((IFNULL(tvente_entete_vente.montant, 0) + IFNULL(tvente_entete_vente.totaltva, 0) - IFNULL(tvente_entete_vente.reduction, 0)) - IFNULL(tvente_entete_vente.paie, 0), 2) > 0')
@@ -30197,7 +30217,7 @@ function showEnteteFacturationClient($date1,$date2,$refService)
                 <td class="cs6E02D7D2" style="width:128px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$row->totalFacture.'$</td>
                 <td class="cs6E02D7D2" style="width:113px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$row->totalPaie.'$</td>
                 <td class="cs6E02D7D2" colspan="3" style="width:112px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">'.$row->RestePaie.'$</td>
-                <td class="cs6C28398D" style="width:102px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>'.$row->nombreJr.'J</nobr></td>
+                <td class="cs6C28398D" style="width:102px;height:22px;line-height:15px;text-align:center;vertical-align:middle;"><nobr>'.$row->totalReduction.'$</nobr></td>
             </tr>
             '; 
            

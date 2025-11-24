@@ -122,7 +122,8 @@ import Produits from './views/backend/Ventes/Produits.vue'
 import Fournisseur from './views/backend/Ventes/Fournisseur.vue'
 import ParamSystem from './views/backend/Ventes/ParamSystem.vue'
 import RetourStock from './views/backend/Ventes/RetourStock.vue'
-//RetourStock
+import VenteEnteteVenteUserService from './views/backend/Ventes/VenteEnteteVenteUserService.vue'
+//
 
 import LogEnteteEntree from './views/backend/Logistique/LogEnteteEntree.vue'
 import LogEnteteRequisition from './views/backend/Logistique/LogEnteteRequisition.vue'
@@ -1261,12 +1262,17 @@ const Router = new VueRouter({
         name: 'Produits',
         component: Produits,
     },
-    { //RetourStock
+    { //
         path: '/admin/Fournisseur',
         name: 'Fournisseur',
         component: Fournisseur,
     },
-    { //RetourStock
+    { //
+        path: '/admin/VenteEnteteVenteUserService',
+        name: 'VenteEnteteVenteUserService',
+        component: VenteEnteteVenteUserService,
+    },
+    { //
         path: '/admin/RetourStock',
         name: 'RetourStock',
         component: RetourStock,

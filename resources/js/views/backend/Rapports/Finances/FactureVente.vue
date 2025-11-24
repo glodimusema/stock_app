@@ -450,7 +450,7 @@
                   </td>
                   <td class="cs38AECAED" colspan="3"
                     style="width:78px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">
-                    <nobr>{{ donnee.puVente }}$</nobr>
+                    <nobr>{{ donnee.PUReduit }}$</nobr>
                   </td>
                   <td class="cs38AECAED" colspan="4"
                     style="width:101px;height:22px;line-height:15px;text-align:center;vertical-align:middle;">

@@ -50,10 +50,11 @@ class tvente_detail_transfertController extends Controller
         ->select('tvente_detail_transfert.id','refEnteteTransfert','refProduit','refDestination','puTransfert',
         'qteTransfert','uniteTransfert','tvente_detail_transfert.puBase','tvente_detail_transfert.qteBase',
         'tvente_detail_transfert.uniteBase','tvente_detail_transfert.author','tvente_detail_transfert.refUser',
-        'tvente_detail_transfert.created_at','refService','date_transfert',"servicesOrigine.nom_service as ServiceOrigine",
-        "servicesDestination.nom_service as ServiceDestination"
+        'tvente_detail_transfert.created_at','refService','date_transfert','libelle_tranafert',
+        "servicesOrigine.nom_service as ServiceOrigine",
+        "servicesDestination.nom_service as ServiceDestination",
 
-        ,"tvente_produit.designation as designation",'refCategorie','refUniteBase','pu','qte',
+        "tvente_produit.designation as designation",'refCategorie','refUniteBase','pu','qte',
         'cmup','devise','taux','Oldcode','Newcode','tvaapplique','estvendable',"tvente_categorie_produit.designation as Categorie",
         'compte_achat','compte_vente','compte_variationstock','tvente_categorie_produit.code',
         'compte_perte','compte_produit','compte_destockage','compte_stockage' 
@@ -109,7 +110,7 @@ class tvente_detail_transfertController extends Controller
         ->select('tvente_detail_transfert.id','refEnteteTransfert','refProduit','refDestination','puTransfert',
         'qteTransfert','uniteTransfert','tvente_detail_transfert.puBase','tvente_detail_transfert.qteBase',
         'tvente_detail_transfert.uniteBase','tvente_detail_transfert.author','tvente_detail_transfert.refUser',
-        'tvente_detail_transfert.created_at','refService','date_transfert',"servicesOrigine.nom_service as ServiceOrigine",
+        'tvente_detail_transfert.created_at','refService','date_transfert','libelle_tranafert',"servicesOrigine.nom_service as ServiceOrigine",
         "servicesDestination.nom_service as ServiceDestination"
 
         ,"tvente_produit.designation as designation",'refCategorie','refUniteBase','pu','qte',
@@ -166,7 +167,7 @@ class tvente_detail_transfertController extends Controller
         ->select('tvente_detail_transfert.id','refEnteteTransfert','refProduit','refDestination','puTransfert',
         'qteTransfert','uniteTransfert','tvente_detail_transfert.puBase','tvente_detail_transfert.qteBase',
         'tvente_detail_transfert.uniteBase','tvente_detail_transfert.author','tvente_detail_transfert.refUser',
-        'tvente_detail_transfert.created_at','refService','date_transfert',"servicesOrigine.nom_service as ServiceOrigine",
+        'tvente_detail_transfert.created_at','refService','date_transfert','libelle_tranafert',"servicesOrigine.nom_service as ServiceOrigine",
         "servicesDestination.nom_service as ServiceDestination"
 
         ,"tvente_produit.designation as designation",'refCategorie','refUniteBase','pu','qte',
@@ -495,7 +496,8 @@ class tvente_detail_transfertController extends Controller
         $data = tvente_entete_transfert::create([
             'refService'       =>  $request->refService,
             'module_id'       =>  $id_module,
-            'date_transfert'       =>  $request->date_transfert,         
+            'date_transfert'       =>  $request->date_transfert, 
+            'libelle_tranafert'       =>  $request->libelle_tranafert,        
             'author'       =>  $request->author,
             'refUser'    =>  $request->refUser
         ]);
@@ -970,7 +972,8 @@ class tvente_detail_transfertController extends Controller
         $data = tvente_entete_transfert::create([
             'refService'       =>  $refService,
             'module_id'       =>  $id_module,
-            'date_transfert'       =>  $date_transfert,         
+            'date_transfert'       =>  $date_transfert,  
+            'libelle_tranafert'       =>  'Transfert depuis l\'approvisionnement N°: '.$id_appro,       
             'author'       =>  $author,
             'refUser'    =>  $refUser
         ]);
@@ -1261,7 +1264,8 @@ class tvente_detail_transfertController extends Controller
         $data = tvente_entete_transfert::create([
             'refService'       =>  $request->refService,
             'module_id'       =>  $id_module,
-            'date_transfert'       =>  $request->date_transfert,         
+            'date_transfert'       =>  $request->date_transfert,   
+            'libelle_tranafert'       =>  'Transfert et Consommation directe',      
             'author'       =>  $request->author,
             'refUser'    =>  $request->refUser
         ]);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class tvente_entete_transfert extends Model
 {
-    protected $fillable=['id','refService','date_transfert','module_id','author','refUser'];
+    protected $fillable=['id','refService','date_transfert','module_id','libelle_tranafert','author','refUser'];
     protected $table = 'tvente_entete_transfert';     
 }
 

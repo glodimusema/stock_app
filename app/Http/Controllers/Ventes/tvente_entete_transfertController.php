@@ -33,7 +33,7 @@ class tvente_entete_transfertController extends Controller
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
         ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
         ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
-        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
         'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module");
         if (!is_null($request->get('query'))) {
             # code...
@@ -69,7 +69,7 @@ class tvente_entete_transfertController extends Controller
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
         ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
         ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
-        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
         'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
         ->where([
             ['tvente_entete_transfert.refService','=', $refService]
@@ -112,7 +112,7 @@ class tvente_entete_transfertController extends Controller
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
         ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
         ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
-        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
         'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
         ->where([
             ['tvente_entete_transfert.created_at','>=', $formattedDate],
@@ -138,7 +138,7 @@ class tvente_entete_transfertController extends Controller
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
         ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
         ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
-        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
         'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
         ->Where('refFournisseur',$refEntete);
         if (!is_null($request->get('query'))) {
@@ -163,7 +163,7 @@ class tvente_entete_transfertController extends Controller
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
         ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
         ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
-        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
         'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
         ->where('tvente_entete_transfert.id', $id)
         ->get();
@@ -173,7 +173,7 @@ class tvente_entete_transfertController extends Controller
         ]);
     }
 
-    // 'id','refService','date_transfert','author','refUser' 
+    // 'id','refService','date_transfert','libelle_tranafert','author','refUser' 
 
     function insert_data(Request $request)
     {
@@ -182,6 +182,7 @@ class tvente_entete_transfertController extends Controller
         $data = tvente_entete_transfert::create([
             'refService'       =>  $request->refService,
             'module_id'       =>  $id_module,
+            'libelle_tranafert'       =>  $request->libelle_tranafert,         
             'date_transfert'       =>  $request->date_transfert,         
             'author'       =>  $request->author,
             'refUser'    =>  $request->refUser
@@ -195,7 +196,8 @@ class tvente_entete_transfertController extends Controller
     {
         $data = tvente_entete_transfert::where('id', $id)->update([
             'refService'       =>  $request->refService,
-            'date_transfert'       =>  $request->date_transfert,         
+            'date_transfert'       =>  $request->date_transfert,  
+            'libelle_tranafert'       =>  $request->libelle_tranafert,       
             'author'       =>  $request->author,
             'refUser'    =>  $request->refUser
         ]);
@@ -227,7 +229,7 @@ class tvente_entete_transfertController extends Controller
             ->join('tvente_services as servicesDestination','servicesDestination.id','=','tvente_detail_transfert.refDestination')
             ->select('tvente_detail_transfert.id','refEnteteTransfert','refProduit','refDestination',
             'puTransfert','qteTransfert','uniteTransfert','puBase','qteBase','uniteBase','tvente_detail_transfert.author',
-            'tvente_detail_transfert.refUser','refService','date_transfert',
+            'tvente_detail_transfert.refUser','refService','date_transfert','libelle_tranafert',
             'servicesOrigine.status as status_source',
             'servicesDestination.status as status_dest')
             ->selectRaw('(qteBase * qteTransfert) as qteTotal')

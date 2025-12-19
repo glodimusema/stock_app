@@ -18,12 +18,14 @@ class CreateTventeEnteteTransfertTable extends Migration
             $table->foreignId('refService')->constrained('tvente_services')->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('date_transfert');
             $table->foreignId('module_id')->constrained('tvente_module')->restrictOnUpdate()->restrictOnDelete();
+            $table->string('libelle_tranafert',100)->nullable();
             $table->string('author',100);  
             $table->foreignId('refUser')->constrained('users')->restrictOnUpdate()->restrictOnDelete();
             $table->timestamps();
         });
     }
 
+    //libelle_tranafert
     /**
      * Reverse the migrations.
      *

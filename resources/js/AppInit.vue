@@ -3500,6 +3500,247 @@ export default {
           ],
         };
       }
+      //Agent
+      else if (this.userData.id_role == 7) {
+        this.linkAdmin = {
+          links: [
+            {
+              icon: "mdi-microsoft-windows",
+              text: "Tableau de bord",
+              href: "/admin/dashboard",
+            },
+            {
+              icon: "mdi-chart-pie",
+              text: "Tableau de bord(Ese)",
+              href: "/admin/statistique_entreprise",
+            },
+            {
+              icon: "chat",
+              text: "Chat",
+              href: "/admin/chat",
+            },
+          ],
+          links_operation_2: [
+          ],
+          links_finance: [
+          ],
+          links_vente: [
+          ],
+          links_tresorerie: [
+          ],
+          links_hotel: [
+          ],
+          links_personne: [
+          ],
+          links_operation: [
+          ],
+          links_systems: [
+          ],
+          sublinks: [
+            {
+              icon: "book",
+              text: "A propos ",
+              href: "/admin/about_page",
+            },
+          ],
+          listCommancdes: [
+            {
+              text: "Commandes",
+              icon: "mdi-cart-off",
+              items: [ 
+              { //Commandes
+                text: "Creation Commandes",
+                href: "/admin/Commandes",
+              },
+              {
+                text: "Appro. par Commande",
+                href: "/admin/ApprovCommandes",
+              },               
+              { //Commandes
+                text: "Listes Commandes",
+                href: "/admin/VenteEnteteCommande",
+              },                
+              { //Commandes
+                text: "Paiement Fact. Fss.",
+                href: "/admin/VenteEntetePaieCmd",
+              },
+              {
+                text: "Clients",
+                href: "/admin/ClientVente",
+              },
+              {
+                text: "Produits",
+                href: "/admin/Produits",
+              },
+              {
+                icon: "store",
+                text: "Fournisseurs",
+                href: "/admin/Fournisseur",
+              },
+              {
+                icon: "store",
+                text: "Rapports",
+                href: "/admin/RapportEntree",
+              },
+                  
+              ],
+            },
+          ],
+          listAppro: [
+            {
+              text: "Entrée Stock",
+              icon: "mdi-cart-plus",
+              items: [
+              {
+                text: "Création Appro.",
+                href: "/admin/Approvisionnements",
+              },
+              { //RetourStock
+                text: "Appro. par Commande",
+                href: "/admin/ApprovCommandes",
+              },
+              { //RetourStock
+                text: "Retour Stock",
+                href: "/admin/RetourStock",
+              },
+              {
+                text: "Liste Appro.",
+                href: "/admin/VenteEnteteEntree",
+              },
+              { //RapportEntree     RapportSortie
+                text: "Création Transfert",
+                href: "/admin/TransfertStock",
+              },
+              { //
+                text: "Les Transfert/Service",
+                href: "/admin/ListeTransfertService",
+              },
+              { 
+                text: "Transfert/Usage",
+                href: "/admin/TranfertUsage",
+              },
+              // { 
+              //   text: "Liste Transfert",
+              //   href: "/admin/VenteEnteteTransfert",
+              // },
+              {
+                text: "Produits",
+                href: "/admin/Produits",
+              },
+              {
+                icon: "store",
+                text: "Fournisseurs",
+                href: "/admin/Fournisseur",
+              },
+              {
+                icon: "groups",
+                text: "Services Vente",
+                href: "/admin/VenteServices",
+              },
+              { //TestExcel
+                icon: "store",
+                text: "Rapports",
+                href: "/admin/RapportEntree",
+              },
+              { //TestExcel
+                icon: "store",
+                text: "Excel",
+                href: "/admin/TestExcel",
+              },
+              ],
+            },
+          ],
+          listVentes: [
+            {
+              text: "Vente Produit",
+              icon: "mdi-cart",
+              items: [
+                // {
+                //   text: "Création Vente",
+                //   href: "/admin/CreateVentes",
+                // },
+                // {
+                //   text: "Création Vente(Gros)",
+                //   href: "/admin/CreateVenteGros",
+                // },
+                // { //
+                //   text: "Liste des Ventes",
+                //   href: "/admin/VenteEnteteVenteUserService",
+                // },
+                // { //
+                //   text: "Liste des Dettes",
+                //   href: "/admin/VenteEnteteDette",
+                // },
+                // {
+                //   // StatistiqueVente
+                //   text: "Paiement Ventes",
+                //   href: "/admin/VenteEntetePaieVente",
+                // },
+                // {
+                //   // 
+                //   text: "Statistique des Ventes",
+                //   href: "/admin/StatistiqueVente",
+                // },
+                // {
+                //   text: "Les Clients",
+                //   href: "/admin/ClientVente",
+                // },
+                // {
+                //   text: "Produits",
+                //   href: "/admin/Produits",
+                // },
+                // {
+                //   icon: "store",
+                //   text: "Fournisseurs",
+                //   href: "/admin/Fournisseur",
+                // },
+                // { //
+                //   icon: "store",
+                //   text: "Rapports",
+                //   href: "/admin/RapportSortie",
+                // },
+                // { //
+                //   icon: "store",
+                //   text: "Rapports",
+                //   href: "/admin/RaportVenteAcces",
+                // },
+              ],
+            },
+          ],
+          listUsage: [
+            {
+              text: "Sortie Produit",
+              icon: "mdi-alert",
+              items: [
+                {
+                  text: "Création Usage",
+                  href: "/admin/CreateUsage",
+                },
+                {
+                  text: "Liste des Usages",
+                  href: "/admin/VenteEnteteUse",
+                },                {
+                  icon: "store",
+                  text: "Rapports",
+                  href: "/admin/RapportSortie",
+                },
+              ],
+            },
+          ],
+          links_systems_mouvement: [
+          ],
+          links_systems_mouvement_2: [
+            // ProfilPatient
+          ],
+          links_systems_mouvement_3: [
+          ],
+
+          admins: [
+            ["Management", ""],
+            ["Settings", ""],
+          ],
+        };
+      }
       else {
       }
     },

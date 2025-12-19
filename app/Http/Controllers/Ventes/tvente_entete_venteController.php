@@ -422,7 +422,7 @@ class tvente_entete_venteController extends Controller
         ->selectRaw('IFNULL(paie,0) as totalPaie')
         ->selectRaw('ROUND((IFNULL((IFNULL(montant,0) + IFNULL(totaltva,0) - IFNULL(reduction,0)),0) - IFNULL(paie,0)),2) as RestePaie')
         ->where([
-            ['tvente_entete_vente.nombre_print','<',1],
+            ['tvente_entete_vente.nombre_print','<',2],
             ['tvente_entete_vente.created_at','>=', $formattedDate],
             ['tvente_entete_vente.refService','=', $refService]
         ]);

@@ -278,7 +278,7 @@ export default {
                 this.loadings = false; // Arrêtez le chargement en cas d'erreur
             }
 
-      },
+        },
         async updateUnite(index) {
                 try {
                     // Fetch the unit detail for the specified reference

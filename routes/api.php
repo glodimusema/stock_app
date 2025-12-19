@@ -1282,7 +1282,11 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::post("update_vente_detail_inventaire/{id}", 'tvente_detail_inventaireController@update_data');
     Route::get("delete_vente_detail_inventaire/{id}", 'tvente_detail_inventaireController@delete_data');
 
+    
+
     Route::get("fetch_vente_entete_transfert", 'tvente_entete_transfertController@all');
+    Route::get("fetch_vente_entete_transfert_by_service", 'tvente_entete_transfertController@fetch_data_by_service');
+    Route::get("fetch_vente_entete_transfert_encours", 'tvente_entete_transfertController@fetch_data_encours');
     Route::get("fetch_vente_entete_transfert/{refEntete}", 'tvente_entete_transfertController@fetch_data_entete');
     Route::get("fetch_single_vente_entete_transfert/{id}", 'tvente_entete_transfertController@fetch_single_data');    
     Route::post("insert_vente_entete_transfert", 'tvente_entete_transfertController@insert_data');

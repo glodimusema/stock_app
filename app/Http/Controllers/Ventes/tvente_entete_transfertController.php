@@ -24,7 +24,7 @@ class tvente_entete_transfertController extends Controller
       // return $request->get('query');
     }
 
-    // 'id','refService','date_transfert','author','refUser'   tvente_entete_transfert
+    //  'id','refService','date_transfert','author','refUser'   tvente_entete_transfert
 
     public function all(Request $request)
     { 
@@ -49,6 +49,86 @@ class tvente_entete_transfertController extends Controller
         $data->orderBy("tvente_entete_transfert.created_at", "desc");
         return $this->apiData($data->paginate(10));
         
+    }
+
+
+    public function fetch_data_by_service(Request $request)
+    { 
+        $refService='';
+        $data3 = DB::table('tvente_user_service')
+        ->select('id','refUser','refService','active','author')        
+        ->where('tvente_user_service.refUser','=', $request->get('refUser'))
+        ->orderBy('tvente_user_service.id', 'desc')         
+        ->first();    
+        if ($data3) 
+        {                           
+            $refService = $data3->refService;          
+        }
+
+        $data = DB::table('tvente_entete_transfert')       
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
+        ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
+        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
+        ->where([
+            ['tvente_entete_transfert.refService','=', $refService]
+        ]);
+        if (!is_null($request->get('query'))) {
+            # code...
+            $query = $this->Gquery($request);
+
+            $data->where('tvente_services.nom_service', 'like', '%'.$query.'%')          
+            ->orderBy("tvente_entete_transfert.created_at", "desc");
+
+            return $this->apiData($data->paginate(10));
+           
+
+        }
+        $data->orderBy("tvente_entete_transfert.created_at", "desc");
+        return $this->apiData($data->paginate(10));
+        
+    }
+
+
+    public function fetch_data_encours(Request $request)
+    {
+
+        $refService='';
+        $data3 = DB::table('tvente_user_service')
+        ->select('id','refUser','refService','active','author')        
+        ->where('tvente_user_service.refUser','=', $request->get('refUser'))
+        ->orderBy('tvente_user_service.id', 'desc')         
+        ->first();    
+        if ($data3) 
+        {                           
+            $refService = $data3->refService;          
+        }
+
+        $current = Carbon::now(); 
+        $formattedDate = $current->format('Y-m-d');
+
+        $data = DB::table('tvente_entete_transfert')       
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
+        ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService','date_transfert',
+        'tvente_entete_transfert.author','tvente_entete_transfert.refUser','tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
+        ->where([
+            ['tvente_entete_transfert.created_at','>=', $formattedDate],
+            ['tvente_entete_transfert.refService','=', $refService]
+        ]);
+        if (!is_null($request->get('query'))) {
+            # code...
+            $query = $this->Gquery($request);
+
+            $data ->where('nom_service', 'like', '%'.$query.'%')          
+            ->orderBy("tvente_entete_transfert.created_at", "desc");
+            return $this->apiData($data->paginate(10));         
+
+        }       
+        $data->orderBy("tvente_entete_transfert.created_at", "desc");
+        return $this->apiData($data->paginate(10));
     }
 
 

@@ -821,11 +821,11 @@ export default {
                 text: "Création Appro.",
                 href: "/admin/Approvisionnements",
               },
-              { //RetourStock
+              { //
                 text: "Appro. par Commande",
                 href: "/admin/ApprovCommandes",
               },
-              { //RetourStock
+              { //
                 text: "Retour Stock",
                 href: "/admin/RetourStock",
               },
@@ -833,15 +833,19 @@ export default {
                 text: "Liste Appro.",
                 href: "/admin/VenteEnteteEntree",
               },
-              { //RapportEntree     RapportSortie
+              { //
                 text: "Création Transfert",
                 href: "/admin/TransfertStock",
               },
-              { //ApprovCommandes
+              { //
                 text: "Transfert/Usage",
                 href: "/admin/TranfertUsage",
               },
-              { //TransfertStock  TranfertUsage
+              { //
+                text: "Les Transfert/Service",
+                href: "/admin/ListeTransfertService",
+              },
+              { //
                 text: "Liste Transfert",
                 href: "/admin/VenteEnteteTransfert",
               },
@@ -2113,6 +2117,10 @@ export default {
                 text: "Transfert/Usage",
                 href: "/admin/TranfertUsage",
               },
+              { //
+                text: "Les Transfert/Service",
+                href: "/admin/ListeTransfertService",
+              },
               { //TransfertStock  TranfertUsage
                 text: "Liste Transfert",
                 href: "/admin/VenteEnteteTransfert",
@@ -3258,6 +3266,10 @@ export default {
               { //ApprovCommandes
                 text: "Transfert/Usage",
                 href: "/admin/TranfertUsage",
+              },
+              { //
+                text: "Les Transfert/Service",
+                href: "/admin/ListeTransfertService",
               },
               { //TransfertStock  TranfertUsage
                 text: "Liste Transfert",

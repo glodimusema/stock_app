@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Ventes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+// 
 use App\Models\Ventes\{tvente_produit};
+use App\Models\Ventes\{tvente_detail_unite};
 use App\Models\Produit;
 use App\Traits\{GlobalMethod,Slug};
 use DB;
@@ -118,7 +119,8 @@ class tvente_produitController extends Controller
     //'cmup','devise','taux','Oldcode','Newcode','tvaapplique','estvendable','author','refUser'
 
     public function store(Request $request)
-    {
+    { 
+
         $taux=0;
         $data5 =  DB::table("tvente_taux")
         ->select("tvente_taux.id", "tvente_taux.taux", 
@@ -154,14 +156,14 @@ class tvente_produitController extends Controller
             ->select('nom_unite','code_unite')
             ->where([
                ['tvente_unite.id','=', $request->refUniteBase]
-           ])      
-           ->get();      
-           $output='';
-           foreach ($data4 as $row) 
-           {
-               $uniteBase = $row->nom_unite;
-               $unite = $row->nom_unite;
-           }
+            ])      
+            ->get();      
+            $output='';
+            foreach ($data4 as $row) 
+            {
+                $uniteBase = $row->nom_unite;
+                $unite = $row->nom_unite;
+            }
 
             # code...
             // update stock_alerte
@@ -221,6 +223,30 @@ class tvente_produitController extends Controller
                 'stock_alerte'    =>  $request->stock_alerte,
                 'author'    =>  $request->author,
                 'refUser'    =>  $request->refUser  
+            ]);
+
+            $idmax=0;
+            $maxid = DB::table('tvente_produit')       
+            ->selectRaw('MAX(tvente_produit.id) as code_entete')
+            ->where('tvente_produit.refUser', $request->refUser)
+            ->get();
+            foreach ($maxid as $list) {
+                $idmax= $list->code_entete;
+            }
+
+
+             $data_unite = tvente_detail_unite::create([
+                'refProduit'       =>  $idmax,
+                'refUnite'    =>  $request->refUniteBase,
+                'puUnite'    =>  $montants,
+                'qteUnite'    =>  1,
+                'puBase'    =>  $montants,
+                'qteBase'    =>  1,
+                'estunite'    =>  'OUI',
+                'estpivot'    =>  'OUI',
+                'active'    =>  'OUI',
+                'author'       =>  $request->author,
+                'refUser'       =>  $request->refUser
             ]);
 
             //cmup

@@ -308,7 +308,7 @@ export default {
     },
 
     printBill(id) {
-      window.open(`${this.apiBaseURL}/pdf_bonentree_data?id=` + id);
+      window.open(`${this.apiBaseURL}/pdf_fiche_transfert_produit?id=` + id);
     },
     deleteData(id) {
       this.confirmMsg().then(({ res }) => {

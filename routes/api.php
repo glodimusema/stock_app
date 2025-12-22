@@ -1059,7 +1059,8 @@ Route::group(['namespace'   =>  "Ventes"], function(){
     Route::get("pdf_fiche_stock_vente_service_bycategorie_unite_excel", 'PdfVenteController@pdf_fiche_stock_vente_service_bycategorie_unite_excel');
     Route::get("pdf_fiche_stock_vente_service_unite_excel", 'PdfVenteController@pdf_fiche_stock_vente_service_unite_excel');
 
-    //pdf_fiche_stock_vente_service_sans_prix_excel
+    //pdf_fiche_transfert_produit
+    Route::get("pdf_fiche_transfert_produit", 'PdfVenteController@pdf_fiche_transfert_produit');
     Route::get("pdf_fiche_stock_vente_service_bycategorie_excel", 'PdfVenteController@pdf_fiche_stock_vente_service_bycategorie_excel');
     Route::get("pdf_fiche_stock_vente_service_excel", 'PdfVenteController@pdf_fiche_stock_vente_service_excel');
     Route::get("pdf_fiche_stock_vente_service_sans_prix_excel", 'PdfVenteController@pdf_fiche_stock_vente_service_sans_prix_excel');

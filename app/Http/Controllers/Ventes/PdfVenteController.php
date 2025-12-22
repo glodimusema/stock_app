@@ -24006,16 +24006,6 @@ function showDetailTransfert_Service_Destination($date1,$date2,$idService)
     return $output;
 
 }
-
-
-
-
-
-
-
-
-
-
 //== FICHE DE STOCK DES SERVICES SANS PRIX ET POUR LES FILTRES DES NON VENDABLES ET VENDABLES=======================================================================================
 
 //pdf_fiche_stock_vente_service_by_vendable
@@ -25953,6 +25943,553 @@ function showDetailFicheStockServiceByVendableCMUP($date1, $date2, $refCategorie
 }
 
 
+
+//======================= FICHE MOUVEMENT SUR LE PRODUIT ==================================================================
+//=========================================================================================================================
+
+function pdf_fiche_transfert_produit(Request $request)
+{
+
+    if ($request->get('id')) 
+    {
+        $id = $request->get('id');
+
+        $html = $this->getInfoFicheTransfertProduit($id);
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($html);
+        $pdf->loadHTML($html)->setPaper('a4');
+        return $pdf->stream();
+        
+    }
+    else{
+
+    }   
+    
+}
+
+function getInfoFicheTransfertProduit($id)
+{
+           //Info Entreprise
+           $nomEse='';
+           $adresseEse='';
+           $Tel1Ese='';
+           $Tel2Ese='';
+           $siteEse='';
+           $emailEse='';
+           $idNatEse='';
+           $numImpotEse='';
+           $rccEse='';
+           $siege='';
+           $busnessName='';
+           $pic='';
+           $pic2 = $this->displayImg("fichier", 'logo.png');
+           $logo='';
+   
+           $data1 = DB::table('entreprises')
+           ->join('secteurs','secteurs.id','=','entreprises.idsecteur')
+           ->join('forme_juridiques','forme_juridiques.id','=','entreprises.idforme')
+   
+           ->join('pays','pays.id','=','entreprises.idPays')
+           ->join('provinces','provinces.id','=','entreprises.idProvince')
+           ->join('users','users.id','=','entreprises.ceo')        
+           ->select('entreprises.id as id','entreprises.id as idEntreprise',
+           'entreprises.ceo','entreprises.nomEntreprise','entreprises.descriptionEntreprise',
+           'entreprises.emailEntreprise','entreprises.adresseEntreprise',
+           'entreprises.telephoneEntreprise','entreprises.solutionEntreprise','entreprises.idsecteur',
+           'entreprises.idforme','entreprises.etat',
+           'entreprises.idPays','entreprises.idProvince','entreprises.edition','entreprises.facebook',
+           'entreprises.linkedin','entreprises.twitter','entreprises.siteweb','entreprises.rccm',
+           'entreprises.invPersonnel','entreprises.invHub','entreprises.invRecherche',
+           'entreprises.chiffreAffaire','entreprises.nbremploye','entreprises.slug','entreprises.logo',
+               //forme
+               'forme_juridiques.nomForme','secteurs.nomSecteur',
+               //users
+               'users.name','users.email','users.avatar','users.telephone','users.adresse',
+               //
+               'provinces.nomProvince','pays.nomPays', 'entreprises.created_at')
+           ->get();
+           $output='';
+           foreach ($data1 as $row) 
+           {                                
+               $nomEse=$row->nomEntreprise;
+               $adresseEse=$row->adresseEntreprise;
+               $Tel1Ese=$row->telephoneEntreprise;
+               $Tel2Ese=$row->telephone;
+               $siteEse=$row->siteweb;
+               $emailEse=$row->emailEntreprise;
+               $idNatEse=$row->rccm;
+               $numImpotEse=$row->rccm;
+               $busnessName=$row->nomSecteur;
+               $rccmEse=$row->rccm;
+               $pic = $this->displayImg("fichier", 'logo.png');
+               $siege=$row->nomForme;         
+           }
+               //
+          $totalTransfert=0;
+
+          $date_total = DB::table('tvente_detail_transfert')   
+          ->select(DB::raw('IFNULL(ROUND(SUM(qteTransfert * puTransfert),3),0) as totalTransfert'))
+          ->where([  
+              ['tvente_detail_transfert.refEnteteTransfert','=', $id]              
+          ])               
+          ->get();
+          foreach ($date_total as $row) 
+          {                                
+             $totalTransfert=$row->totalTransfert;                           
+          }
+
+
+          $date_transfert='';
+          $service_source='';
+          $libelle_tranafert='';
+
+          $date_total = DB::table('tvente_entete_transfert')       
+        ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
+        ->join('tvente_module','tvente_module.id','=','tvente_entete_transfert.module_id')
+        ->select('tvente_entete_transfert.id','tvente_entete_transfert.refService',
+        'tvente_entete_transfert.author','libelle_tranafert','tvente_entete_transfert.refUser',
+        'tvente_entete_transfert.module_id',
+        'tvente_entete_transfert.created_at',"tvente_services.nom_service","nom_module")
+        ->selectRaw("DATE_FORMAT(date_transfert,'%d/%m/%Y') as date_transfert")
+          ->where([  
+              ['tvente_entete_transfert.id','=', $id]              
+          ])               
+          ->get();
+          foreach ($date_total as $row) 
+          {                                
+             $date_transfert = $row->date_transfert;  
+             $service_source = $row->nom_service;
+             $libelle_tranafert = $row->libelle_tranafert;                         
+          }
+
+          $aps = "'";
+                    
+          
+          $output='';  
+          $output=' 
+
+                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                <!-- saved from url=(0016)http://localhost -->
+                <html>
+                <head>
+                    <title>rptFicheTransfert</title>
+                    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
+                    <style type="text/css">
+                        .cs1E4BB091 {color:#000000;background-color:transparent;border-left:#000000 1px solid;border-top:#000000 1px solid;border-right:#000000 1px solid;border-bottom:#000000 1px solid;font-family:Times New Roman; font-size:11px; font-weight:bold; font-style:normal; }
+                        .csE5AC9E0D {color:#000000;background-color:transparent;border-left:#000000 1px solid;border-top:#000000 1px solid;border-right:#000000 1px solid;border-bottom:#000000 1px solid;font-family:Times New Roman; font-size:11px; font-weight:normal; font-style:normal; }
+                        .csEE1F9023 {color:#000000;background-color:transparent;border-left-style: none;border-top:#000000 1px solid;border-right:#000000 1px solid;border-bottom:#000000 1px solid;font-family:Times New Roman; font-size:11px; font-weight:bold; font-style:normal; }
+                        .cs3B0DD49A {color:#000000;background-color:transparent;border-left-style: none;border-top:#000000 1px solid;border-right:#000000 1px solid;border-bottom:#000000 1px solid;font-family:Times New Roman; font-size:11px; font-weight:normal; font-style:normal; }
+                        .cs612ED82F {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Times New Roman; font-size:12px; font-weight:bold; font-style:normal; padding-left:2px;}
+                        .cs8A513397 {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Times New Roman; font-size:13px; font-weight:bold; font-style:normal; padding-left:2px;}
+                        .cs101A94F7 {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Times New Roman; font-size:13px; font-weight:normal; font-style:normal; }
+                        .cs6105B8F3 {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Times New Roman; font-size:13px; font-weight:normal; font-style:normal; padding-left:2px;}
+                        .csE5855143 {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Times New Roman; font-size:21px; font-weight:bold; font-style:normal; padding-left:2px;padding-right:2px;}
+                        .cs739196BC {color:#5C5C5C;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Segoe UI; font-size:11px; font-weight:normal; font-style:normal; }
+                        .csF7D3565D {height:0px;width:0px;overflow:hidden;font-size:0px;line-height:0px;}
+                    </style>
+                </head>
+                <body leftMargin=10 topMargin=10 rightMargin=10 bottomMargin=10 style="background-color:#FFFFFF">
+                <table cellpadding="0" cellspacing="0" border="0" style="border-width:0px;empty-cells:show;width:652px;height:443px;position:relative;">
+                    <tr>
+                        <td style="width:0px;height:0px;"></td>
+                        <td style="height:0px;width:10px;"></td>
+                        <td style="height:0px;width:74px;"></td>
+                        <td style="height:0px;width:38px;"></td>
+                        <td style="height:0px;width:20px;"></td>
+                        <td style="height:0px;width:13px;"></td>
+                        <td style="height:0px;width:15px;"></td>
+                        <td style="height:0px;width:29px;"></td>
+                        <td style="height:0px;width:18px;"></td>
+                        <td style="height:0px;width:31px;"></td>
+                        <td style="height:0px;width:73px;"></td>
+                        <td style="height:0px;width:25px;"></td>
+                        <td style="height:0px;width:63px;"></td>
+                        <td style="height:0px;width:8px;"></td>
+                        <td style="height:0px;width:18px;"></td>
+                        <td style="height:0px;width:11px;"></td>
+                        <td style="height:0px;width:24px;"></td>
+                        <td style="height:0px;width:13px;"></td>
+                        <td style="height:0px;width:43px;"></td>
+                        <td style="height:0px;width:38px;"></td>
+                        <td style="height:0px;width:15px;"></td>
+                        <td style="height:0px;width:35px;"></td>
+                        <td style="height:0px;width:32px;"></td>
+                        <td style="height:0px;width:6px;"></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:23px;"></td>
+                        <td class="cs739196BC" colspan="12" style="width:409px;height:23px;line-height:14px;text-align:center;vertical-align:middle;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:12px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$nomEse.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs101A94F7" colspan="5" rowspan="5" style="width:126px;height:110px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:126px;height:110px;">
+                            <img alt="" src="'.$pic2.'" style="width:126px;height:110px;" /></div>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs6105B8F3" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$busnessName.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>RCCM&nbsp;'.$rccEse.'.&nbsp;ID&nbsp;NAT&nbsp;'.$idNatEse.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>N&#176;&nbsp;Impot : '.$numImpotEse.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Tel&#233;phone&nbsp;:&nbsp;'.$Tel1Ese.' - '.$Tel2Ese.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:17px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:25px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="csE5855143" colspan="18" style="width:491px;height:25px;line-height:25px;text-align:center;vertical-align:middle;"><nobr>BORDEREAU&nbsp;D'.$aps.'EXPEDITION&nbsp;N&#176;&nbsp;:&nbsp;00'.$id.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:10px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:23px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="8" style="width:236px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Bordereau&nbsp;de&nbsp;Marchandise&nbsp;exp&#233;di&#233;es&nbsp;le&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="12" style="width:364px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$date_transfert.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="3" style="width:130px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Nom&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="17" style="width:470px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$service_source.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="9" rowspan="2" style="width:309px;height:32px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Autres&nbsp;d&#233;tails&nbsp;(Transporteur&nbsp;,&nbsp;Chauffeur,&nbsp;Camion,&nbsp;etc.)</nobr><br/><nobr>:</nobr></td>
+                        <td class="cs6105B8F3" colspan="11" style="width:291px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$libelle_tranafert.'</nobr></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:10px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:18px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:24px;"></td>
+                        <td></td>
+                        <td class="cs1E4BB091" colspan="2" style="width:110px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Destinataire</nobr></td>
+                        <td class="csEE1F9023" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Quantit&#233;</nobr></td>
+                        <td class="csEE1F9023" colspan="2" style="width:46px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Unit&#233;</nobr></td>
+                        <td class="csEE1F9023" colspan="6" style="width:217px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Produit</nobr></td>
+                        <td class="csEE1F9023" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Prix&nbsp;Unit.</nobr></td>
+                        <td class="csEE1F9023" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Prix&nbsp;Total</nobr></td>
+                        <td class="csEE1F9023" colspan="3" style="width:81px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Observation</nobr></td>
+                        <td></td>
+                    </tr>
+                    ';
+                                                                                    
+                                                        $output .= $this->showFicheTransfertProduit($id); 
+                                                                                    
+                                                        $output.='
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:24px;"></td>
+                        <td></td>
+                        <td class="cs1E4BB091" colspan="16" style="width:471px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
+                        <td class="csEE1F9023" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$totalTransfert.'$</nobr></td>
+                        <td class="csEE1F9023" colspan="3" style="width:81px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:13px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="4" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="4" style="width:145px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;du&nbsp;Transporteur</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;R&#233;ceptionnaire</nobr></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="4" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;exp&#233;diteur&nbsp;Conforme</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="6" style="width:216px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;prise&nbsp;en&nbsp;Charge/&nbsp;remise&nbsp;en&nbsp;bon&nbsp;&#233;tat</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>pour&nbsp;d&#233;charge,&nbsp;sous&nbsp;r&#233;serves</nobr></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Mentionn&#233;es&nbsp;Observation</nobr></td>
+                        <td></td>
+                    </tr>
+                </table>
+                </body>
+                </html>
+
+            '; 
+
+    return $output;
+
+}   
+
+function showFicheTransfertProduit($id)
+{
+    $data = DB::table('tvente_detail_transfert')  
+        ->join('tvente_entete_transfert','tvente_entete_transfert.id','=','tvente_detail_transfert.refEnteteTransfert')     
+        ->join('tvente_services as servicesOrigine','servicesOrigine.id','=','tvente_entete_transfert.refService')
+        ->join('tvente_services as servicesDestination','servicesDestination.id','=','tvente_detail_transfert.refDestination')
+        ->join('tvente_produit','tvente_produit.id','=','tvente_detail_transfert.refProduit')
+        ->join('tvente_categorie_produit','tvente_categorie_produit.id','=','tvente_produit.refCategorie')
+        ->select('tvente_detail_transfert.id','refEnteteTransfert','refProduit','refDestination','puTransfert',
+        'qteTransfert','uniteTransfert','tvente_detail_transfert.puBase','tvente_detail_transfert.qteBase',
+        'tvente_detail_transfert.uniteBase','tvente_detail_transfert.author','tvente_detail_transfert.refUser',
+        'tvente_detail_transfert.created_at','refService','libelle_tranafert',
+        "servicesOrigine.nom_service as ServiceOrigine",
+        "servicesDestination.nom_service as ServiceDestination",
+
+        "tvente_produit.designation as designation",'refCategorie','refUniteBase',
+        'pu','qte','cmup','devise','taux','Oldcode','Newcode','tvaapplique',
+        'estvendable',"tvente_categorie_produit.designation as Categorie"
+        )
+        ->selectRaw('(qteTransfert * puTransfert) as PTTransfert')
+        ->selectRaw('(qteBase * puBase) as PTBase')
+        ->selectRaw("DATE_FORMAT(date_transfert,'%d/%m/%Y') as date_transfert")
+        ->where([               
+            ['tvente_detail_transfert.refEnteteTransfert','=', $id]                
+        ])
+        ->orderBy("tvente_produit.designation", "asc")
+        ->get();
+
+    $output='';
+
+    foreach ($data as $row) 
+    {
+        $output .='        
+            <tr style="vertical-align:top;">
+                <td style="width:0px;height:24px;"></td>
+                <td></td>
+                <td class="csE5AC9E0D" colspan="2" style="width:110px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->ServiceDestination.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->puTransfert.'$</nobr></td>
+                <td class="cs3B0DD49A" colspan="2" style="width:46px;height:22px;line-height:12px;text-align:left;vertical-align:middle;"><nobr>'.$row->uniteTransfert.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="6" style="width:217px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->designation.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->qteTransfert.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->PTTransfert.'$</nobr></td>
+                <td class="cs3B0DD49A" colspan="3" style="width:81px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
+                <td></td>
+            </tr>        
+        ';
+    }
+
+    return $output;
+
+}
 
 
 

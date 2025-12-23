@@ -306,7 +306,7 @@ export default {
         }
       );
     },
-
+ 
     printBill(id) {
       window.open(`${this.apiBaseURL}/pdf_fiche_transfert_produit?id=` + id);
     },

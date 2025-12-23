@@ -26043,6 +26043,7 @@ function getInfoFicheTransfertProduit($id)
           $date_transfert='';
           $service_source='';
           $libelle_tranafert='';
+          $user_tranafert='';
 
           $date_total = DB::table('tvente_entete_transfert')       
         ->join('tvente_services','tvente_services.id','=','tvente_entete_transfert.refService')
@@ -26060,7 +26061,8 @@ function getInfoFicheTransfertProduit($id)
           {                                
              $date_transfert = $row->date_transfert;  
              $service_source = $row->nom_service;
-             $libelle_tranafert = $row->libelle_tranafert;                         
+             $libelle_tranafert = $row->libelle_tranafert; 
+             $user_tranafert = $row->author;                        
           }
 
           $aps = "'";
@@ -26068,7 +26070,7 @@ function getInfoFicheTransfertProduit($id)
           
           $output='';  
           $output=' 
-
+                
                 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <!-- saved from url=(0016)http://localhost -->
                 <html>
@@ -26090,39 +26092,33 @@ function getInfoFicheTransfertProduit($id)
                     </style>
                 </head>
                 <body leftMargin=10 topMargin=10 rightMargin=10 bottomMargin=10 style="background-color:#FFFFFF">
-                <table cellpadding="0" cellspacing="0" border="0" style="border-width:0px;empty-cells:show;width:652px;height:443px;position:relative;">
+                <table cellpadding="0" cellspacing="0" border="0" style="border-width:0px;empty-cells:show;width:652px;height:430px;position:relative;">
                     <tr>
                         <td style="width:0px;height:0px;"></td>
                         <td style="height:0px;width:10px;"></td>
                         <td style="height:0px;width:74px;"></td>
-                        <td style="height:0px;width:38px;"></td>
-                        <td style="height:0px;width:20px;"></td>
+                        <td style="height:0px;width:58px;"></td>
                         <td style="height:0px;width:13px;"></td>
-                        <td style="height:0px;width:15px;"></td>
-                        <td style="height:0px;width:29px;"></td>
-                        <td style="height:0px;width:18px;"></td>
-                        <td style="height:0px;width:31px;"></td>
-                        <td style="height:0px;width:73px;"></td>
-                        <td style="height:0px;width:25px;"></td>
+                        <td style="height:0px;width:35px;"></td>
+                        <td style="height:0px;width:9px;"></td>
+                        <td style="height:0px;width:39px;"></td>
+                        <td style="height:0px;width:10px;"></td>
+                        <td style="height:0px;width:37px;"></td>
+                        <td style="height:0px;width:48px;"></td>
+                        <td style="height:0px;width:13px;"></td>
                         <td style="height:0px;width:63px;"></td>
                         <td style="height:0px;width:8px;"></td>
-                        <td style="height:0px;width:18px;"></td>
-                        <td style="height:0px;width:11px;"></td>
+                        <td style="height:0px;width:29px;"></td>
                         <td style="height:0px;width:24px;"></td>
-                        <td style="height:0px;width:13px;"></td>
-                        <td style="height:0px;width:43px;"></td>
-                        <td style="height:0px;width:38px;"></td>
+                        <td style="height:0px;width:56px;"></td>
                         <td style="height:0px;width:15px;"></td>
-                        <td style="height:0px;width:35px;"></td>
-                        <td style="height:0px;width:32px;"></td>
+                        <td style="height:0px;width:38px;"></td>
+                        <td style="height:0px;width:67px;"></td>
                         <td style="height:0px;width:6px;"></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:23px;"></td>
                         <td class="cs739196BC" colspan="12" style="width:409px;height:23px;line-height:14px;text-align:center;vertical-align:middle;"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -26154,50 +26150,42 @@ function getInfoFicheTransfertProduit($id)
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$nomEse.'</nobr></td>
+                        <td class="cs8A513397" colspan="13" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$nomEse.'</nobr></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td class="cs101A94F7" colspan="5" rowspan="5" style="width:126px;height:110px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:126px;height:110px;">
+                        <td class="cs101A94F7" colspan="4" rowspan="5" style="width:126px;height:110px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:126px;height:110px;">
                             <img alt="" src="'.$pic2.'" style="width:126px;height:110px;" /></div>
                         </td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs6105B8F3" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$busnessName.'</nobr></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align:top;">
-                        <td style="width:0px;height:22px;"></td>
-                        <td></td>
-                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>RCCM&nbsp;'.$rccEse.'.&nbsp;ID&nbsp;NAT&nbsp;'.$idNatEse.'</nobr></td>
-                        <td></td>
+                        <td class="cs6105B8F3" colspan="13" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$busnessName.'</nobr></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>N&#176;&nbsp;Impot : '.$numImpotEse.'</nobr></td>
-                        <td></td>
+                        <td class="cs8A513397" colspan="13" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>RCCM&nbsp;'.$rccEse.'.&nbsp;ID&nbsp;NAT&nbsp;'.$idNatEse.'</nobr></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs8A513397" colspan="14" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Tel&#233;phone&nbsp;:&nbsp;'.$Tel1Ese.' - '.$Tel2Ese.'</nobr></td>
+                        <td class="cs8A513397" colspan="13" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>N&#176;&nbsp;Impot : '.$numImpotEse.'</nobr></td>
                         <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
+                        <td></td>
+                        <td class="cs8A513397" colspan="13" style="width:434px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Tel&#233;phone&nbsp;:&nbsp;'.$Tel1Ese.' - '.$Tel2Ese.'</nobr></td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -26223,24 +26211,17 @@ function getInfoFicheTransfertProduit($id)
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:25px;"></td>
                         <td></td>
                         <td></td>
-                        <td class="csE5855143" colspan="18" style="width:491px;height:25px;line-height:25px;text-align:center;vertical-align:middle;"><nobr>BORDEREAU&nbsp;D'.$aps.'EXPEDITION&nbsp;N&#176;&nbsp;:&nbsp;00'.$id.'</nobr></td>
-                        <td></td>
+                        <td class="csE5855143" colspan="16" style="width:491px;height:25px;line-height:25px;text-align:center;vertical-align:middle;"><nobr>BORDEREAU&nbsp;D'.$aps.'EXPEDITION&nbsp;N&#176;&nbsp;:&nbsp;00'.$id.'</nobr></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:10px;"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -26265,49 +26246,33 @@ function getInfoFicheTransfertProduit($id)
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:23px;"></td>
                         <td></td>
-                        <td class="cs8A513397" colspan="8" style="width:236px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Bordereau&nbsp;de&nbsp;Marchandise&nbsp;exp&#233;di&#233;es&nbsp;le&nbsp;:</nobr></td>
-                        <td class="cs6105B8F3" colspan="12" style="width:364px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$date_transfert.'</nobr></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align:top;">
-                        <td style="width:0px;height:22px;"></td>
-                        <td></td>
-                        <td class="cs8A513397" colspan="3" style="width:130px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Nom&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur&nbsp;:</nobr></td>
-                        <td class="cs6105B8F3" colspan="17" style="width:470px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$service_source.'</nobr></td>
-                        <td></td>
+                        <td class="cs8A513397" colspan="7" style="width:236px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Bordereau&nbsp;de&nbsp;Marchandise&nbsp;exp&#233;di&#233;es&nbsp;le&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="11" style="width:396px;height:23px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$date_transfert.'</nobr></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs8A513397" colspan="9" rowspan="2" style="width:309px;height:32px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Autres&nbsp;d&#233;tails&nbsp;(Transporteur&nbsp;,&nbsp;Chauffeur,&nbsp;Camion,&nbsp;etc.)</nobr><br/><nobr>:</nobr></td>
-                        <td class="cs6105B8F3" colspan="11" style="width:291px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$libelle_tranafert.'</nobr></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align:top;">
-                        <td style="width:0px;height:10px;"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="cs8A513397" colspan="2" style="width:130px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Nom&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="16" style="width:502px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$user_tranafert.'</nobr></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
-                        <td style="width:0px;height:18px;"></td>
+                        <td style="width:0px;height:22px;"></td>
                         <td></td>
+                        <td class="cs8A513397" colspan="2" style="width:130px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Service&nbsp;Exp&#233;diteur&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="16" style="width:502px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$service_source.'</nobr></td>
                         <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
                         <td></td>
+                        <td class="cs8A513397" colspan="9" style="width:321px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>Autres&nbsp;d&#233;tails&nbsp;(Transporteur&nbsp;,&nbsp;Chauffeur,&nbsp;Camion,&nbsp;etc.)&nbsp;:</nobr></td>
+                        <td class="cs6105B8F3" colspan="9" style="width:311px;height:22px;line-height:15px;text-align:left;vertical-align:middle;"><nobr>'.$libelle_tranafert.'</nobr></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:15px;"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -26332,33 +26297,20 @@ function getInfoFicheTransfertProduit($id)
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:24px;"></td>
                         <td></td>
-                        <td class="cs1E4BB091" colspan="2" style="width:110px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Destinataire</nobr></td>
-                        <td class="csEE1F9023" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Quantit&#233;</nobr></td>
+                        <td class="cs1E4BB091" colspan="4" style="width:178px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Destinataire</nobr></td>
+                        <td class="csEE1F9023" colspan="2" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Quantit&#233;</nobr></td>
                         <td class="csEE1F9023" colspan="2" style="width:46px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Unit&#233;</nobr></td>
-                        <td class="csEE1F9023" colspan="6" style="width:217px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Produit</nobr></td>
-                        <td class="csEE1F9023" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Prix&nbsp;Unit.</nobr></td>
-                        <td class="csEE1F9023" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Prix&nbsp;Total</nobr></td>
-                        <td class="csEE1F9023" colspan="3" style="width:81px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Observation</nobr></td>
+                        <td class="csEE1F9023" colspan="8" style="width:255px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Produit</nobr></td>
+                        <td class="csEE1F9023" colspan="2" style="width:104px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>Observation</nobr></td>
                         <td></td>
                     </tr>
                     ';
-                                                                                    
-                                                        $output .= $this->showFicheTransfertProduit($id); 
-                                                                                    
-                                                        $output.='
+                                                                                                    
+                                                                        $output .= $this->showFicheTransfertProduit($id); 
+                                                                                                    
+                                                                        $output.='
                     <tr style="vertical-align:top;">
-                        <td style="width:0px;height:24px;"></td>
-                        <td></td>
-                        <td class="cs1E4BB091" colspan="16" style="width:471px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-                        <td class="csEE1F9023" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$totalTransfert.'$</nobr></td>
-                        <td class="csEE1F9023" colspan="3" style="width:81px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align:top;">
-                        <td style="width:0px;height:13px;"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="width:0px;height:15px;"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -26383,34 +26335,31 @@ function getInfoFicheTransfertProduit($id)
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
-                        <td class="cs612ED82F" colspan="4" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur</nobr></td>
+                        <td class="cs612ED82F" colspan="3" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;l'.$aps.'Exp&#233;diteur</nobr></td>
                         <td></td>
                         <td></td>
-                        <td class="cs612ED82F" colspan="4" style="width:145px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;du&nbsp;Transporteur</nobr></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;R&#233;ceptionnaire</nobr></td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align:top;">
-                        <td style="width:0px;height:22px;"></td>
-                        <td></td>
-                        <td class="cs612ED82F" colspan="4" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;exp&#233;diteur&nbsp;Conforme</nobr></td>
-                        <td></td>
-                        <td></td>
-                        <td class="cs612ED82F" colspan="6" style="width:216px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;prise&nbsp;en&nbsp;Charge/&nbsp;remise&nbsp;en&nbsp;bon&nbsp;&#233;tat</nobr></td>
+                        <td class="cs612ED82F" colspan="5" style="width:145px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;du&nbsp;Transporteur</nobr></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>pour&nbsp;d&#233;charge,&nbsp;sous&nbsp;r&#233;serves</nobr></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="4" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Signature&nbsp;de&nbsp;R&#233;ceptionnaire</nobr></td>
                         <td></td>
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="width:0px;height:22px;"></td>
                         <td></td>
+                        <td class="cs612ED82F" colspan="3" style="width:143px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;exp&#233;diteur&nbsp;Conforme</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="7" style="width:216px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Pour&nbsp;prise&nbsp;en&nbsp;Charge/&nbsp;remise&nbsp;en&nbsp;bon&nbsp;&#233;tat</nobr></td>
+                        <td></td>
+                        <td></td>
+                        <td class="cs612ED82F" colspan="4" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>pour&nbsp;d&#233;charge,&nbsp;sous&nbsp;r&#233;serves</nobr></td>
+                        <td></td>
+                    </tr>
+                    <tr style="vertical-align:top;">
+                        <td style="width:0px;height:22px;"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -26426,7 +26375,7 @@ function getInfoFicheTransfertProduit($id)
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="cs612ED82F" colspan="6" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Mentionn&#233;es&nbsp;Observation</nobr></td>
+                        <td class="cs612ED82F" colspan="4" style="width:174px;height:22px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Mentionn&#233;es&nbsp;Observation</nobr></td>
                         <td></td>
                     </tr>
                 </table>
@@ -26471,19 +26420,17 @@ function showFicheTransfertProduit($id)
 
     foreach ($data as $row) 
     {
-        $output .='        
-            <tr style="vertical-align:top;">
+        $output .='
+              <tr style="vertical-align:top;">
                 <td style="width:0px;height:24px;"></td>
                 <td></td>
-                <td class="csE5AC9E0D" colspan="2" style="width:110px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->ServiceDestination.'</nobr></td>
-                <td class="cs3B0DD49A" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->puTransfert.'$</nobr></td>
+                <td class="csE5AC9E0D" colspan="4" style="width:178px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->ServiceDestination.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="2" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->qteTransfert.'</nobr></td>
                 <td class="cs3B0DD49A" colspan="2" style="width:46px;height:22px;line-height:12px;text-align:left;vertical-align:middle;"><nobr>'.$row->uniteTransfert.'</nobr></td>
-                <td class="cs3B0DD49A" colspan="6" style="width:217px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->designation.'</nobr></td>
-                <td class="cs3B0DD49A" colspan="3" style="width:47px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->qteTransfert.'</nobr></td>
-                <td class="cs3B0DD49A" colspan="2" style="width:80px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->PTTransfert.'$</nobr></td>
-                <td class="cs3B0DD49A" colspan="3" style="width:81px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
+                <td class="cs3B0DD49A" colspan="8" style="width:255px;height:22px;line-height:12px;text-align:center;vertical-align:middle;"><nobr>'.$row->designation.'</nobr></td>
+                <td class="cs3B0DD49A" colspan="2" style="width:104px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
                 <td></td>
-            </tr>        
+            </tr>
         ';
     }
 

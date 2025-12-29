@@ -493,7 +493,7 @@ class tDepenseController extends Controller
                 $data3 = tDepense::create([
                     'montant'       =>  $TotalPaie,
                     'montantLettre'    =>  'USD',
-                    'motif'    =>  'VENTES RESTO&BAR',
+                    'motif'    =>  'PAIEMENTS FACTURES DES VENTES JOURNALIERES DU '. $date_paie,
                     'dateOperation'    => $date_paie,
                     'refMvt'    =>  1,
                     'refCompte'    =>  $refCompte,

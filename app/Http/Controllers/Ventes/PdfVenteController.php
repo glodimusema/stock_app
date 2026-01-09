@@ -31169,13 +31169,13 @@ function showPaieFacturationVente($date1, $date2)
     ->selectRaw("DATE_FORMAT(tvente_paiement.date_paie,'%d/%M/%Y') as date_paie_formated")
     ->selectRaw("DATE_FORMAT(tvente_entete_vente.dateVente,'%d/%M/%Y') as dateVente")
 
-    ->where('tvente_paiement.date_paie','>=', $date1)
-    ->where('tvente_paiement.date_paie','<=', $date2)
-
-    // ⚠️ erreur corrigée : comparaison entre colonnes doit utiliser whereColumn
-    ->whereColumn('tvente_paiement.date_paie','!=','tvente_entete_vente.dateVente')
-
-    ->orderBy("tvente_paiement.created_at","asc")
+    ->whereBetween('tvente_paiement.date_paie', [$date1, $date2])
+    ->whereColumn(
+        'tvente_paiement.date_paie',
+        '>',
+        'tvente_entete_vente.dateVente'
+    )
+    ->orderBy('tvente_paiement.created_at', 'asc')
     ->get();
 
     $output='';

@@ -29175,7 +29175,8 @@ function printRapportEnteteFactureDetteClient($date1, $date2)
             ROUND(SUM(IFNULL(paie, 0)), 2) as TotalPaie,
             ROUND(SUM(IFNULL(montant, 0) - IFNULL(reduction, 0) - IFNULL(paie, 0)), 2) as TotalReste
         ')
-        ->whereRaw('ROUND((IFNULL(montant, 0) + IFNULL(totaltva, 0) - IFNULL(reduction, 0)) - IFNULL(paie, 0), 2) > 0')
+        ->whereRaw('ROUND((IFNULL(tvente_entete_vente.montant, 0) + IFNULL(tvente_entete_vente.totaltva, 0) - IFNULL(tvente_entete_vente.reduction, 0)) - IFNULL(tvente_entete_vente.paie, 0), 2) > 0')
+        // ->whereRaw('ROUND((IFNULL(montant, 0) + IFNULL(totaltva, 0) - IFNULL(reduction, 0)) - IFNULL(paie, 0), 2) > 0')
         ->where([
             ['dateVente', '>=', $date1],
             ['dateVente', '<=', $date2]
@@ -29478,7 +29479,7 @@ function showDetailFacturationDetteClient($date1,$date2)
         CONCAT("F",YEAR(dateVente),"",MONTH(dateVente),"00",tvente_entete_vente.id) as codeFacture,
         ROUND(IFNULL(tvente_entete_vente.montant,0),2) as totalFacture,
         ROUND(IFNULL(tvente_entete_vente.paie,0),2) as totalPaie,
-        ROUND((IFNULL(tvente_entete_vente.montant,0) - IFNULL(tvente_entete_vente.paie,0)),2) as RestePaie,
+        ROUND((IFNULL(tvente_entete_vente.montant,0) - IFNULL(tvente_entete_vente.reduction,0) - IFNULL(tvente_entete_vente.paie,0)),2) as RestePaie,
         TIMESTAMPDIFF(DAY, tvente_entete_vente.dateVente, CURDATE()) as nombreJr
     '))
     ->whereRaw('ROUND((IFNULL(tvente_entete_vente.montant, 0) + IFNULL(tvente_entete_vente.totaltva, 0) - IFNULL(tvente_entete_vente.reduction, 0)) - IFNULL(tvente_entete_vente.paie, 0), 2) > 0')
@@ -31202,9 +31203,5 @@ function showPaieFacturationVente($date1, $date2)
 
     return $output;
 }
-
-
-
-
 
 }

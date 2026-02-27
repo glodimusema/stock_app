@@ -811,7 +811,7 @@ export default {
 
 
         // VISUALISATION DES DONNEES DES COMMANDES============================================================
-
+  
 
 
     },

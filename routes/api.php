@@ -1038,8 +1038,9 @@ Route::group(['namespace'   =>  "Ventes"], function(){
 
     
 
-    //
+    //fetch_rapport_entete_facture_client_service_byclient_date
 
+    Route::get("fetch_rapport_entete_facture_client_service_byclient_date", 'PdfVenteController@fetch_rapport_entete_facture_client_service_byclient_date');
     Route::get("pdf_detail_invetaire_service_excel", 'PdfVenteController@pdf_detail_invetaire_service_excel');
     Route::get("pdf_detail_stock_service_excel", 'PdfVenteController@pdf_detail_stock_service_excel');
 

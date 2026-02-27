@@ -128,6 +128,26 @@
                             </v-tooltip>
 
                             <br>
+                            <v-flex xs12 sm12 md12 lg12>
+                                <div class="mr-1">
+                                    <v-autocomplete label="Selectionnez le Client" prepend-inner-icon="mdi-map"
+                                        :rules="[(v) => !!v || 'Ce champ est requis']" :items="clientList" item-text="noms"
+                                        item-value="id" outlined dense v-model="svData.refClient">
+                                    </v-autocomplete>
+                                </div>
+                            </v-flex>
+                              <v-tooltip bottom color="black">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on">
+                                        <v-btn @click="showEnteteVenteByDate_Synthese_Service_by_client" block color="  blue" dark>
+                                            <v-icon>print</v-icon> LES VENTES CASH ET CREDIT/SERVICE/CLIENT
+                                        </v-btn>
+                                    </span>
+                                </template>
+                                <span>Imprimer le rapport</span>
+                            </v-tooltip>
+
+                            <br>
 
                                 <v-flex xs12 sm12 md12 lg12>
                                     <div class="mr-1">
@@ -544,7 +564,7 @@
                                     </v-autocomplete>
                                 </div>
                             </v-flex> -->
-                            <v-tooltip bottom color="black">
+                            <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
                                     <span v-bind="attrs" v-on="on">
                                         <v-btn @click="showEnteteVenteByDate_Serveur_EtatFacture" block color="  blue" dark>
@@ -554,7 +574,7 @@
                                 </template>
                                 <span>Imprimer le rapport</span>
                             </v-tooltip>
-                            <br>
+                            <br> -->
 
                              <!-- <v-tooltip bottom color="black">
                                 <template v-slot:activator="{ on, attrs }">
@@ -685,7 +705,8 @@ export default {
                 etat_facture : '',
                 type_sortie : '',
                 statut : '',
-                serveur_id : 0              
+                serveur_id : 0 ,
+                refClient : 0              
             },
             stataData: {                
             },
@@ -694,6 +715,7 @@ export default {
             categorieList: [],
             fournisseurList: [],
             categorieProList: [],
+            clientList: [],
             serviceList: [],
             produitList: [],
             serveurList: [],
@@ -1927,7 +1949,35 @@ export default {
             } else {
                this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
             }
-        }
+        },
+        showEnteteVenteByDate_Synthese_Service_by_client() {
+            var date1 =  this.dates[0] ;
+            var date2 =  this.dates[1] ;
+            if (date1 <= date2) {
+                //
+                if(this.svData.idService!="" && this.svData.refClient!="")
+                {
+                    window.open(`${this.apiBaseURL}/fetch_rapport_entete_facture_client_service_byclient_date?date1=` + date1+"&date2="+date2+"&refService="+this.svData.idService+"&refClient="+this.svData.refClient);
+                }else
+                {
+                    this.showError("Veillez selectionner le service et le client svp");
+                }               
+               
+            } else {
+               this.showError("Veillez vérifier les dates car la date debit doit être inférieure à la date de fin");
+            }
+        },      
+      fetchListClient() {
+        this.editOrFetch(`${this.apiBaseURL}/fetch_tvente_client_2?refUser=`+this.userData.id).then(
+                ({ data }) => {
+                    var donnees = data.data;
+                    this.clientList = donnees;
+                    if (!this.svData.refClient && donnees.length > 0) {
+                        this.svData.refClient = donnees[0].id;
+                    }
+                }
+            );
+      }
 
        
 
@@ -1939,6 +1989,7 @@ export default {
         this.fetchListServiceVente();
         this.fetchListFournisseur();
         this.fetchListServeur();
+        this.fetchListClient();
         this.GetProduit();
         this.showDate=true;
     },

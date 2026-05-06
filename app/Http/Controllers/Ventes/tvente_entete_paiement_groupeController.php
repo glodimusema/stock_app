@@ -59,10 +59,7 @@ class tvente_entete_paiement_groupeController extends Controller
 
             $data->where('noms', 'like', '%'.$query.'%')          
             ->orderBy("tvente_entete_paiement_groupe.created_at", "asc");
-
             return $this->apiData($data->paginate(10));
-           
-
         }
         $data->orderBy("tvente_entete_paiement_groupe.created_at", "desc");
         return $this->apiData($data->paginate(10));

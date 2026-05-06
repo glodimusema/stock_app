@@ -603,7 +603,6 @@
         );
       } ,
       showVenteDetailUnite(refProduit, name) {
-        //VenteServiceStockByProduit
   
         if (refProduit != '') {
   

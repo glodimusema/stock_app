@@ -658,7 +658,7 @@ export default {
           );
       },
       fetchListService() {
-            this.editOrFetch(`${this.apiBaseURL}/fetch_service_magasin_user_by_user/${this.userData.id}`).then(
+            this.editOrFetch(`${this.apiBaseURL}/fetch_service_user_by_user/${this.userData.id}`).then(
                 ({ data }) => {
                     const donnees = data.data;
                     this.serviceList = donnees;
